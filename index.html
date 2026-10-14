@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#3a2414">
+<meta name="theme-color" content="#1c1007">
 <title>DnD Zaoo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=VT323&family=Jersey+10&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 /* ======== DnD Zaoo – vzhled starého rukopisu: pergamen, inkoust, pečetě ======== */
 :root{
-  --bg:#e8d9b8;--panel:#f2e6cb;--panel2:#e3d2ad;--line:#c2a879;--line2:#9c7f4f;
-  --text:#2a1b0e;--muted:#6d573a;--gold:#9a6a12;--gilt:#c99a3a;
-  --red:#8c2216;--blood:#8c2216;--green:#3d6a26;--blue:#2c4d72;--purple:#5b3770;--orange:#a35612;
+  --bg:#b39d74;--panel:#d2c09a;--panel2:#bfa881;--line:#977d53;--line2:#6b5432;
+  --text:#1a1008;--muted:#4b3923;--gold:#764f0a;--gilt:#b8892f;
+  --red:#7e1d12;--blood:#7e1d12;--green:#2d561b;--blue:#213c5c;--purple:#47285a;--orange:#8e4a0e;
   --leather:#3a2414;--leather2:#4b2f1b;--lt:#f0e0bd;--lm:#c4a979;
   --seal:radial-gradient(circle at 35% 30%,#b23a24,#86200f 60%,#5f150a);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .1 0 0 0 .11 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -22,7 +22,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{color:var(--text);font-family:var(--fb);font-size:18px;line-height:1.5;-webkit-tap-highlight-color:transparent;
-  background:radial-gradient(ellipse at 50% 40%,transparent 50%,rgba(105,62,18,.32) 100%),var(--grain),var(--bg)}
+  background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(30,15,3,.62) 100%),var(--grain),var(--bg)}
 h1,h2,h3{font-family:var(--fc);letter-spacing:.02em;font-weight:700}
 button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 button:disabled{opacity:.45;cursor:default}
@@ -36,7 +36,7 @@ input,textarea{font:inherit;color:inherit}
 
 /* společné „papírové“ prvky */
 .card,.preview,.combat div,.irow,.qrow,.chron,.e.roll,.loot,.dstats,.field,.stat,.chip,.fchip,.tag,.foe,.opt{
-  background:linear-gradient(rgba(255,250,235,.55),rgba(255,250,235,.25)),var(--grain),var(--panel)}
+  background:linear-gradient(rgba(255,250,235,0.248),rgba(255,250,235,0.113)),var(--grain),var(--panel)}
 
 /* ---------- Tvorba postavy ---------- */
 #create{overflow-y:auto;padding:30px 16px calc(28px + env(safe-area-inset-bottom))}
@@ -74,7 +74,7 @@ input,textarea{font:inherit;color:inherit}
 
 /* ---------- Hra: kožená hlavička ---------- */
 .top{padding:calc(8px + env(safe-area-inset-top)) 12px 8px;color:var(--lt);
-  background:var(--leathertex),linear-gradient(#4b2f1b,#34200f);border-bottom:3px double var(--gilt);box-shadow:0 3px 8px rgba(40,20,5,.35)}
+  background:var(--leathertex),linear-gradient(#2f1d0e,#1c1007);border-bottom:3px double var(--gilt);box-shadow:0 3px 8px rgba(40,20,5,.35)}
 .row1{display:flex;align-items:center;gap:10px}
 .row1 b{flex:1;min-width:0;font-family:var(--fd);font-weight:400;font-size:25px;line-height:1.1;color:#f3dfae;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 2px #000}
 .goldv{color:var(--gilt);font-size:17px;white-space:nowrap;font-weight:600}
@@ -136,7 +136,7 @@ input,textarea{font:inherit;color:inherit}
 .tag.quest{color:var(--gold);border-style:dashed}.tag.loc{color:var(--blue)}.tag.npc{color:var(--purple)}.tag.foe{color:var(--blood)}
 .e.roll{border:1px solid var(--line);border-radius:4px;padding:10px 12px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px rgba(80,50,20,.18)}
 .die{width:48px;height:48px;flex:none;display:grid;place-items:center;font-family:var(--fc);font-size:21px;font-weight:700;color:var(--text);
-  background:radial-gradient(circle at 35% 30%,#fffaf0,#e9dcc0 70%,#cdb98f);border:2px solid #8d7448;border-radius:9px;transform:rotate(-7deg);box-shadow:1px 2px 3px rgba(60,35,10,.4)}
+  background:radial-gradient(circle at 35% 30%,#eadfc4,#d8c9a8 70%,#cdb98f);border:2px solid #8d7448;border-radius:9px;transform:rotate(-7deg);box-shadow:1px 2px 3px rgba(60,35,10,.4)}
 .e.roll.good .die{border-color:var(--green);color:var(--green)}.e.roll.bad .die{border-color:var(--blood);color:var(--blood)}
 .e.roll.enemy{border-color:#b9826b;background:linear-gradient(rgba(140,34,22,.07),rgba(140,34,22,.07)),var(--grain),var(--panel)}
 .e.roll b{font-family:var(--fc);font-size:16px}
@@ -147,9 +147,9 @@ input,textarea{font:inherit;color:inherit}
 
 /* nález – truhla */
 .loot{border:1px solid var(--gilt);border-radius:4px;overflow:hidden;box-shadow:0 2px 6px rgba(80,50,20,.25)}
-.loot h3{font-size:14px;color:var(--gilt);padding:9px 12px;letter-spacing:.06em;background:var(--leathertex),linear-gradient(#4b2f1b,#34200f)}
+.loot h3{font-size:14px;color:var(--gilt);padding:9px 12px;letter-spacing:.06em;background:var(--leathertex),linear-gradient(#2f1d0e,#1c1007)}
 .lrow{display:flex;gap:10px;width:100%;text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);align-items:flex-start}
-.lrow .chk{width:22px;height:22px;flex:none;border:2px solid var(--line2);border-radius:3px;display:grid;place-items:center;font-size:14px;margin-top:2px;background:#fffaf0}
+.lrow .chk{width:22px;height:22px;flex:none;border:2px solid var(--line2);border-radius:3px;display:grid;place-items:center;font-size:14px;margin-top:2px;background:#eadfc4}
 .lrow.on .chk{background:var(--blood);border-color:#5a1209;color:#f6e6c4}
 .lrow:not(.on){opacity:.5}
 .lbtns{display:flex;gap:8px;padding:10px 12px}
@@ -170,13 +170,13 @@ input,textarea{font:inherit;color:inherit}
 .typing span{animation:blink 1.2s infinite}.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
 .bottom{padding:8px 12px calc(10px + env(safe-area-inset-bottom));border-top:3px double var(--line2);
-  background:linear-gradient(rgba(255,250,235,.35),rgba(255,250,235,.1)),var(--grain),var(--panel2)}
+  background:linear-gradient(rgba(255,250,235,0.158),rgba(255,250,235,0.045)),var(--grain),var(--panel2)}
 .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
 .chips::-webkit-scrollbar,#foes::-webkit-scrollbar{display:none}
 .chip{flex:none;font-size:16px;padding:5px 12px;border-radius:4px;border:1px solid var(--line2);white-space:nowrap;box-shadow:0 1px 2px rgba(80,50,20,.15)}
 .chip.quick{border-color:var(--gilt);color:var(--gold);font-weight:600}
 .inrow{display:flex;gap:8px;align-items:flex-end}
-#input{flex:1;resize:none;max-height:110px;min-height:46px;background:#fbf4e2;border:1px solid var(--line2);border-radius:4px;padding:10px 12px;outline:none;line-height:1.35;font-size:18px;box-shadow:inset 0 1px 3px rgba(80,50,20,.2)}
+#input{flex:1;resize:none;max-height:110px;min-height:46px;background:#ddcdaa;border:1px solid var(--line2);border-radius:4px;padding:10px 12px;outline:none;line-height:1.35;font-size:18px;box-shadow:inset 0 1px 3px rgba(80,50,20,.2)}
 #input:focus{border-color:var(--blood)}
 #send{width:46px;height:46px;border-radius:50%;background:var(--seal);color:#f6e6c4;font-size:19px;flex:none;border:1px solid #5a1209;box-shadow:0 2px 4px rgba(60,20,5,.4),inset 0 1px 0 rgba(255,200,170,.3)}
 .panel{display:none;text-align:center}
@@ -190,14 +190,14 @@ input,textarea{font:inherit;color:inherit}
 .shade{position:fixed;inset:0;background:rgba(30,15,5,.55);opacity:0;pointer-events:none;transition:.2s;z-index:10}
 .shade.on{opacity:1;pointer-events:auto}
 .drawer{position:fixed;inset:0;transform:translateX(100%);transition:.25s;z-index:11;display:flex;flex-direction:column;
-  background:radial-gradient(ellipse at 50% 40%,transparent 50%,rgba(105,62,18,.3) 100%),var(--grain),var(--bg)}
+  background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(30,15,3,.6) 100%),var(--grain),var(--bg)}
 .drawer.on{transform:none}
 .jhead{display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;color:var(--lt);
-  background:var(--leathertex),linear-gradient(#4b2f1b,#34200f)}
+  background:var(--leathertex),linear-gradient(#2f1d0e,#1c1007)}
 .jhead h2{flex:1;font-family:var(--fd);font-weight:400;color:#f3dfae;font-size:28px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 2px #000}
 .jhead small{display:block;font-family:var(--fb);color:var(--lm);font-size:15px;letter-spacing:0;font-style:italic}
 .xbtn{width:40px;height:40px;border-radius:4px;background:rgba(0,0,0,.25);border:1px solid #6b4a2a;color:var(--lt);font-size:20px;flex:none}
-.tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:3px double var(--gilt);background:var(--leathertex),linear-gradient(#34200f,#2c1a0c)}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:3px double var(--gilt);background:var(--leathertex),linear-gradient(#1f1309,#170d05)}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex:1 0 auto;padding:9px 12px 8px;font-size:16px;color:var(--lm);border-bottom:3px solid transparent;white-space:nowrap}
 .tab.on{color:#f3dfae;border-bottom-color:var(--gilt);background:rgba(201,154,58,.12)}
@@ -209,7 +209,7 @@ input,textarea{font:inherit;color:inherit}
 .combat{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .combat div{border:1px solid var(--line);border-radius:4px;padding:7px 10px;font-size:17px}
 .combat small{display:block;color:var(--muted);font-size:12px;font-family:var(--fc)}
-.combat .hpbar,.combat .bar{margin-top:5px;background:#d6c39b;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}
+.combat .hpbar,.combat .bar{margin-top:5px;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}
 
 .irow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);border-left:4px solid var(--rc);border-radius:4px;padding:9px 10px;margin-bottom:6px;box-shadow:0 1px 2px rgba(80,50,20,.15)}
 .irow .ico{font-size:22px;width:28px;text-align:center;flex:none}
@@ -238,7 +238,7 @@ input,textarea{font:inherit;color:inherit}
 /* spodní list */
 .sheet{position:fixed;left:0;right:0;bottom:0;max-height:88dvh;overflow-y:auto;border-top:3px double var(--rc,var(--gilt));border-radius:10px 10px 0 0;
   padding:8px 16px calc(16px + env(safe-area-inset-bottom));z-index:21;transform:translateY(105%);transition:.22s;box-shadow:0 -6px 18px rgba(40,20,5,.4);
-  background:linear-gradient(rgba(255,250,235,.4),rgba(255,250,235,.2)),var(--grain),var(--panel)}
+  background:linear-gradient(rgba(255,250,235,0.18),rgba(255,250,235,0.09)),var(--grain),var(--panel)}
 .sheet.on{transform:none}
 .sheet .grip{width:44px;height:4px;background:var(--line2);border-radius:2px;margin:0 auto 10px;opacity:.6}
 .sheet h3{font-size:15px;color:var(--blood);margin-bottom:10px}
@@ -246,7 +246,7 @@ input,textarea{font:inherit;color:inherit}
 .sheet .cancel{display:block;width:100%;text-align:center;padding:10px;color:var(--muted);font-style:italic}
 #sheetShade{z-index:20}
 .dhead{display:flex;gap:12px;align-items:center;margin-bottom:10px}
-.dhead .ico{font-size:38px;width:58px;height:58px;display:grid;place-items:center;background:#fbf4e2;border:2px solid var(--rc);border-radius:6px;flex:none;box-shadow:inset 0 0 0 3px #fbf4e2,inset 0 0 0 4px var(--line)}
+.dhead .ico{font-size:38px;width:58px;height:58px;display:grid;place-items:center;background:#ddcdaa;border:2px solid var(--rc);border-radius:6px;flex:none;box-shadow:inset 0 0 0 3px #ddcdaa,inset 0 0 0 4px var(--line)}
 .dhead h2{font-size:20px;color:var(--rc);line-height:1.2}
 .dhead small{display:block;color:var(--muted);font-size:15px;font-style:italic}
 .ddesc{font-style:italic;color:var(--muted);margin-bottom:12px;line-height:1.4;font-size:17px}
@@ -255,7 +255,7 @@ input,textarea{font:inherit;color:inherit}
 .dstats div:last-child{border-bottom:none}
 .dstats span{color:var(--muted)}
 .dstats b{text-align:right;font-weight:600}
-.cmp{font-size:16px;border-radius:4px;padding:8px 12px;margin-bottom:12px;border:1px dashed var(--line2);background:rgba(255,250,235,.4)}
+.cmp{font-size:16px;border-radius:4px;padding:8px 12px;margin-bottom:12px;border:1px dashed var(--line2);background:rgba(255,250,235,0.18)}
 .cmp b{font-family:var(--fc);font-size:12px;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:2px}
 .cmp b.up,.cmp b.down{display:inline;font-family:var(--fb);font-size:16px;text-transform:none}
 .up{color:var(--green)}.down{color:var(--blood)}
@@ -266,9 +266,9 @@ input,textarea{font:inherit;color:inherit}
 
 /* ---------- úrovně a schopnosti ---------- */
 .lvlb{display:inline-block;font-family:var(--fc);font-size:12px;color:#2a1b0e;background:var(--gilt);border-radius:50%;width:20px;height:20px;line-height:20px;text-align:center;vertical-align:4px;text-shadow:none;margin-left:2px}
-.xpbar{height:9px;border-radius:2px;background:#d6c39b;box-shadow:inset 0 1px 2px rgba(80,50,20,.35);overflow:hidden}
+.xpbar{height:9px;border-radius:2px;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35);overflow:hidden}
 .xpbar div{height:100%;background:linear-gradient(90deg,#9a6a12,#d9a441)}
-.abil{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;margin-bottom:6px;border:1px solid var(--line2);border-radius:4px;background:rgba(255,250,235,.5)}
+.abil{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;margin-bottom:6px;border:1px solid var(--line2);border-radius:4px;background:rgba(255,250,235,0.225)}
 .abil .ico{font-size:24px;width:30px;text-align:center;flex:none}
 .abil .mid{flex:1;min-width:0}.abil b{display:block}.abil small{display:block;color:var(--muted);font-size:14px;line-height:1.3;font-style:italic}
 .abil .val{font-size:14px;font-weight:600;white-space:nowrap;color:var(--blood)}
@@ -276,7 +276,7 @@ input,textarea{font:inherit;color:inherit}
 .e.lvl{text-align:center;padding:10px;border:2px double var(--gilt);border-radius:4px;background:linear-gradient(rgba(217,164,65,.18),rgba(217,164,65,.06))}
 .e.lvl b{display:block;font-family:var(--fd);font-weight:400;font-size:26px;color:var(--gold)}
 .e.lvl small{color:var(--muted);font-style:italic}
-.relbar{margin-top:5px;background:#d6c39b}
+.relbar{margin-top:5px;background:#a8916a}
 /* ---------- vyprávění: nástroje, ilustrace, brk ---------- */
 .dmtools{display:flex;gap:6px;justify-content:flex-end;margin-top:2px}
 .dmtools:empty{display:none}
@@ -286,11 +286,11 @@ img.illu{display:block;width:100%;margin:8px 0 4px;border:1px solid var(--line2)
 .e.dm .w{transition:opacity .25s}
 .e.dm .w.hid{opacity:0}
 .e.dm.tw{cursor:pointer}
-#mic{width:46px;height:46px;border-radius:50%;flex:none;font-size:19px;border:1px solid var(--line2);background:#fbf4e2}
+#mic{width:46px;height:46px;border-radius:50%;flex:none;font-size:19px;border:1px solid var(--line2);background:#ddcdaa}
 #mic.on{background:var(--seal);color:#fff;animation:pulse 1s infinite}
 @keyframes pulse{50%{box-shadow:0 0 0 6px rgba(140,34,22,.25)}}
 /* ---------- mapa ---------- */
-.mapwrap{overflow:auto;border:1px solid var(--line2);border-radius:4px;background:radial-gradient(ellipse at center,rgba(255,250,235,.6),rgba(201,170,110,.35)),var(--grain),#ead9b2;box-shadow:inset 0 0 30px rgba(105,62,18,.3)}
+.mapwrap{overflow:auto;border:1px solid var(--line2);border-radius:4px;background:radial-gradient(ellipse at center,rgba(255,250,235,0.27),rgba(201,170,110,.35)),var(--grain),#ead9b2;box-shadow:inset 0 0 30px rgba(105,62,18,.3)}
 .mapsvg{display:block;height:auto;max-height:70vh}
 .mapsvg .mname{font-family:'EB Garamond',serif;font-size:12px;text-anchor:middle;fill:#2a1b0e;paint-order:stroke;stroke:#f2e6cb;stroke-width:3px}
 .mapsvg .mname.here{fill:#8c2216;font-weight:600}
@@ -298,7 +298,7 @@ img.illu{display:block;width:100%;margin:8px 0 4px;border:1px solid var(--line2)
 .mplace{cursor:pointer}
 /* ---------- uložené hry ---------- */
 .savecard{display:flex;gap:6px;margin-bottom:8px}
-.savemain{flex:1;display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border:1px solid var(--line2);border-radius:4px;background:linear-gradient(rgba(255,250,235,.55),rgba(255,250,235,.25)),var(--panel);box-shadow:0 1px 2px rgba(80,50,20,.15)}
+.savemain{flex:1;display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border:1px solid var(--line2);border-radius:4px;background:linear-gradient(rgba(255,250,235,0.248),rgba(255,250,235,0.113)),var(--panel);box-shadow:0 1px 2px rgba(80,50,20,.15)}
 .savemain .ic{font-size:26px}.savemain .mid{min-width:0}.savemain b{display:block;font-family:var(--fd);font-weight:400;font-size:22px;line-height:1.1;color:var(--blood)}
 .savemain small{display:block;color:var(--muted);font-size:14px;font-style:italic}
 .savecard.dead .savemain{opacity:.6}
@@ -307,7 +307,7 @@ img.illu{display:block;width:100%;margin:8px 0 4px;border:1px solid var(--line2)
 .tog{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 4px;border-bottom:1px dotted var(--line2)}
 .tog .mid{flex:1}.tog b{display:block;font-weight:600}.tog small{display:block;color:var(--muted);font-size:14px;font-style:italic}
 .tog .sw{width:44px;height:24px;border-radius:12px;background:#cdb98f;position:relative;flex:none;transition:.2s;box-shadow:inset 0 1px 3px rgba(60,35,10,.4)}
-.tog .sw::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fbf4e2;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.tog .sw::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#ddcdaa;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.3)}
 .tog.on .sw{background:var(--blood)}.tog.on .sw::after{left:23px}
 .flbl{font-family:var(--fc);font-size:12px;color:var(--blood);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
 .seg{display:flex;border:1px solid var(--line2);border-radius:4px;overflow:hidden}
@@ -385,52 +385,52 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .e.ini b{display:block;font-family:var(--fc);color:var(--blood);font-size:14px}
 .e.ini span{font-size:15px}.e.ini i{font-style:normal;font-weight:600}
 .abil.react{border-style:dashed}
-.stdots{display:flex;gap:4px;margin:6px 0 4px}.stdots i{flex:1;height:7px;background:#d6c39b;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}.stdots i.on{background:var(--gold)}
+.stdots{display:flex;gap:4px;margin:6px 0 4px}.stdots i{flex:1;height:7px;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}.stdots i.on{background:var(--gold)}
 .abil .val small{font-size:11px;color:var(--muted)}
 /* ---------- Deník postavy (papírový character sheet) ---------- */
-.dsheet{--ink:#1f2a52;--dark:#2e2418;background:linear-gradient(rgba(255,252,242,.75),rgba(255,250,235,.55)),var(--grain),#f4ead2;border:3px solid var(--dark);
-  box-shadow:inset 0 0 0 4px #f4ead2,inset 0 0 0 5px var(--line2),0 3px 8px rgba(60,35,10,.3);padding:12px 10px 14px;margin:2px 0 8px}
+.dsheet{--ink:#1f2a52;--dark:#2e2418;background:linear-gradient(rgba(255,252,242,0.338),rgba(255,250,235,0.248)),var(--grain),#cdbb94;border:3px solid var(--dark);
+  box-shadow:inset 0 0 0 4px #cdbb94,inset 0 0 0 5px var(--line2),0 3px 8px rgba(60,35,10,.3);padding:12px 10px 14px;margin:2px 0 8px}
 .dsheet button{text-align:left;width:100%}
 .rib{display:flex;align-items:center;gap:8px;margin:16px 0 8px;padding:4px 18px 4px 4px;color:#f3e7c9;background:linear-gradient(#55463a,#2e2418);
   clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%);box-shadow:0 2px 0 rgba(0,0,0,.2)}
-.rib .rbi{width:24px;height:24px;flex:none;border-radius:50%;display:grid;place-items:center;background:#f4ead2;color:var(--dark);font-size:14px;font-weight:700;border:2px solid #8a7a66}
+.rib .rbi{width:24px;height:24px;flex:none;border-radius:50%;display:grid;place-items:center;background:#cdbb94;color:var(--dark);font-size:14px;font-weight:700;border:2px solid #8a7a66}
 .rib b{font-family:var(--fc);font-size:14px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
 .rib small{margin-left:auto;font-size:12px;opacity:.75;font-style:italic;white-space:nowrap}
 .bx{display:inline-flex;flex-direction:column;align-items:center;min-width:46px;flex:none}
 .bx i{font-style:normal;font-family:var(--fc);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);order:2;margin-top:1px}
-.bx b{display:block;min-width:44px;text-align:center;padding:2px 6px;background:#fffdf6;border:2px solid var(--dark);color:var(--ink);font-size:19px;font-weight:600;line-height:1.2;box-shadow:inset 1px 1px 0 rgba(0,0,0,.12)}
+.bx b{display:block;min-width:44px;text-align:center;padding:2px 6px;background:#e8dbbd;border:2px solid var(--dark);color:var(--ink);font-size:19px;font-weight:600;line-height:1.2;box-shadow:inset 1px 1px 0 rgba(0,0,0,.12)}
 .bx b sup{font-size:11px;color:var(--green)}
 .bx.low b{color:var(--blood)}
 /* identita */
 .idn{display:flex;gap:10px;align-items:stretch;padding:0}
 .scroll{flex:1.1;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 8px;border:2px solid var(--dark);
-  background:radial-gradient(ellipse at center,#fffdf6 55%,#efe2c2);position:relative;box-shadow:3px 3px 0 rgba(60,35,10,.2)}
-.scroll::before,.scroll::after{content:'';position:absolute;left:-6px;right:-6px;height:8px;background:#e6d6b0;border:2px solid var(--dark);border-radius:6px}
+  background:radial-gradient(ellipse at center,#e8dbbd 55%,#cdbb94);position:relative;box-shadow:3px 3px 0 rgba(60,35,10,.2)}
+.scroll::before,.scroll::after{content:'';position:absolute;left:-6px;right:-6px;height:8px;background:#c9b68f;border:2px solid var(--dark);border-radius:6px}
 .scroll::before{top:-6px}.scroll::after{bottom:-6px}
 .scroll i,.tagr i{font-style:normal;font-family:var(--fc);font-size:10px;letter-spacing:.12em;color:var(--muted)}
 .scroll b{font-family:var(--fd);font-weight:400;font-size:30px;line-height:1.05;color:var(--ink);text-align:center;word-break:break-word}
 .ids{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.tagr{display:block;border:2px solid var(--dark);background:#fffdf6;padding:2px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 50%,100% 100%,0 100%)}
+.tagr{display:block;border:2px solid var(--dark);background:#e8dbbd;padding:2px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 50%,100% 100%,0 100%)}
 .tagr i{display:block;line-height:1.1}
 .tagr b{display:block;color:var(--ink);font-weight:600;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:6px}
 .lvtrack{display:flex;gap:3px;margin:16px 0 6px}
-.lvtrack i{flex:1;text-align:center;font-style:normal;font-family:var(--fc);font-size:13px;border:2px solid var(--line2);background:#fffdf6;color:var(--muted);padding:2px 0}
-.lvtrack i.past{background:#e9dcbd;color:var(--text)}
+.lvtrack i{flex:1;text-align:center;font-style:normal;font-family:var(--fc);font-size:13px;border:2px solid var(--line2);background:#e8dbbd;color:var(--muted);padding:2px 0}
+.lvtrack i.past{background:#cdbc97;color:var(--text)}
 .lvtrack i.on{background:var(--blood);border-color:#5a1209;color:#fff3dd;font-weight:700}
 .xpline{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);margin-bottom:4px}.xpline b{color:var(--ink)}
 /* sloupce */
 .cols{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px}
-.attr{display:flex;align-items:center;justify-content:space-between;gap:6px;border:2px solid var(--line2);background:rgba(255,253,246,.7);padding:4px 6px 3px;margin-bottom:6px}
+.attr{display:flex;align-items:center;justify-content:space-between;gap:6px;border:2px solid var(--line2);background:rgba(255,253,246,0.35);padding:4px 6px 3px;margin-bottom:6px}
 .an{display:flex;flex-direction:column;gap:2px;min-width:0}
 .an > i{font-style:normal;font-family:var(--fc);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .an .bx b{font-size:17px;min-width:38px}
-.shield{width:48px;height:54px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(#fffdf6,#eadcbc);
+.shield{width:48px;height:54px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(#e8dbbd,#cdbb94);
   border:2px solid var(--dark);clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%);position:relative;padding-bottom:10px}
 .shield b{font-size:21px;color:var(--ink);line-height:1;font-weight:700}
 .shield i{font-style:normal;font-family:var(--fc);font-size:9px;font-weight:700;color:var(--dark)}
 .shield em{position:absolute;top:1px;right:3px;font-style:normal;font-size:10px;color:var(--green);font-weight:700}
 .money{display:flex;gap:8px}
-.lifebox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(255,253,246,.7);padding:6px}
+.lifebox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(255,253,246,0.35);padding:6px}
 .lifebox .hpbar{flex-basis:100%;margin:0}
 .death{flex-basis:100%;display:flex;align-items:center;gap:6px;font-size:14px}
 .death > i{font-style:normal;font-family:var(--fc);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);flex:1;line-height:1.1}
@@ -438,20 +438,20 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .death .ok i.on{color:var(--green);font-weight:700}.death .ko i.on{color:var(--blood);font-weight:700}
 .acrow{display:flex;gap:10px;align-items:center}
 .acshield{width:64px;height:70px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:12px;
-  background:linear-gradient(#fffdf6,#e6d6b0);border:2px solid var(--dark);clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
+  background:linear-gradient(#e8dbbd,#c9b68f);border:2px solid var(--dark);clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
 .acshield b{font-size:28px;color:var(--ink);line-height:1}
 .acshield i{font-style:normal;font-family:var(--fc);font-size:8px;font-weight:700;color:var(--dark)}
 .acinfo{font-size:13px;color:var(--muted);line-height:1.3}
-.manabox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(255,253,246,.7);padding:6px}
+.manabox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(255,253,246,0.35);padding:6px}
 .abl{display:flex;flex-wrap:wrap;gap:4px;font-size:20px;flex-basis:100%}
 .abl sub{font-size:11px;color:var(--ink);font-weight:700;vertical-align:-2px}
-.needs{display:flex;flex-direction:column;gap:5px;border:2px solid var(--line2);background:rgba(255,253,246,.7);padding:6px}
+.needs{display:flex;flex-direction:column;gap:5px;border:2px solid var(--line2);background:rgba(255,253,246,0.35);padding:6px}
 .needs > div{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:8px}
 .needs i{font-style:normal;font-family:var(--fc);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .needs b{text-align:right;color:var(--ink);font-size:16px}.needs b small{font-size:12px;color:var(--muted)}
-.needs .bar{grid-column:1 / -1;background:#d6c39b;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}
+.needs .bar{grid-column:1 / -1;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}
 /* tabulky */
-.wtab,.atab{border:2px solid var(--line2);background:rgba(255,253,246,.7)}
+.wtab,.atab{border:2px solid var(--line2);background:rgba(255,253,246,0.35)}
 .wrow,.arow{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px dashed var(--line2)}
 .wrow:last-child,.arow:last-child{border-bottom:none}
 .wrow .wn,.arow .wn{flex:1;min-width:0;color:var(--ink);font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid var(--line2);padding-bottom:1px}
@@ -465,7 +465,7 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .dsheet .filters{margin-bottom:6px}
 .dsheet .fchip{width:auto}
 .wm:empty{display:none}
-.vyb{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(255,253,246,.75);padding:0 8px}
+.vyb{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(255,253,246,0.375);padding:0 8px}
 .vcat{font-family:var(--fc);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);height:34px;line-height:40px}
 .vline{display:flex;align-items:baseline;gap:8px;height:34px;padding:9px 2px 0;font-size:17px}
 .vline .vn{flex:1;min-width:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -473,117 +473,9 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .vline .vn em{font-style:normal;color:var(--muted);font-size:14px}
 .vline .vs{flex:none;font-size:14px;color:var(--muted)}
 .vline.empty .vn{color:var(--muted);font-style:italic}
-.conds2{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(255,253,246,.75);padding:0 8px}
+.conds2{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(255,253,246,0.375);padding:0 8px}
 .dsheet > .vline{border-bottom:1px solid rgba(44,77,114,.28)}
 /* pixel vzhled */
-body.px .rib b{font-size:19px;font-weight:400}
-body.px .rib small{font-size:15px}
-body.px .bx i,body.px .scroll i,body.px .tagr i,body.px .death > i,body.px .needs i,body.px .shield i,body.px .acshield i{font-size:13px}
-body.px .bx b{font-size:22px;font-weight:400}
-body.px .an > i{font-size:15px;font-weight:400}
-body.px .shield b{font-size:24px;font-weight:400}
-body.px .acshield b{font-size:32px}
-body.px .tagr b,body.px .wrow .wn,body.px .arow .wn{font-size:19px;font-weight:400}
-body.px .scroll b{font-size:34px}
-body.px .lvtrack i{font-size:17px;font-weight:400}
-body.px .vline{font-size:20px}
-body.px .vline .vs{font-size:17px}
-body.px .vcat{font-size:15px}
-body.px .xpline,body.px .acinfo,body.px .mountl{font-size:17px}
-body.px .wm{font-size:14px}
-body.px .rib{clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%)}
-/* ======== PIXEL – stejný pergamen, jen kostičkově (písmo, ostré hrany, tvrdé stíny) ======== */
-body.px{
-  --fd:'Jersey 10','VT323',monospace; --fc:'Jersey 10','VT323',monospace; --fi:'Jersey 10','VT323',monospace; --fb:'VT323',monospace;
-  font-size:22px;line-height:1.25;-webkit-font-smoothing:none;
-}
-body.px *{border-radius:0!important;font-style:normal!important}
-body.px h1,body.px h2,body.px h3{font-weight:400}
-/* měkké stíny → tvrdé pixelové */
-body.px .card,body.px .e.roll,body.px .chip,body.px .irow,body.px .loot,body.px .savemain,body.px .preview{box-shadow:3px 3px 0 rgba(80,50,20,.28)}
-body.px .card.sel{box-shadow:0 0 0 2px var(--blood),3px 3px 0 rgba(80,50,20,.35)}
-body.px .btn,body.px #rollBtn,body.px .lbtns button.main,body.px .dbtns .main{box-shadow:3px 3px 0 #3a0c05;text-shadow:2px 2px 0 rgba(0,0,0,.45);background:#a3281a;border:2px solid #5a1209}
-body.px .btn.ghost{background:transparent;box-shadow:3px 3px 0 rgba(80,50,20,.25);text-shadow:none;border:2px solid var(--line2)}
-body.px #send{background:#a3281a;border:2px solid #5a1209;box-shadow:3px 3px 0 #3a0c05}
-body.px #mic{border:2px solid var(--line2);box-shadow:3px 3px 0 rgba(80,50,20,.25)}
-body.px .btn:active,body.px #rollBtn:active,body.px #send:active,body.px .chip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(60,20,5,.4)}
-body.px .top{box-shadow:0 4px 0 rgba(40,20,5,.35)}
-body.px .sheet{box-shadow:0 -4px 0 rgba(40,20,5,.35)}
-body.px .field,body.px #input{box-shadow:inset 3px 3px 0 rgba(80,50,20,.15);border-width:2px}
-body.px .die{transform:none;box-shadow:3px 3px 0 rgba(60,35,10,.4);background:#f6ecd6;border-width:3px;font-family:var(--fb);font-size:30px;font-weight:400}
-body.px .dhead .ico{box-shadow:3px 3px 0 rgba(60,35,10,.3)}
-body.px .seal,body.px .tog .sw,body.px .tog .sw::after{box-shadow:none}
-/* ukazatele z kostiček – barvy zůstávají */
-body.px .bar,body.px .hpbar,body.px .xpbar{height:9px;box-shadow:none;border:1px solid rgba(0,0,0,.5)}
-body.px .bar div,body.px .hpbar div,body.px .xpbar div{transition:width .4s steps(8);
-  -webkit-mask:repeating-linear-gradient(90deg,#000 0 6px,transparent 6px 8px);mask:repeating-linear-gradient(90deg,#000 0 6px,transparent 6px 8px)}
-/* velikosti písma (pixelová písma jsou opticky menší) */
-body.px .logo h1{font-size:72px;text-shadow:3px 3px 0 rgba(201,154,58,.6)}
-body.px .logo p,body.px .lbl{font-size:21px}
-body.px .lbl{font-size:19px}
-body.px .card h3{font-size:20px}
-body.px .card.mini h3{font-size:17px}
-body.px .card p,body.px .card.mini p{font-size:17px;line-height:1.1}
-body.px .stat small,body.px .combat small,body.px .flbl,body.px .cmp b,body.px .pvhead b{font-size:16px}
-body.px .stat b{font-family:var(--fb);font-size:24px;font-weight:400}
-body.px .btn{font-size:23px;font-weight:400}
-body.px .btn.ghost{font-family:var(--fb);font-size:20px}
-body.px .row1 b{font-size:30px;text-shadow:2px 2px 0 #000}
-body.px .goldv{font-size:22px;font-weight:400}
-body.px .ml{font-size:17px}
-body.px .ml b,body.px .acbox b{font-weight:400;font-size:20px}
-body.px .acbox{font-size:17px}
-body.px .top .meta{font-size:18px}
-body.px .cond{font-size:17px}
-body.px .foe b,body.px .inibar b,body.px .e.ini b{font-size:19px;font-weight:400}
-body.px .foe small,body.px .inibar small,body.px .inibar .ord{font-size:17px}
-body.px .foe{grid-template-columns:minmax(0,1fr) 70px 92px}
-body.px .e.dm{font-size:24px;line-height:1.2;hyphens:manual;-webkit-hyphens:manual}
-body.px .e.dm b{font-weight:400}
-body.px .e.dm p:first-child::first-letter{font-weight:400;font-size:3em;line-height:.8;padding:4px 8px 0 2px;text-shadow:3px 3px 0 rgba(201,154,58,.55)}
-body.px .e.player span{font-size:22px}
-body.px .tag{font-size:18px}
-body.px .e.roll b{font-size:21px;font-weight:400}
-body.px .e.roll small{font-size:18px;line-height:1.15}
-body.px .e.roll small b{font-family:var(--fb);font-size:1.15em}
-body.px .e.lvl b{font-size:32px}
-body.px .chip{font-size:19px}
-body.px .chip.quick{font-weight:400}
-body.px #input{font-size:22px}
-body.px .why{font-size:19px}
-body.px #rollBtn{font-size:25px;font-weight:400}
-body.px .loot h3{font-size:19px}
-body.px .lbtns button,body.px .dbtns button{font-size:19px}
-body.px .jhead h2{font-size:32px}
-body.px .jhead small{font-size:18px}
-body.px .tab{font-size:19px}
-body.px .sec{font-size:19px}
-body.px .irow .nm{font-size:21px;font-weight:400}
-body.px .irow .sub,body.px .qrow small{font-size:17px}
-body.px .irow .val,body.px .abil .val{font-size:18px;font-weight:400}
-body.px .badge,body.px .rar{font-size:14px}
-body.px .qrow b,body.px .tog b,body.px .abil b{font-weight:400}
-body.px .chron{font-size:21px;line-height:1.25}
-body.px .chron::first-letter{font-weight:400}
-body.px .combat > div{font-size:20px}
-body.px .sheet h3{font-size:22px}
-body.px .sheet .opt{font-size:21px}
-body.px .dhead h2{font-size:24px}
-body.px .dstats div{font-size:20px}
-body.px .dstats b{font-weight:400}
-body.px .lvlb{font-size:15px;line-height:21px}
-body.px .savemain b{font-size:25px}
-body.px .recap h4{font-family:var(--fc);font-size:18px}
-body.px .dmtools button{font-size:17px}
-body.px .mapsvg .mname,body.px .mapsvg .mroad{font-family:'VT323',monospace;font-size:15px}
-body.px img.illu{image-rendering:pixelated}
-/* kostka */
-body.px .diceov canvas{image-rendering:pixelated;image-rendering:crisp-edges}
-body.px .diceov .dres{font-weight:400;font-size:120px;text-shadow:5px 5px 0 #5a1209,0 0 18px rgba(0,0,0,.5)}
-body.px .e{animation:pxin .3s steps(3)}
-body.px .e.dm::before{content:'· ❦ ·';font-family:'EB Garamond',serif}
-body.px .field::placeholder,body.px #input::placeholder{font-style:normal}
-@keyframes pxin{from{opacity:0;transform:translateY(6px)}}
 </style>
 </head>
 <body>
@@ -690,6 +582,8 @@ const LOG_MAX = 300;                // kolik záznamů držet na obrazovce
 const INV_MAX = 30;                 // max. počet položek v batohu
 
 const PROVIDERS = {
+  claude:{ nazev:'Claude', ikona:'✳️', popis:'Anthropic · nejlepší vyprávění',
+    hint:'Klíč (začíná sk-ant-) získáš na platform.claude.com → API Keys. Platí se z kreditu, výchozí model je Sonnet 5.5; v Kronice jde přepnout na levnější Haiku.' },
   gemini:{ nazev:'Gemini', ikona:'✨', popis:'Google · má bezplatný limit',
     hint:'Klíč získáš zdarma na aistudio.google.com → Get API key. Aby byl zdarma, projekt NESMÍ mít zapnutou fakturaci.' },
   grok:{ nazev:'Grok', ikona:'𝕏', popis:'xAI · placené za použití',
@@ -1181,11 +1075,11 @@ const d20 = () => 1 + Math.floor(Math.random() * 20);
 
 const ls = { get:k => { try{ return localStorage.getItem(k) || ''; }catch(e){ return ''; } },
   set:(k,v) => { try{ v ? localStorage.setItem(k, v) : localStorage.removeItem(k); }catch(e){} } };
-const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kroniky_provider') : 'gemini';
+const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kroniky_provider') : 'claude';
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v7';
+const APP_VERSION = '14. 10. 2026 · v10';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1561,7 +1455,7 @@ $('#settings').onclick = e => { const b = e.target.closest('[data-set]'); if(b){
 $('#stories').onclick = e => { const b = e.target.closest('[data-story]'); if(b){ selStory = b.dataset.story || null; renderCreate(); } };
 $('#providers').onclick = e => { const b = e.target.closest('[data-prov]'); if(b){ setProvider(b.dataset.prov); $('#apiKey').blur(); renderCreate(); } };
 $('#name').oninput = renderCreate;
-$('#apiKey').oninput = () => { setKey($('#apiKey').value.trim()); ls.set('dz_gem_auth', ''); ls.set('kroniky_' + getProvider() + '_model', ''); renderCreate(); };
+$('#apiKey').oninput = () => { setKey($('#apiKey').value.trim()); ls.set('dz_gem_auth', ''); if(getProvider() !== 'claude') ls.set('kroniky_' + getProvider() + '_model', ''); renderCreate(); };
 $('#savesBox').onclick = e => {
   const l = e.target.closest('[data-load]'), d = e.target.closest('[data-del]');
   if(l){ const g = load(l.dataset.load); if(!g) return alert('Uložení se nepodařilo načíst.'); S = g; initState(); ls.set(ACTIVE_KEY, S.slot); show('game'); render(); if(!S.log.length) callDM({ typ:'start' }); }
@@ -1768,7 +1662,39 @@ function checkOut(out){
   if(!out || !out.vypraveni) throw new Error('AI vrátila nečitelnou odpověď');
   return out;
 }
-async function fetchDM(req){ return getProvider() === 'grok' ? fetchGrok(req) : fetchGemini(req); }
+async function fetchDM(req){ const p = getProvider(); return p === 'claude' ? fetchClaude(req) : p === 'grok' ? fetchGrok(req) : fetchGemini(req); }
+
+/* Claude (Anthropic) – volání přímo z prohlížeče. Dlouhé pokyny Pána jeskyně se ukládají do mezipaměti
+   (prompt caching), takže se při dalších tazích platí jen zlomek ceny. */
+const CLAUDE_MODELS = [
+  ['claude-sonnet-5-5', 'Sonnet 5.5', 'doporučeno · nejlepší poměr kvality a ceny'],
+  ['claude-haiku-5-5', 'Haiku 5.5', 'nejlevnější a nejrychlejší'],
+  ['claude-opus-5-5', 'Opus 5.5', 'nejchytřejší, ale dražší']
+];
+const claudeModel = () => ls.get('kroniky_claude_model') || CLAUDE_MODELS[0][0];
+const claudeName = id => (CLAUDE_MODELS.find(m => m[0] === id) || [id, id])[1];
+async function fetchClaude(req){
+  const body = { model:claudeModel(), max_tokens:2500, temperature:0.9,
+    system:[{ type:'text', text:req.sys || SYSTEM, cache_control:{ type:'ephemeral' } }],
+    messages:[{ role:'user', content:req.prompt || buildPrompt(req) }] };
+  const send = b => fetch('https://api.anthropic.com/v1/messages', { method:'POST',
+    headers:{ 'content-type':'application/json', 'x-api-key':getKey(), 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
+    body:JSON.stringify(b) });
+  let r = await send(body), d = await r.json().catch(() => null);
+  if(r.status === 400 && /temperature/i.test(d?.error?.message || '')){ delete body.temperature; r = await send(body); d = await r.json().catch(() => null); }
+  if(!r.ok) throw claudeErr(r, d);
+  const out = parseJSON((d?.content || []).filter(c => c.type === 'text').map(c => c.text).join(''));
+  return req.prompt ? checkRaw(out) : checkOut(out);
+}
+function claudeErr(r, d){
+  const m = d?.error?.message || ('HTTP ' + r.status), k = getKey();
+  if(r.status === 401) return new Error(`Claude odmítl API klíč (${keyHint(k)}). Zkontroluj, že je celý – začíná „sk-ant-“.`);
+  if(/credit balance|billing/i.test(m)) return new Error('Na účtu Claude došel kredit – dobij ho na platform.claude.com → Billing.');
+  if(r.status === 404 || /model/i.test(m) && r.status === 400){ ls.set('kroniky_claude_model', ''); return new Error('Model ' + claudeName(claudeModel()) + ' není dostupný – přepnul jsem na výchozí, zkus to znovu. [' + m + ']'); }
+  if(r.status === 429) return new Error('Moc dotazů najednou – chvilku počkej a zkus to znovu.');
+  if(r.status === 529 || r.status >= 500) return new Error('Claude je teď přetížený – zkus to za chvilku znovu.');
+  return new Error(m);
+}
 
 /* Gemini: modely se často přejmenovávají, proto je bereme ze seznamu.
    Výchozí je nejlevnější „flash-lite“, který má bezplatný limit. */
@@ -2929,7 +2855,7 @@ function tabChron(){
     <button class="btn ghost" data-act="settings">⚙️ Zvuky, efekty a ilustrace</button>
     <button class="btn ghost" data-act="cloud">☁️ Cloud (více zařízení)${cloudCfg()?.on ? ' – zapnuto' : ''}</button>
     <button class="btn ghost" data-act="switchAI">🔄 AI: ${PROVIDERS[getProvider()].nazev}${isDemo() ? ' (demo)' : ''} – přepnout</button>
-    ${getProvider() === 'gemini' ? `<button class="btn ghost" data-act="model">🤖 Model: ${esc(ls.get('kroniky_gemini_model') || 'vybere se automaticky')}</button>` : ''}
+    ${getProvider() === 'gemini' ? `<button class="btn ghost" data-act="model">🤖 Model: ${esc(ls.get('kroniky_gemini_model') || 'vybere se automaticky')}</button>` : getProvider() === 'claude' ? `<button class="btn ghost" data-act="model">🤖 Model: Claude ${esc(claudeName(claudeModel()))}</button>` : ''}
     <button class="btn ghost" data-act="key">🔑 Změnit API klíč</button>
     <p class="muted" style="text-align:center;font-size:12px;margin-top:12px">DnD Zaoo · verze ${APP_VERSION}</p>
 `;
@@ -3042,9 +2968,11 @@ function journalAction(b){
   else if(a === 'cloudup') cloudUpload(true);
   else if(a === 'clouddown') cloudDownload();
   else if(a === 'switchAI'){
-    setProvider(getProvider() === 'grok' ? 'gemini' : 'grok');
-    if(!getKey()) alert(PROVIDERS[getProvider()].nazev + ' zatím nemá klíč – nastav ho tlačítkem 🔑, jinak poběží demo.');
-    renderDrawer();
+    pick('Kdo bude Pánem jeskyně?', Object.entries(PROVIDERS).map(([k,p]) => ({ label:(k === getProvider() ? '✅ ' : '') + p.ikona + ' ' + p.nazev + ' · ' + p.popis + (ls.get('kroniky_key_' + k) ? '' : ' (bez klíče)'), value:k }))).then(v => {
+      if(!v) return;
+      setProvider(v); renderDrawer();
+      if(!getKey()) alert(PROVIDERS[v].nazev + ' zatím nemá klíč – nastav ho tlačítkem 🔑, jinak poběží demo.');
+    });
   }else if(a === 'key'){
     const k = prompt(PROVIDERS[getProvider()].nazev + ' API klíč (prázdné = demo režim):', getKey());
     if(k !== null){
@@ -3057,11 +2985,22 @@ function journalAction(b){
 async function testKey(){
   try{
     if(getProvider() === 'grok'){ ls.set('kroniky_grok_model', ''); await grokModel(); }
+    else if(getProvider() === 'claude'){
+      const r = await fetch('https://api.anthropic.com/v1/models', { headers:{ 'x-api-key':getKey(), 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' } });
+      const d = await r.json().catch(() => null);
+      if(!r.ok) throw claudeErr(r, d);
+    }
     else await geminiModels();
     alert('✅ Klíč funguje (' + keyHint(getKey()) + ').');
   }catch(e){ alert('❌ Klíč nefunguje: ' + e.message); }
 }
 async function chooseModel(){
+  if(getProvider() === 'claude'){
+    const cur = claudeModel();
+    const m = await pick('Model Claude', CLAUDE_MODELS.map(([id, n, d]) => ({ label:(id === cur ? '✅ ' : '') + n + ' · ' + d, value:id })));
+    if(m){ ls.set('kroniky_claude_model', m); renderDrawer(); }
+    return;
+  }
   if(!getKey()){ alert('Nejdřív nastav API klíč.'); return; }
   let list;
   try{ list = await geminiModels(); }catch(e){ alert('Nepodařilo se načíst modely: ' + e.message); return; }
@@ -3663,6 +3602,22 @@ const ICO_V = (() => { const p = (1 + Math.sqrt(5)) / 2; return [[-1,p,0],[1,p,0
 const ICO_F = [[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
 const ICO_N = [20,2,14,8,16,18,4,12,6,10,1,19,7,13,5,3,17,9,15,11];
 let diceSkip = null;
+/* Kvaterniony pro otáčení kostky – kostka musí dopadnout tak, aby na hráče koukalo hozené číslo. */
+const qMul = (a, b) => [a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3], a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2], a[0]*b[2]-a[1]*b[3]+a[2]*b[0]+a[3]*b[1], a[0]*b[3]+a[1]*b[2]-a[2]*b[1]+a[3]*b[0]];
+const qAxis = (v, ang) => { const n = Math.hypot(v[0], v[1], v[2]) || 1, s = Math.sin(ang / 2); return [Math.cos(ang / 2), v[0] / n * s, v[1] / n * s, v[2] / n * s]; };
+function qRot(q, v){
+  const [w, x, y, z] = q;
+  const ix = w*v[0] + y*v[2] - z*v[1], iy = w*v[1] + z*v[0] - x*v[2], iz = w*v[2] + x*v[1] - y*v[0], iw = -x*v[0] - y*v[1] - z*v[2];
+  return [ix*w - iw*x - iy*z + iz*y, iy*w - iw*y - iz*x + ix*z, iz*w - iw*z - ix*y + iy*x];
+}
+/* Natočení, ve kterém stěna s číslem `final` míří přímo k hráči (osa +z). */
+function diceTarget(final, twist){
+  const fi = Math.max(0, ICO_N.indexOf(final)), f = ICO_F[fi];
+  const c = [0,1,2].map(k => (ICO_V[f[0]][k] + ICO_V[f[1]][k] + ICO_V[f[2]][k]) / 3), n = Math.hypot(...c), u = c.map(x => x / n);
+  const axis = [u[1], -u[0], 0], d = clamp(u[2], -1, 1);
+  const align = Math.hypot(axis[0], axis[1]) < 1e-6 ? (d > 0 ? [1,0,0,0] : qAxis([1,0,0], Math.PI)) : qAxis(axis, Math.acos(d));
+  return qMul(qAxis([0,0,1], twist || 0), align);
+}
 function diceAnim(final){
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   sfx('dice');
@@ -3670,28 +3625,22 @@ function diceAnim(final){
   if(ls.get('dz_dice3d') === 'off' || reduce || !can2d) return new Promise(r => setTimeout(() => { if(final === 20) sfx('crit'); else if(final === 1) sfx('fail'); r(); }, reduce ? 0 : 250));
   return new Promise(res => {
     const ov = $('#diceOv'), cv = ov.querySelector('canvas'), x2 = cv.getContext('2d'), num = ov.querySelector('.dres');
-    const PX = document.body.classList.contains('px');
-    const dpr = PX ? 0.5 : Math.min(2, window.devicePixelRatio || 1), W = Math.min(window.innerWidth || 390, 440), H = 320;
+    const dpr = Math.min(2, window.devicePixelRatio || 1), W = Math.min(window.innerWidth || 390, 440), H = 320;
     cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
     x2.setTransform(dpr, 0, 0, dpr, 0, 0);
     ov.className = 'diceov on'; num.textContent = '';
-    let ax = Math.random() * 6, ay = Math.random() * 6, az = Math.random() * 6;
-    const vx = 9 + Math.random() * 5, vy = 7 + Math.random() * 6, vz = 3 + Math.random() * 3;
+    const qT = diceTarget(final, (Math.random() - 0.5) * 0.9);
+    const sAxis = [Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5], spin = (3 + Math.random() * 2) * Math.PI * 2;
     const T = 1150, t0 = performance.now(), R = 62;
-    let finished = false, raf = 0, last = t0;
+    let finished = false, raf = 0, last = t0, force = false;
     const L = (() => { const v = [-0.45, 0.55, 0.7], n = Math.hypot(...v); return v.map(x => x / n); })();
     function frame(now){
-      const t = Math.min(1, (now - t0) / T), e = 1 - Math.pow(1 - t, 3), dt = Math.min(0.05, (now - last) / 1000); last = now;
-      ax += vx * dt * (1 - e); ay += vy * dt * (1 - e); az += vz * dt * (1 - e);
+      const t = force ? 1 : Math.min(1, (now - t0) / T), e = 1 - Math.pow(1 - t, 3), dt = Math.min(0.05, (now - last) / 1000); last = now;
       const cx = W * 0.18 + W * 0.32 * e, bounce = Math.abs(Math.sin(e * Math.PI * 3)) * (1 - e) * 80, cy = H * 0.5 - bounce;
       x2.clearRect(0, 0, W, H);
       x2.fillStyle = 'rgba(40,20,5,.28)'; x2.beginPath(); x2.ellipse(cx, H * 0.5 + R * 1.05, R * (0.85 - bounce / 300), 9, 0, 0, Math.PI * 2); x2.fill();
-      const [ca, sa, cb, sb, cc, sc] = [Math.cos(ax), Math.sin(ax), Math.cos(ay), Math.sin(ay), Math.cos(az), Math.sin(az)];
-      const P = ICO_V.map(([x, y, z]) => {
-        let y1 = y * ca - z * sa, z1 = y * sa + z * ca;
-        let x2_ = x * cb + z1 * sb, z2 = -x * sb + z1 * cb;
-        return [x2_ * cc - y1 * sc, x2_ * sc + y1 * cc, z2];
-      });
+      const q = qMul(qT, qAxis(sAxis, (1 - e) * spin));   /* dotáčí se, až skončí přesně na hozeném čísle */
+      const P = ICO_V.map(v => qRot(q, v));
       const faces = ICO_F.map((f, i) => {
         const a = P[f[0]], b = P[f[1]], c = P[f[2]];
         const ux = b[0]-a[0], uy = b[1]-a[1], uz = b[2]-a[2], wx_ = c[0]-a[0], wy = c[1]-a[1], wz = c[2]-a[2];
@@ -3705,15 +3654,14 @@ function diceAnim(final){
       for(const o of faces){
         const pts = o.f.map(k => pr(P[k]));
         let lit = Math.max(0.25, o.nx * L[0] + o.ny * L[1] + o.nz * L[2]);
-        if(PX) lit = Math.round(lit * 3) / 3;   /* jen pár odstínů jako v 16 barvách */
         const col = [250, 240, 216].map(v => Math.round(v * (0.55 + 0.45 * lit)));
         x2.beginPath(); x2.moveTo(...pts[0]); x2.lineTo(...pts[1]); x2.lineTo(...pts[2]); x2.closePath();
         x2.fillStyle = `rgb(${col})`; x2.fill();
-        x2.strokeStyle = '#6b5530'; x2.lineWidth = PX ? 2 : 1.4; x2.stroke();
+        x2.strokeStyle = '#6b5530'; x2.lineWidth = 1.4; x2.stroke();
         if(o.nz > 0.35){
           const [px, py] = pr(o.cen);
           x2.fillStyle = `rgba(60,30,10,${Math.min(1, o.nz * 1.2)})`;
-          x2.font = PX ? `${Math.round(18 + o.nz * 12)}px 'Jersey 10', monospace` : `700 ${Math.round(9 + o.nz * 11)}px Cinzel, serif`; x2.textAlign = 'center'; x2.textBaseline = 'middle';
+          x2.font = `700 ${Math.round(9 + o.nz * 11)}px Cinzel, serif`; x2.textAlign = 'center'; x2.textBaseline = 'middle';
           x2.fillText(ICO_N[o.i], px, py);
         }
       }
@@ -3728,7 +3676,7 @@ function diceAnim(final){
       setTimeout(close, final === 20 || final === 1 ? 1100 : 700);
     }
     function close(){ ov.className = 'diceov'; diceSkip = null; res(); }
-    diceSkip = () => { if(!finished) end(); else close(); };
+    diceSkip = () => { if(!finished){ force = true; cancelAnimationFrame(raf); frame(performance.now()); } else close(); };   /* přeskočení = kostka hned leží na hozeném čísle */
     raf = requestAnimationFrame(frame);
   });
 }
@@ -4086,7 +4034,7 @@ const TOGGLES = [
   ['dz_autoreact', '↺ Automatické reakce', 'Štít, odražení, úhyb… se použijí samy, když tě v boji zasáhnou', true]
 ];
 /* Vzhled: pergamen v pixelovém písmu (výchozí) nebo klasický hladký pergamen. */
-const theme = () => ls.get('dz_theme') === 'parch' ? 'parch' : 'px';
+const theme = () => 'parch';
 function applyTheme(){
   const px = theme() === 'px';
   document.body.classList.toggle('px', px);
@@ -4095,8 +4043,6 @@ const togOn = (k, def) => def ? ls.get(k) !== 'off' : ls.get(k) === 'on';
 function settingsSheet(){
   const im = imgMode();
   openSheet(`<h3>⚙️ Nastavení hry</h3>
-    <div class="flbl" style="margin-top:0">🎨 Vzhled</div>
-    <div class="seg">${[['px','👾 Pixelový'],['parch','📜 Hladký']].map(([k,n]) => `<button class="${theme() === k ? 'on' : ''}" data-act="theme" data-k="${k}">${n}</button>`).join('')}</div>
     ${TOGGLES.map(([k, n, d, def]) => `<button class="tog ${togOn(k, def) ? 'on' : ''}" data-act="toggle" data-k="${k}" data-def="${def ? 1 : 0}"><span class="mid"><b>${n}</b><small>${d}</small></span><span class="sw"></span></button>`).join('')}
     <div class="flbl">🖼️ Ilustrace scén</div>
     <div class="seg">${[['off','Vypnuto'],['gemini','Gemini'],['pollinations','Pollinations']].map(([k,n]) => `<button class="${im === k ? 'on' : ''}" data-act="imgmode" data-k="${k}">${n}</button>`).join('')}</div>
