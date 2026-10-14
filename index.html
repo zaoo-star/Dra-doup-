@@ -10,6 +10,8 @@
 <style>
 /* ======== DnD Zaoo – vzhled starého rukopisu: pergamen, inkoust, pečetě ======== */
 :root{
+  --pin:#ddcdaa;--pbox:#e8dbbd;--psheet:#cdbb94;--pdie:#eadfc4;--pbar:#a8916a;--pa:#cdbc97;--pb:#c9b68f;--pc:#d8c9a8;--pd:#f2e6cb;--pe:#efe2c4;--pplayer:#4a3420;--pph:#9a8462;--psw:#cdb98f;--pmap:#ead9b2;--pink:#1f2a52;--pdark:#2e2418;--hl:255,250,235;
+  
   --bg:#b39d74;--panel:#d2c09a;--panel2:#bfa881;--line:#977d53;--line2:#6b5432;
   --text:#1a1008;--muted:#4b3923;--gold:#764f0a;--gilt:#b8892f;
   --red:#7e1d12;--blood:#7e1d12;--green:#2d561b;--blue:#213c5c;--purple:#47285a;--orange:#8e4a0e;
@@ -36,7 +38,7 @@ input,textarea{font:inherit;color:inherit}
 
 /* společné „papírové“ prvky */
 .card,.preview,.combat div,.irow,.qrow,.chron,.e.roll,.loot,.dstats,.field,.stat,.chip,.fchip,.tag,.foe,.opt{
-  background:linear-gradient(rgba(255,250,235,0.248),rgba(255,250,235,0.113)),var(--grain),var(--panel)}
+  background:linear-gradient(rgba(var(--hl),0.248),rgba(var(--hl),0.113)),var(--grain),var(--panel)}
 
 /* ---------- Tvorba postavy ---------- */
 #create{overflow-y:auto;padding:30px 16px calc(28px + env(safe-area-inset-bottom))}
@@ -50,7 +52,7 @@ input,textarea{font:inherit;color:inherit}
 .lbl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
 .field{width:100%;border:1px solid var(--line2);border-radius:4px;padding:12px 14px;outline:none;box-shadow:inset 0 1px 3px rgba(80,50,20,.18)}
 .field:focus{border-color:var(--blood)}
-.field::placeholder,#input::placeholder{color:#9a8462;font-style:italic}
+.field::placeholder,#input::placeholder{color:var(--pph);font-style:italic}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .card{border:1px solid var(--line);border-radius:4px;padding:12px;text-align:left;transition:.15s;box-shadow:0 1px 2px rgba(80,50,20,.15)}
 .card.sel{border:1px solid var(--blood);box-shadow:0 0 0 2px rgba(140,34,22,.25),0 2px 6px rgba(80,50,20,.25)}
@@ -127,10 +129,10 @@ input,textarea{font:inherit;color:inherit}
   text-shadow:1px 1px 0 rgba(201,154,58,.55)}
 .e.dm b{color:var(--blood);font-weight:600}
 .e.player{text-align:right}
-.e.player span{display:inline-block;font-style:italic;max-width:85%;text-align:left;color:#4a3420;padding:4px 12px 4px 14px;border-right:3px solid var(--gold);
+.e.player span{display:inline-block;font-style:italic;max-width:85%;text-align:left;color:var(--pplayer);padding:4px 12px 4px 14px;border-right:3px solid var(--gold);
   background:linear-gradient(270deg,rgba(154,106,18,.14),transparent)}
 .e.player span::before{content:'✒ ';color:var(--gold);font-style:normal}
-.e.fx{display:flex;flex-direction:column;border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:4px;background:rgba(255,250,235,.16);overflow:hidden}
+.e.fx{display:flex;flex-direction:column;border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:4px;background:rgba(var(--hl),.16);overflow:hidden}
 .fxr{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:6px 10px;font-size:16px;line-height:1.25;border-bottom:1px dotted var(--line)}
 .fxr:last-child{border-bottom:none}
 .fxr .fi{width:22px;text-align:center;flex:none}
@@ -144,7 +146,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .tag.quest{color:var(--gold);border-style:dashed}.tag.loc{color:var(--blue)}.tag.npc{color:var(--purple)}.tag.foe{color:var(--blood)}
 .e.roll{border:1px solid var(--line);border-radius:4px;padding:10px 12px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px rgba(80,50,20,.18)}
 .die{width:48px;height:48px;flex:none;display:grid;place-items:center;font-family:var(--fc);font-size:21px;font-weight:700;color:var(--text);
-  background:radial-gradient(circle at 35% 30%,#eadfc4,#d8c9a8 70%,#cdb98f);border:2px solid #8d7448;border-radius:9px;transform:rotate(-7deg);box-shadow:1px 2px 3px rgba(60,35,10,.4)}
+  background:radial-gradient(circle at 35% 30%,var(--pdie),var(--pc) 70%,var(--psw));border:2px solid #8d7448;border-radius:9px;transform:rotate(-7deg);box-shadow:1px 2px 3px rgba(60,35,10,.4)}
 .e.roll.good .die{border-color:var(--green);color:var(--green)}.e.roll.bad .die{border-color:var(--blood);color:var(--blood)}
 .e.roll.enemy{border-color:#b9826b;background:linear-gradient(rgba(140,34,22,.07),rgba(140,34,22,.07)),var(--grain),var(--panel)}
 .e.roll b{font-family:var(--fc);font-size:16px}
@@ -157,7 +159,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .loot{border:1px solid var(--gilt);border-radius:4px;overflow:hidden;box-shadow:0 2px 6px rgba(80,50,20,.25)}
 .loot h3{font-size:14px;color:var(--gilt);padding:9px 12px;letter-spacing:.06em;background:var(--leathertex),linear-gradient(#2f1d0e,#1c1007)}
 .lrow{display:flex;gap:10px;width:100%;text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);align-items:flex-start}
-.lrow .chk{width:22px;height:22px;flex:none;border:2px solid var(--line2);border-radius:3px;display:grid;place-items:center;font-size:14px;margin-top:2px;background:#eadfc4}
+.lrow .chk{width:22px;height:22px;flex:none;border:2px solid var(--line2);border-radius:3px;display:grid;place-items:center;font-size:14px;margin-top:2px;background:var(--pdie)}
 .lrow.on .chk{background:var(--blood);border-color:#5a1209;color:#f6e6c4}
 .lrow:not(.on){opacity:.5}
 .lbtns{display:flex;gap:8px;padding:10px 12px}
@@ -178,13 +180,13 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .typing span{animation:blink 1.2s infinite}.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
 .bottom{padding:8px 12px calc(10px + env(safe-area-inset-bottom));border-top:3px double var(--line2);
-  background:linear-gradient(rgba(255,250,235,0.158),rgba(255,250,235,0.045)),var(--grain),var(--panel2)}
+  background:linear-gradient(rgba(var(--hl),0.158),rgba(var(--hl),0.045)),var(--grain),var(--panel2)}
 .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
 .chips::-webkit-scrollbar,#foes::-webkit-scrollbar{display:none}
 .chip{flex:none;font-size:16px;padding:5px 12px;border-radius:4px;border:1px solid var(--line2);white-space:nowrap;box-shadow:0 1px 2px rgba(80,50,20,.15)}
 .chip.quick{border-color:var(--gilt);color:var(--gold);font-weight:600}
 .inrow{display:flex;gap:8px;align-items:flex-end}
-#input{flex:1;resize:none;max-height:110px;min-height:46px;background:#ddcdaa;border:1px solid var(--line2);border-radius:4px;padding:10px 12px;outline:none;line-height:1.35;font-size:18px;box-shadow:inset 0 1px 3px rgba(80,50,20,.2)}
+#input{flex:1;resize:none;max-height:110px;min-height:46px;background:var(--pin);border:1px solid var(--line2);border-radius:4px;padding:10px 12px;outline:none;line-height:1.35;font-size:18px;box-shadow:inset 0 1px 3px rgba(80,50,20,.2)}
 #input:focus{border-color:var(--blood)}
 #send{width:46px;height:46px;border-radius:50%;background:var(--seal);color:#f6e6c4;font-size:19px;flex:none;border:1px solid #5a1209;box-shadow:0 2px 4px rgba(60,20,5,.4),inset 0 1px 0 rgba(255,200,170,.3)}
 .panel{display:none;text-align:center}
@@ -192,7 +194,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .why{font-size:16px;color:var(--muted);margin-bottom:6px}
 .why .dcl{font-size:14px;opacity:.85}
 .rollalt{display:block;width:100%;margin-top:8px;padding:8px;font-size:15px;color:var(--muted);font-style:italic;border:1px dashed var(--line2);border-radius:5px}
-.e.choices{border:1px solid var(--line2);border-radius:5px;background:rgba(255,250,235,.16);padding:4px 0 2px;margin-top:4px}
+.e.choices{border:1px solid var(--line2);border-radius:5px;background:rgba(var(--hl),.16);padding:4px 0 2px;margin-top:4px}
 .chh{font-family:var(--fc);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--blood);padding:4px 12px 6px;font-weight:700}
 .cho{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:9px 12px;border-top:1px dotted var(--line);font-size:17px;line-height:1.3}
 .cho b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-family:var(--fc);font-size:13px;color:#f6e6c4;background:var(--seal);margin-top:1px}
@@ -226,7 +228,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .combat{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .combat div{border:1px solid var(--line);border-radius:4px;padding:7px 10px;font-size:17px}
 .combat small{display:block;color:var(--muted);font-size:12px;font-family:var(--fc)}
-.combat .hpbar,.combat .bar{margin-top:5px;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}
+.combat .hpbar,.combat .bar{margin-top:5px;background:var(--pbar);box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}
 
 .irow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);border-left:4px solid var(--rc);border-radius:4px;padding:9px 10px;margin-bottom:6px;box-shadow:0 1px 2px rgba(80,50,20,.15)}
 .irow .ico{font-size:22px;width:28px;text-align:center;flex:none}
@@ -255,7 +257,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 /* spodní list */
 .sheet{position:fixed;left:0;right:0;bottom:0;max-height:88dvh;overflow-y:auto;border-top:3px double var(--rc,var(--gilt));border-radius:10px 10px 0 0;
   padding:8px 16px calc(16px + env(safe-area-inset-bottom));z-index:21;transform:translateY(105%);transition:.22s;box-shadow:0 -6px 18px rgba(40,20,5,.4);
-  background:linear-gradient(rgba(255,250,235,0.18),rgba(255,250,235,0.09)),var(--grain),var(--panel)}
+  background:linear-gradient(rgba(var(--hl),0.18),rgba(var(--hl),0.09)),var(--grain),var(--panel)}
 .sheet.on{transform:none}
 .sheet .grip{width:44px;height:4px;background:var(--line2);border-radius:2px;margin:0 auto 10px;opacity:.6}
 .sheet h3{font-size:15px;color:var(--blood);margin-bottom:10px}
@@ -263,7 +265,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .sheet .cancel{display:block;width:100%;text-align:center;padding:10px;color:var(--muted);font-style:italic}
 #sheetShade{z-index:20}
 .dhead{display:flex;gap:12px;align-items:center;margin-bottom:10px}
-.dhead .ico{font-size:38px;width:58px;height:58px;display:grid;place-items:center;background:#ddcdaa;border:2px solid var(--rc);border-radius:6px;flex:none;box-shadow:inset 0 0 0 3px #ddcdaa,inset 0 0 0 4px var(--line)}
+.dhead .ico{font-size:38px;width:58px;height:58px;display:grid;place-items:center;background:var(--pin);border:2px solid var(--rc);border-radius:6px;flex:none;box-shadow:inset 0 0 0 3px var(--pin),inset 0 0 0 4px var(--line)}
 .dhead h2{font-size:20px;color:var(--rc);line-height:1.2}
 .dhead small{display:block;color:var(--muted);font-size:15px;font-style:italic}
 .ddesc{font-style:italic;color:var(--muted);margin-bottom:12px;line-height:1.4;font-size:17px}
@@ -272,7 +274,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .dstats div:last-child{border-bottom:none}
 .dstats span{color:var(--muted)}
 .dstats b{text-align:right;font-weight:600}
-.cmp{font-size:16px;border-radius:4px;padding:8px 12px;margin-bottom:12px;border:1px dashed var(--line2);background:rgba(255,250,235,0.18)}
+.cmp{font-size:16px;border-radius:4px;padding:8px 12px;margin-bottom:12px;border:1px dashed var(--line2);background:rgba(var(--hl),0.18)}
 .cmp b{font-family:var(--fc);font-size:12px;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:2px}
 .cmp b.up,.cmp b.down{display:inline;font-family:var(--fb);font-size:16px;text-transform:none}
 .up{color:var(--green)}.down{color:var(--blood)}
@@ -283,9 +285,9 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 
 /* ---------- úrovně a schopnosti ---------- */
 .lvlb{display:inline-block;font-family:var(--fc);font-size:12px;color:#2a1b0e;background:var(--gilt);border-radius:50%;width:20px;height:20px;line-height:20px;text-align:center;vertical-align:4px;text-shadow:none;margin-left:2px}
-.xpbar{height:9px;border-radius:2px;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35);overflow:hidden}
+.xpbar{height:9px;border-radius:2px;background:var(--pbar);box-shadow:inset 0 1px 2px rgba(80,50,20,.35);overflow:hidden}
 .xpbar div{height:100%;background:linear-gradient(90deg,#9a6a12,#d9a441)}
-.abil{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;margin-bottom:6px;border:1px solid var(--line2);border-radius:4px;background:rgba(255,250,235,0.225)}
+.abil{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;margin-bottom:6px;border:1px solid var(--line2);border-radius:4px;background:rgba(var(--hl),0.225)}
 .abil .ico{font-size:24px;width:30px;text-align:center;flex:none}
 .abil .mid{flex:1;min-width:0}.abil b{display:block}.abil small{display:block;color:var(--muted);font-size:14px;line-height:1.3;font-style:italic}
 .abil .val{font-size:14px;font-weight:600;white-space:nowrap;color:var(--blood)}
@@ -293,7 +295,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .e.lvl{text-align:center;padding:10px;border:2px double var(--gilt);border-radius:4px;background:linear-gradient(rgba(217,164,65,.18),rgba(217,164,65,.06))}
 .e.lvl b{display:block;font-family:var(--fd);font-weight:400;font-size:26px;color:var(--gold)}
 .e.lvl small{color:var(--muted);font-style:italic}
-.relbar{margin-top:5px;background:#a8916a}
+.relbar{margin-top:5px;background:var(--pbar)}
 /* ---------- vyprávění: nástroje, ilustrace, brk ---------- */
 .dmtools{display:flex;gap:6px;justify-content:flex-end;margin-top:2px}
 .dmtools:empty{display:none}
@@ -303,19 +305,19 @@ img.illu{display:block;width:100%;margin:8px 0 4px;border:1px solid var(--line2)
 .e.dm .w{transition:opacity .25s}
 .e.dm .w.hid{opacity:0}
 .e.dm.tw{cursor:pointer}
-#mic{width:46px;height:46px;border-radius:50%;flex:none;font-size:19px;border:1px solid var(--line2);background:#ddcdaa}
+#mic{width:46px;height:46px;border-radius:50%;flex:none;font-size:19px;border:1px solid var(--line2);background:var(--pin)}
 #mic.on{background:var(--seal);color:#fff;animation:pulse 1s infinite}
 @keyframes pulse{50%{box-shadow:0 0 0 6px rgba(140,34,22,.25)}}
 /* ---------- mapa ---------- */
-.mapwrap{overflow:auto;border:1px solid var(--line2);border-radius:4px;background:radial-gradient(ellipse at center,rgba(255,250,235,0.27),rgba(201,170,110,.35)),var(--grain),#ead9b2;box-shadow:inset 0 0 30px rgba(105,62,18,.3)}
+.mapwrap{overflow:auto;border:1px solid var(--line2);border-radius:4px;background:radial-gradient(ellipse at center,rgba(var(--hl),0.27),rgba(201,170,110,.35)),var(--grain),var(--pmap);box-shadow:inset 0 0 30px rgba(105,62,18,.3)}
 .mapsvg{display:block;height:auto;max-height:70vh}
-.mapsvg .mname{font-family:'EB Garamond',serif;font-size:12px;text-anchor:middle;fill:#2a1b0e;paint-order:stroke;stroke:#f2e6cb;stroke-width:3px}
+.mapsvg .mname{font-family:'EB Garamond',serif;font-size:12px;text-anchor:middle;fill:#2a1b0e;paint-order:stroke;stroke:var(--pd);stroke-width:3px}
 .mapsvg .mname.here{fill:#8c2216;font-weight:600}
-.mapsvg .mroad{font-family:'EB Garamond',serif;font-size:10px;text-anchor:middle;fill:#6d573a;font-style:italic;paint-order:stroke;stroke:#efe2c4;stroke-width:3px}
+.mapsvg .mroad{font-family:'EB Garamond',serif;font-size:10px;text-anchor:middle;fill:#6d573a;font-style:italic;paint-order:stroke;stroke:var(--pe);stroke-width:3px}
 .mplace{cursor:pointer}
 /* ---------- uložené hry ---------- */
 .savecard{display:flex;gap:6px;margin-bottom:8px}
-.savemain{flex:1;display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border:1px solid var(--line2);border-radius:4px;background:linear-gradient(rgba(255,250,235,0.248),rgba(255,250,235,0.113)),var(--panel);box-shadow:0 1px 2px rgba(80,50,20,.15)}
+.savemain{flex:1;display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border:1px solid var(--line2);border-radius:4px;background:linear-gradient(rgba(var(--hl),0.248),rgba(var(--hl),0.113)),var(--panel);box-shadow:0 1px 2px rgba(80,50,20,.15)}
 .savemain .ic{font-size:26px}.savemain .mid{min-width:0}.savemain b{display:block;font-family:var(--fd);font-weight:400;font-size:22px;line-height:1.1;color:var(--blood)}
 .savemain small{display:block;color:var(--muted);font-size:14px;font-style:italic}
 .savecard.dead .savemain{opacity:.6}
@@ -323,8 +325,8 @@ img.illu{display:block;width:100%;margin:8px 0 4px;border:1px solid var(--line2)
 /* ---------- nastavení ---------- */
 .tog{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 4px;border-bottom:1px dotted var(--line2)}
 .tog .mid{flex:1}.tog b{display:block;font-weight:600}.tog small{display:block;color:var(--muted);font-size:14px;font-style:italic}
-.tog .sw{width:44px;height:24px;border-radius:12px;background:#cdb98f;position:relative;flex:none;transition:.2s;box-shadow:inset 0 1px 3px rgba(60,35,10,.4)}
-.tog .sw::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#ddcdaa;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.tog .sw{width:44px;height:24px;border-radius:12px;background:var(--psw);position:relative;flex:none;transition:.2s;box-shadow:inset 0 1px 3px rgba(60,35,10,.4)}
+.tog .sw::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--pin);transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.3)}
 .tog.on .sw{background:var(--blood)}.tog.on .sw::after{left:23px}
 .flbl{font-family:var(--fc);font-size:12px;color:var(--blood);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
 .seg{display:flex;border:1px solid var(--line2);border-radius:4px;overflow:hidden}
@@ -406,62 +408,75 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .e.ini b{display:block;font-family:var(--fc);color:var(--blood);font-size:14px}
 .e.ini span{font-size:15px}.e.ini i{font-style:normal;font-weight:600}
 .abil.react{border-style:dashed}
+.older{display:block;width:100%;padding:10px;margin-bottom:12px;font-size:15px;font-style:italic;color:var(--muted);border:1px dashed var(--line2);border-radius:5px}
+.cond.comp{border-color:#6f9a4e;color:#d8ecc2;background:rgba(40,80,20,.35)}.cond.comp.down{border-color:#a0402c;color:#f2c2b0;background:rgba(120,25,10,.35)}
+.comprow{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line2);border-left:4px solid var(--green);border-radius:4px;padding:10px;margin-bottom:6px;background:rgba(var(--hl),.12)}
+.compst{font-size:15px;margin:3px 0 4px}
+.comprow .npcm small{display:block;color:var(--muted);font-style:italic;font-size:15px;line-height:1.3;margin-top:2px}
+.clues small{opacity:.6;font-size:12px}
+.shtop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:15px;color:var(--muted)}.shtop b{color:var(--gold)}
+.shrow{display:flex;gap:10px;align-items:center;padding:8px 2px;border-bottom:1px dotted var(--line)}
+.shrow .ico{font-size:22px;width:28px;text-align:center;flex:none}.shrow .mid{flex:1;min-width:0}.shrow .mid b{display:block;color:var(--rc);font-weight:600}.shrow .mid small{display:block;color:var(--muted);font-size:13px;line-height:1.25}
+.shb{flex:none;min-width:74px;padding:7px 10px;border-radius:5px;background:var(--seal);color:#f6e6c4;font-weight:600;border:1px solid #5a1209}
+.shb.sell{background:transparent;color:var(--gold);border:1px solid var(--gilt)}
+.shb:disabled{opacity:.35}
+.e.roll.comp{border-color:#6f9a4e}
 .e.dm .say{clear:both;margin:4px 0 9px;padding:3px 0 3px 12px;border-left:3px solid var(--sc)}
 .e.dm .say b{display:block;font-family:var(--fc);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sc);font-weight:700}
 .e.dm .say > span{display:block;font-style:italic}
 .e.dm .say.hasp{padding-left:100px;position:relative;min-height:92px}
 .saypic{position:absolute;left:12px;top:4px;width:80px;height:80px;object-fit:cover;border-radius:50%;border:3px solid var(--sc);box-shadow:0 2px 6px rgba(0,0,0,.4);cursor:pointer}
 .npcrow{display:flex;gap:12px;align-items:flex-start}.npcm{flex:1;min-width:0}
-.npcp{width:58px;height:58px;flex:none;border-radius:50%;overflow:hidden;border:2px solid var(--line2);display:grid;place-items:center;font-size:24px;background:rgba(255,250,235,.2);padding:0}
+.npcp{width:58px;height:58px;flex:none;border-radius:50%;overflow:hidden;border:2px solid var(--line2);display:grid;place-items:center;font-size:24px;background:rgba(var(--hl),.2);padding:0}
 .npcp img{width:100%;height:100%;object-fit:cover;display:block}
 .npcp.busy{animation:pulse 1.2s infinite}
 .npcbig img{display:block;width:min(78vw,320px);aspect-ratio:1;object-fit:cover;margin:4px auto 10px;border-radius:6px;border:3px double var(--line2);box-shadow:0 3px 10px rgba(0,0,0,.35)}
-.stdots{display:flex;gap:4px;margin:6px 0 4px}.stdots i{flex:1;height:7px;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}.stdots i.on{background:var(--gold)}
+.stdots{display:flex;gap:4px;margin:6px 0 4px}.stdots i{flex:1;height:7px;background:var(--pbar);box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}.stdots i.on{background:var(--gold)}
 .abil .val small{font-size:11px;color:var(--muted)}
 /* ---------- Deník postavy (papírový character sheet) ---------- */
-.dsheet{--ink:#1f2a52;--dark:#2e2418;background:linear-gradient(rgba(255,252,242,0.338),rgba(255,250,235,0.248)),var(--grain),#cdbb94;border:3px solid var(--dark);
-  box-shadow:inset 0 0 0 4px #cdbb94,inset 0 0 0 5px var(--line2),0 3px 8px rgba(60,35,10,.3);padding:12px 10px 14px;margin:2px 0 8px}
+.dsheet{--ink:var(--pink);--dark:var(--pdark);background:linear-gradient(rgba(var(--hl),0.338),rgba(var(--hl),0.248)),var(--grain),var(--psheet);border:3px solid var(--dark);
+  box-shadow:inset 0 0 0 4px var(--psheet),inset 0 0 0 5px var(--line2),0 3px 8px rgba(60,35,10,.3);padding:12px 10px 14px;margin:2px 0 8px}
 .dsheet button{text-align:left;width:100%}
-.rib{display:flex;align-items:center;gap:8px;margin:16px 0 8px;padding:4px 18px 4px 4px;color:#f3e7c9;background:linear-gradient(#55463a,#2e2418);
+.rib{display:flex;align-items:center;gap:8px;margin:16px 0 8px;padding:4px 18px 4px 4px;color:#f3e7c9;background:linear-gradient(#55463a,var(--pdark));
   clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%);box-shadow:0 2px 0 rgba(0,0,0,.2)}
-.rib .rbi{width:24px;height:24px;flex:none;border-radius:50%;display:grid;place-items:center;background:#cdbb94;color:var(--dark);font-size:14px;font-weight:700;border:2px solid #8a7a66}
+.rib .rbi{width:24px;height:24px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--psheet);color:var(--dark);font-size:14px;font-weight:700;border:2px solid #8a7a66}
 .rib b{font-family:var(--fc);font-size:14px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
 .rib small{margin-left:auto;font-size:12px;opacity:.75;font-style:italic;white-space:nowrap}
 .bx{display:inline-flex;flex-direction:column;align-items:center;min-width:46px;flex:none}
 .bx i{font-style:normal;font-family:var(--fc);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);order:2;margin-top:1px}
-.bx b{display:block;min-width:44px;text-align:center;padding:2px 6px;background:#e8dbbd;border:2px solid var(--dark);color:var(--ink);font-size:19px;font-weight:600;line-height:1.2;box-shadow:inset 1px 1px 0 rgba(0,0,0,.12)}
+.bx b{display:block;min-width:44px;text-align:center;padding:2px 6px;background:var(--pbox);border:2px solid var(--dark);color:var(--ink);font-size:19px;font-weight:600;line-height:1.2;box-shadow:inset 1px 1px 0 rgba(0,0,0,.12)}
 .bx b sup{font-size:11px;color:var(--green)}
 .bx.low b{color:var(--blood)}
 /* identita */
 .idn{display:flex;gap:10px;align-items:stretch;padding:0}
 .scroll{flex:1.1;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 8px;border:2px solid var(--dark);
-  background:radial-gradient(ellipse at center,#e8dbbd 55%,#cdbb94);position:relative;box-shadow:3px 3px 0 rgba(60,35,10,.2)}
-.scroll::before,.scroll::after{content:'';position:absolute;left:-6px;right:-6px;height:8px;background:#c9b68f;border:2px solid var(--dark);border-radius:6px}
+  background:radial-gradient(ellipse at center,var(--pbox) 55%,var(--psheet));position:relative;box-shadow:3px 3px 0 rgba(60,35,10,.2)}
+.scroll::before,.scroll::after{content:'';position:absolute;left:-6px;right:-6px;height:8px;background:var(--pb);border:2px solid var(--dark);border-radius:6px}
 .scroll::before{top:-6px}.scroll::after{bottom:-6px}
 .scroll i,.tagr i{font-style:normal;font-family:var(--fc);font-size:10px;letter-spacing:.12em;color:var(--muted)}
 .scroll b{font-family:var(--fd);font-weight:400;font-size:30px;line-height:1.05;color:var(--ink);text-align:center;word-break:break-word}
 .ids{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.tagr{display:block;border:2px solid var(--dark);background:#e8dbbd;padding:2px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 50%,100% 100%,0 100%)}
+.tagr{display:block;border:2px solid var(--dark);background:var(--pbox);padding:2px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 50%,100% 100%,0 100%)}
 .tagr i{display:block;line-height:1.1}
 .tagr b{display:block;color:var(--ink);font-weight:600;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:6px}
 .lvtrack{display:flex;gap:3px;margin:16px 0 6px}
-.lvtrack i{flex:1;text-align:center;font-style:normal;font-family:var(--fc);font-size:13px;border:2px solid var(--line2);background:#e8dbbd;color:var(--muted);padding:2px 0}
-.lvtrack i.past{background:#cdbc97;color:var(--text)}
+.lvtrack i{flex:1;text-align:center;font-style:normal;font-family:var(--fc);font-size:13px;border:2px solid var(--line2);background:var(--pbox);color:var(--muted);padding:2px 0}
+.lvtrack i.past{background:var(--pa);color:var(--text)}
 .lvtrack i.on{background:var(--blood);border-color:#5a1209;color:#fff3dd;font-weight:700}
 .xpline{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);margin-bottom:4px}.xpline b{color:var(--ink)}
 /* sloupce */
 .cols{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px}
-.attr{display:flex;align-items:center;justify-content:space-between;gap:6px;border:2px solid var(--line2);background:rgba(255,253,246,0.35);padding:4px 6px 3px;margin-bottom:6px}
+.attr{display:flex;align-items:center;justify-content:space-between;gap:6px;border:2px solid var(--line2);background:rgba(var(--hl),0.35);padding:4px 6px 3px;margin-bottom:6px}
 .an{display:flex;flex-direction:column;gap:2px;min-width:0}
 .an > i{font-style:normal;font-family:var(--fc);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .an .bx b{font-size:17px;min-width:38px}
-.shield{width:48px;height:54px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(#e8dbbd,#cdbb94);
+.shield{width:48px;height:54px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(var(--pbox),var(--psheet));
   border:2px solid var(--dark);clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%);position:relative;padding-bottom:10px}
 .shield b{font-size:21px;color:var(--ink);line-height:1;font-weight:700}
 .shield i{font-style:normal;font-family:var(--fc);font-size:9px;font-weight:700;color:var(--dark)}
 .shield em{position:absolute;top:1px;right:3px;font-style:normal;font-size:10px;color:var(--green);font-weight:700}
 .money{display:flex;gap:8px}
-.lifebox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(255,253,246,0.35);padding:6px}
+.lifebox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(var(--hl),0.35);padding:6px}
 .lifebox .hpbar{flex-basis:100%;margin:0}
 .death{flex-basis:100%;display:flex;align-items:center;gap:6px;font-size:14px}
 .death > i{font-style:normal;font-family:var(--fc);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);flex:1;line-height:1.1}
@@ -469,20 +484,20 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .death .ok i.on{color:var(--green);font-weight:700}.death .ko i.on{color:var(--blood);font-weight:700}
 .acrow{display:flex;gap:10px;align-items:center}
 .acshield{width:64px;height:70px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:12px;
-  background:linear-gradient(#e8dbbd,#c9b68f);border:2px solid var(--dark);clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
+  background:linear-gradient(var(--pbox),var(--pb));border:2px solid var(--dark);clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
 .acshield b{font-size:28px;color:var(--ink);line-height:1}
 .acshield i{font-style:normal;font-family:var(--fc);font-size:8px;font-weight:700;color:var(--dark)}
 .acinfo{font-size:13px;color:var(--muted);line-height:1.3}
-.manabox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(255,253,246,0.35);padding:6px}
+.manabox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(var(--hl),0.35);padding:6px}
 .abl{display:flex;flex-wrap:wrap;gap:4px;font-size:20px;flex-basis:100%}
 .abl sub{font-size:11px;color:var(--ink);font-weight:700;vertical-align:-2px}
-.needs{display:flex;flex-direction:column;gap:5px;border:2px solid var(--line2);background:rgba(255,253,246,0.35);padding:6px}
+.needs{display:flex;flex-direction:column;gap:5px;border:2px solid var(--line2);background:rgba(var(--hl),0.35);padding:6px}
 .needs > div{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:8px}
 .needs i{font-style:normal;font-family:var(--fc);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .needs b{text-align:right;color:var(--ink);font-size:16px}.needs b small{font-size:12px;color:var(--muted)}
-.needs .bar{grid-column:1 / -1;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}
+.needs .bar{grid-column:1 / -1;background:var(--pbar);box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}
 /* tabulky */
-.wtab,.atab{border:2px solid var(--line2);background:rgba(255,253,246,0.35)}
+.wtab,.atab{border:2px solid var(--line2);background:rgba(var(--hl),0.35)}
 .wrow,.arow{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px dashed var(--line2)}
 .wrow:last-child,.arow:last-child{border-bottom:none}
 .wrow .wn,.arow .wn{flex:1;min-width:0;color:var(--ink);font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid var(--line2);padding-bottom:1px}
@@ -495,9 +510,9 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 /* vybavení – linkovaný papír */
 .dsheet .filters{margin-bottom:6px}
 .dsheet .fchip{width:auto}
-.imps{border:2px solid var(--line2);background:rgba(255,253,246,.35);padding:2px 10px}.imps div{padding:6px 0;border-bottom:1px solid rgba(33,60,92,.25);color:var(--ink,#1f2a52);font-size:15px;line-height:1.3}.imps div:last-child{border-bottom:none}
+.imps{border:2px solid var(--line2);background:rgba(var(--hl),.35);padding:2px 10px}.imps div{padding:6px 0;border-bottom:1px solid rgba(33,60,92,.25);color:var(--ink,var(--pink));font-size:15px;line-height:1.3}.imps div:last-child{border-bottom:none}
 .wm:empty{display:none}
-.vyb{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(255,253,246,0.375);padding:0 8px}
+.vyb{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(var(--hl),0.375);padding:0 8px}
 .vcat{font-family:var(--fc);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);height:34px;line-height:40px}
 .vline{display:flex;align-items:baseline;gap:8px;height:34px;padding:9px 2px 0;font-size:17px}
 .vline .vn{flex:1;min-width:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -505,9 +520,61 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .vline .vn em{font-style:normal;color:var(--muted);font-size:14px}
 .vline .vs{flex:none;font-size:14px;color:var(--muted)}
 .vline.empty .vn{color:var(--muted);font-style:italic}
-.conds2{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(255,253,246,0.375);padding:0 8px}
+.conds2{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(var(--hl),0.375);padding:0 8px}
 .dsheet > .vline{border-bottom:1px solid rgba(44,77,114,.28)}
 /* pixel vzhled */
+
+/* ======== TEMNÝ VZHLED – prastará kniha ve tmě, světlo svíčky ======== */
+body.dark{
+  --bg:#17110c;--panel:#231a12;--panel2:#1b140d;--line:#4d3b27;--line2:#7a6040;
+  --text:#ddcfb2;--muted:#a3916f;--gold:#d2a64e;--gilt:#b8892f;
+  --red:#c8382a;--blood:#c8382a;--green:#7fae5a;--blue:#8fb0d6;--purple:#b48fd6;--orange:#e08a3a;
+  --lt:#eadcbd;--lm:#a99472;
+  --pin:#120d09;--pbox:#2a2016;--psheet:#20180f;--pdie:#e6d8b8;--pbar:#0e0a07;--pa:#2a2016;--pb:#2a2016;--pc:#2a2016;--pd:#eadcbd;--pe:#eadcbd;
+  --pplayer:#d9c08e;--pph:#6e5c44;--psw:#3a2d1f;--pmap:#8a7650;--pink:#eadbb8;--pdark:#090605;
+  --hl:150,110,60;
+  --seal:radial-gradient(circle at 35% 30%,#b8301f,#7c160a 60%,#4a0c05);
+  background:radial-gradient(ellipse 120% 80% at 50% 0%,rgba(255,160,70,.07),transparent 55%),radial-gradient(ellipse at 50% 45%,transparent 25%,rgba(0,0,0,.78) 100%),var(--grain),var(--bg);
+}
+body.dark .drawer{background:radial-gradient(ellipse at 50% 40%,transparent 25%,rgba(0,0,0,.75) 100%),var(--grain),var(--bg)}
+body.dark .top,body.dark .jhead{background:var(--leathertex),linear-gradient(#140c06,#0b0703);border-bottom-color:#5a3a1a}
+body.dark .tabs{background:var(--leathertex),linear-gradient(#0f0905,#0a0603)}
+body.dark .bottom{background:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.45)),var(--grain),var(--panel2);border-top-color:var(--line)}
+body.dark .sheet{background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.35)),var(--grain),var(--panel);box-shadow:0 -6px 22px rgba(0,0,0,.7)}
+body.dark .e.dm{text-shadow:0 1px 1px rgba(0,0,0,.6)}
+body.dark .e.dm b{color:#e0563f}
+body.dark .e.dm p:first-child::first-letter{color:#c8382a;text-shadow:0 0 14px rgba(200,56,42,.45),2px 2px 0 rgba(0,0,0,.6)}
+body.dark .e.dm::before,body.dark .logo h1::after{color:#5c4630}
+body.dark .logo h1{color:#c8382a;text-shadow:0 0 18px rgba(200,40,20,.35),0 2px 0 #000}
+body.dark .e.player span{background:linear-gradient(270deg,rgba(210,166,78,.12),transparent)}
+body.dark #input{background:#0f0b08;color:var(--text);box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+body.dark #mic{background:#1a130d;color:var(--text)}
+body.dark .field{background:#0f0b08;color:var(--text)}
+body.dark .die{background:radial-gradient(circle at 35% 30%,#efe3c6,#cdbb94 70%,#9c8660);color:#1a1008}
+body.dark .e.roll.good .die{color:#2d561b}
+body.dark .e.roll.bad .die{color:#7e1d12}
+body.dark .e.roll.enemy{background:linear-gradient(rgba(160,30,15,.14),rgba(160,30,15,.08)),var(--grain),var(--panel)}
+body.dark .lrow .chk{background:#0f0b08}
+body.dark .card.sel{box-shadow:0 0 0 2px rgba(200,56,42,.35),0 0 18px rgba(200,56,42,.15)}
+body.dark .chip.quick{color:var(--gold)}
+body.dark .mapwrap{filter:brightness(.72) sepia(.35) contrast(1.05)}
+body.dark img.illu{filter:sepia(.35) brightness(.85) contrast(1.05)}
+body.dark .xpbar,body.dark .combat .hpbar,body.dark .combat .bar,body.dark .relbar,body.dark .needs .bar,body.dark .stdots i{background:#0c0805;box-shadow:inset 0 1px 2px #000}
+body.dark .dsheet{box-shadow:inset 0 0 0 4px var(--psheet),inset 0 0 0 5px var(--line2),0 3px 12px rgba(0,0,0,.6);border-color:#000}
+body.dark .scroll{background:radial-gradient(ellipse at center,#2e2318 55%,#1c150e)}
+body.dark .scroll::before,body.dark .scroll::after{background:#3a2c1d;border-color:#000}
+body.dark .rib{background:linear-gradient(#4a1a10,#240904);color:#eadcbd}
+body.dark .rib .rbi{background:#1a130d;color:#d2a64e;border-color:#7a6040}
+body.dark .shield,body.dark .acshield{background:linear-gradient(#3a2c1d,#1d150d)}
+body.dark .lvtrack i{background:#1a130d}
+body.dark .lvtrack i.past{background:#2e2318;color:var(--text)}
+body.dark .vyb,body.dark .conds2{background:repeating-linear-gradient(transparent 0 33px,rgba(143,176,214,.16) 33px 34px),rgba(0,0,0,.2)}
+body.dark .imps div{border-bottom-color:rgba(143,176,214,.16)}
+body.dark .tog .sw::after{background:#a3916f}
+body.dark .seg button.on{color:#f3e7c9}
+/* pomalý dým u spodního okraje a míhající se světlo svíčky */
+body.dark:not(.night):not(.battle):not(.dying):not(.w-dest):not(.w-bourka) #atmo{background:radial-gradient(ellipse 140% 45% at 50% 108%,rgba(70,60,50,.35),transparent 70%);animation:darkcandle 4.5s ease-in-out infinite}
+@keyframes darkcandle{0%,100%{opacity:1}35%{opacity:.82}55%{opacity:.95}78%{opacity:.86}}
 </style>
 </head>
 <body>
@@ -542,6 +609,9 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 
     <div class="lbl">Hlavní příběh</div>
     <div id="stories" class="cards settings"></div>
+
+    <div class="lbl">Obtížnost</div>
+    <div id="diffs" class="cards cards3"></div>
 
     <div class="lbl">AI Pán jeskyně</div>
     <div id="providers" class="cards"></div>
@@ -1131,7 +1201,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v20';
+const APP_VERSION = '14. 10. 2026 · v22';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1446,6 +1516,7 @@ function advanceTime(hours, sleeping){
     while(S.time.hour >= 24){ S.time.hour -= 24; S.time.day++; }
     const n = S.needs;
     if(sleeping){
+      if(S.comp && S.comp.hp < S.comp.maxHp) S.comp.hp = Math.min(S.comp.maxHp, S.comp.hp + Math.max(1, Math.round(h * S.comp.maxHp / 8)));
       n.unava = Math.max(0, n.unava - 12 * h);
       n.hlad = Math.min(100, n.hlad + 1.5 * h);
       if(n.hlad < 90 && !S.effects.some(e => e.blokuje)){
@@ -1455,8 +1526,8 @@ function advanceTime(hours, sleeping){
       }
     }else{
       const wr = weatherRates();
-      n.unava = Math.min(100, n.unava + 4 * h * (loadRatio() > 1 ? 1.5 : 1) * wr.unava);
-      n.hlad = Math.min(100, n.hlad + 3 * h * wr.hlad);
+      n.unava = Math.min(100, n.unava + 4 * h * (loadRatio() > 1 ? 1.5 : 1) * wr.unava * D().needs);
+      n.hlad = Math.min(100, n.hlad + 3 * h * wr.hlad * D().needs);
     }
     S.wAcc = (S.wAcc || 0) + h;
     while(S.wAcc >= 4){ S.wAcc -= 4; rollWeather(); }
@@ -1570,6 +1641,7 @@ function renderCreate(){
     `<button class="card mini ${selZaz===k?'sel':''}" data-zaz="${k}"><div class="ic">${z.i}</div><h3>${z.nazev}</h3></button>`).join('');
   $('#settings').innerHTML = Object.entries(SETTINGS).map(([k,s]) =>
     `<button class="card ${selSetting===k?'sel':''}" data-set="${k}"><h3>${s.ikona} ${s.nazev}</h3><p>${s.popis}</p></button>`).join('');
+  $('#diffs').innerHTML = Object.entries(DIFFS).map(([k,x]) => `<button class="card mini ${selDiff===k?'sel':''}" data-diff="${k}"><div class="ic">${x.i}</div><h3>${x.n}</h3></button>`).join('') + `<div class="hint" style="grid-column:1/-1">${esc(DIFFS[selDiff].d)}</div>`;
   if(selStory && STORIES[selStory]?.svet !== selSetting) selStory = null;
   $('#stories').innerHTML = Object.entries(STORIES).filter(([,x]) => x.svet === selSetting).map(([k,x]) =>
     `<button class="card ${selStory===k?'sel':''}" data-story="${k}"><h3>${x.ikona} ${esc(x.nazev)}</h3><p>${esc(x.kratce)}</p></button>`).join('')
@@ -1605,6 +1677,7 @@ $('#species').onclick = e => { const b = e.target.closest('[data-spec]'); if(b){
 $('#speciesInfo').onclick = e => { const b = e.target.closest('[data-lin]'); if(b){ selLinie = b.dataset.lin; renderCreate(); } };
 $('#zazemi').onclick = e => { const b = e.target.closest('[data-zaz]'); if(b){ selZaz = b.dataset.zaz; renderCreate(); } };
 $('#settings').onclick = e => { const b = e.target.closest('[data-set]'); if(b){ selSetting = b.dataset.set; selStory = Object.keys(STORIES).find(k => STORIES[k].svet === selSetting) || null; renderCreate(); } };
+$('#diffs').onclick = e => { const b = e.target.closest('[data-diff]'); if(b){ selDiff = b.dataset.diff; renderCreate(); } };
 $('#stories').onclick = e => { const b = e.target.closest('[data-story]'); if(b){ selStory = b.dataset.story || null; renderCreate(); } };
 $('#providers').onclick = e => { const b = e.target.closest('[data-prov]'); if(b){ setProvider(b.dataset.prov); $('#apiKey').blur(); renderCreate(); } };
 $('#name').oninput = renderCreate;
@@ -1616,7 +1689,7 @@ $('#savesBox').onclick = e => {
 };
 $('#startBtn').onclick = () => {
   const c = CLASSES[selClass], h = previewHero();
-  S = { v:2, nextId:0, slot:newSlotId(), setting:selSetting, story:selStory && STORIES[selStory]?.svet === selSetting ? selStory : null, storyStep:0, storyEnd:null,
+  S = { v:2, nextId:0, slot:newSlotId(), setting:selSetting, diff:selDiff, clues:[], comp:null, shop:null, story:selStory && STORIES[selStory]?.svet === selSetting ? selStory : null, storyStep:0, storyEnd:null,
     char:{ name:$('#name').value.trim().slice(0,24), cls:selClass, druh:selSpecies, linie:selLinie, zazemi:selZaz, obor:null, level:1, xp:0, temp:0,
       hp:h.hp, maxHp:h.hp, zlato:h.gold, stats:h.st },
     res:{}, statPicks:0, places:{}, roads:[], rep:{}, book:[], mount:null, nextAttack:null, nextRoll:null,
@@ -1694,6 +1767,12 @@ POSTUP, VZTAHY A SVĚT
 - "novy_ukol" je CÍL na delší dobu (např. „Tajemství krvavého svitku“, „Najít ztracenou dceru“), nikdy ne jednotlivý krok jako „Přečíst svitek“ nebo „Promluvit s Bořkem“ – ty patří do "navrhy". Úkolů zakládej málo.
 - NPC mají vztah k hráči od -100 do 100 (viz stav). Když hráč někomu pomůže, urazí ho, zradí, podplatí nebo ho okouzlí, pošli v "npc" pole "zmena" (-30 až +30). Vztah se MUSÍ projevit: přátelé pomáhají, prozradí víc a dají slevu; nepřátelé lžou, zdražují nebo škodí.
 - Pověst: "povest": [{"misto": "název místa", "zmena": -25 až +25}] za činy, o kterých se lidé dozví (hrdinství, krádež, vražda, pomoc). Projev ji ve vyprávění (stráže, ceny, důvěra, ochota).
+OBTÍŽNOST, STOPY, OBCHOD, DRUŽINÍK
+- Obtížnost hry je ve stavu ("obtiznost_hry"). Příběh: obtížnosti zkoušek o 2–3 nižší, víc nápověd a milosrdnější svět. Nemilosrdná: obtížnosti o 2 vyšší, chytřejší a krutější nepřátelé, svět neodpouští. Sílu nepřátel upravuje hra sama – zapisuj je normálně.
+- "stopa": když hráč zjistí důležitou indicii, tajemství nebo vodítko (kdo, kde, proč), zapiš ji krátce jednou větou, např. "Rychtářův deník zmiňuje vypálení háje". Jen skutečně důležité věci, ne každý detail. Stopy, které už hráč má, jsou ve stavu → "stopy".
+- "obchod": když hráč chce nakupovat nebo prodávat u obchodníka, kováře, hostinského apod., pošli {"obchodnik": "Kovář Ota", "zbozi": [PŘEDMĚT + "cena": 12]} se 3–8 věcmi, které daný obchodník opravdu má, a přiměřenými cenami (jídlo 1–3 zl., lektvar léčení 25–50, běžná zbraň 5–20, zbroj 10–75, vzácné věci stovky). Hráči se otevře obchodní okno – nákup, prodej i smlouvání si dělá sám, ty už nákup nevyřizuješ přes "zlato"/"pridat".
+- "druzinik": když se k hráči NA DELŠÍ DOBU přidá spolubojovník (a hráč souhlasí), pošli {"jmeno","popis","povaha","hp","obrana","utok","zraneni"} – přiměřeně úrovni hráče. Družiník je jen jeden. Mluví do rozhovorů vlastním hlasem (**Jméno:** „…“), má názory, může nesouhlasit a pamatuje si, jak se k němu hráč chová (vztah přes "npc" → "zmena"). V boji útočí sám – výsledky spočítá hra. Když ho hráč hrubě zradí nebo vztah klesne hodně nízko, může odejít: "druzinik_odchazi": "důvod".
+
 ROZHOVORY
 - Když je ve scéně víc postav, nech je mluvit mezi sebou i k hráči – každá svým hlasem, skáčou si do řeči, nesouhlasí, mají vlastní cíle.
 - Repliky postav piš na SAMOSTATNÉ řádky přesně ve tvaru: **Jméno:** „replika“ (jméno tučně a dvojtečka). Popis děje piš mezi nimi normálně.
@@ -1728,7 +1807,7 @@ VÝSTUP – vrať POUZE platný JSON:
     "nalezeno": null nebo {"predmety": [PŘEDMĚT], "zlato": 0},
     "nepratele": [{"jmeno": "...", "hp": 8, "obrana": 12, "utok": 3, "zraneni": "1d6", "iniciativa": 1, "zachrana": 1, "dalka": false}],
     "utoci": ["jméno nepřítele"], "konec_boje": false, "prekvapeni": null, "stav_boje": null,
-    "novy_ukol": null nebo {"nazev": "krátký název úkolu", "popis": "co, pro koho a proč"}, "splneny_ukol": null nebo "název úkolu", "lokace": null, "pribeh_krok": null, "konec_pribehu": null,
+    "novy_ukol": null nebo {"nazev": "krátký název úkolu", "popis": "co, pro koho a proč"}, "splneny_ukol": null nebo "název úkolu", "lokace": null, "pribeh_krok": null, "konec_pribehu": null, "stopa": null, "obchod": null, "druzinik": null, "druzinik_odchazi": null,
     "cas_hodiny": 0.2, "spanek": null, "jidlo": false, "cesta": null,
     "stavy": [{"nazev": "Bahenní horečka", "typ": "nemoc|jed|prokleti|zraneni|pozehnani|jine", "popis": "krátce, jak se projevuje", "postih": {"odolnost": -2} nebo {"vse": -1}, "hp_za_den": -3, "trvani_hodin": 72 nebo null, "lecba": "jak se léčí", "blokuje_leceni": false}],
     "odebrat_stavy": ["přesný název stavu"],
@@ -1773,6 +1852,10 @@ function publicState(){
     ukoly:S.quests.map(q => (q.done ? '[splněno] ' : '') + q.title + (q.popis ? ' – ' + q.popis : '')),
     npc:Object.fromEntries(Object.entries(S.npcs).map(([k,n]) => [k, { popis:n.popis, vztah:`${relLabel(n.skore ?? 0)} (${n.skore ?? 0})` }])),
     lokace:S.location || 'neznámá', tah:S.turn,
+    obtiznost_hry:`${D().n} – ${D().d}`,
+    druzinik:S.comp ? { jmeno:S.comp.jmeno, popis:S.comp.popis, povaha:S.comp.povaha, hp:`${S.comp.hp}/${S.comp.maxHp}${S.comp.down ? ' (padl, mimo boj)' : ''}`, vztah:relLabel(S.npcs[S.comp.jmeno]?.skore ?? 0) } : 'žádný',
+    stopy:(S.clues || []).slice(-12).map(c => c.t),
+    obchod:shopHere() ? `hráč má otevřený obchod u ${S.shop.obchodnik} (${S.shop.zbozi.length} věcí)` : null,
     hlavni_pribeh:story() ? `${story().nazev} – hotovo ${S.storyStep || 0} z ${story().body.length} dějových bodů${S.storyEnd ? ', příběh skončil: ' + S.storyEnd : ''}` : 'volné dobrodružství'
   };
 }
@@ -2055,6 +2138,193 @@ async function makeRecap(){
   }
 }
 
+/* =========================================================
+   OBTÍŽNOST HRY
+   ========================================================= */
+const DIFFS = {
+  pribeh:{ n:'Příběh', i:'📖', d:'Mírnější svět: slabší nepřátelé, lehčí zkoušky. Smrt tě nezabije – jen omráčí.', hp:0.7, utok:-1, needs:0.75 },
+  normal:{ n:'Normální', i:'⚔️', d:'Vyvážená hra podle pravidel D&D 2024.', hp:1, utok:0, needs:1 },
+  kruta:{ n:'Nemilosrdná', i:'💀', d:'Tvrdý svět: silnější nepřátelé, těžší zkoušky, rychlejší hlad a únava, horší následky zranění.', hp:1.3, utok:1, needs:1.25 }
+};
+const diff = () => DIFFS[S?.diff] ? S.diff : 'normal';
+const D = () => DIFFS[diff()];
+let selDiff = 'normal';
+
+/* =========================================================
+   ZÁPISNÍK STOP
+   ========================================================= */
+function addClues(raw){
+  const list = arr(raw).map(x => String(typeof x === 'object' && x ? (x.text || x.stopa || x.nazev || '') : x).trim().slice(0, 160)).filter(x => x && x !== '[object Object]');
+  const notes = [];
+  S.clues ||= [];
+  for(const t of list.slice(0, 3)){
+    if(S.clues.some(c => low(c.t) === low(t))) continue;
+    S.clues.push({ t, d:S.time.day });
+    notes.push({ c:'clue', t:'🔍 ' + t });
+  }
+  if(S.clues.length > 40) S.clues = S.clues.slice(-40);
+  return notes;
+}
+function cluesHTML(){
+  const c = S.clues || [];
+  return `<div class="sec"><span>🔍 Stopy a indicie</span><span>${c.length}</span></div>
+    ${c.length ? `<div class="imps clues">${c.slice().reverse().map(x => `<div>🔍 ${esc(x.t)}<small> · den ${x.d}</small></div>`).join('')}</div>` : '<div class="empty">Zatím žádné stopy. Pán jeskyně sem zapíše, na co přijdeš.</div>'}`;
+}
+
+/* =========================================================
+   OBCHOD A SMLOUVÁNÍ
+   ========================================================= */
+const RAR_PRICE = { bezna:1, neobvykla:4, vzacna:12, legendarni:40 };
+function itemValue(it){
+  if(it.cena) return it.cena;
+  let v = 2;
+  if(it.typ === 'zbran') v = Math.round(avgDice(it.zraneni || '1d6') * 3) + (it.bonus || 0) * 25;
+  else if(it.typ === 'zbroj') v = 10 + (it.obrana || 1) ** 2 * 8 + (it.bonus || 0) * 30;
+  else if(it.typ === 'stit') v = 10 + (it.bonus || 0) * 30;
+  else if(it.typ === 'lektvar') v = it.leceni ? 25 : 40;
+  else if(it.typ === 'svitek') v = 30;
+  else if(it.typ === 'jidlo') v = 1;
+  else if(it.typ === 'doplnek') v = 20 + (it.bonus || 0) * 40;
+  return Math.max(1, Math.round(v * (RAR_PRICE[it.vzacnost] || 1)));
+}
+/* Násobitel cen: charisma, pověst v místě, vztah s obchodníkem, smlouvání, bohatý vzhled. */
+function priceMod(){
+  const sh = S.shop || {}, c = S.char, why = [];
+  let m = 1;
+  const cm = mod(c.stats.charisma); if(cm){ m -= cm * 0.03; why.push(`charisma ${fmtMod(cm)}`); }
+  const r = S.rep?.[S.here]; if(r >= 20){ m -= 0.1; why.push('dobrá pověst'); } else if(r <= -20){ m += 0.2; why.push('špatná pověst'); }
+  const n = S.npcs?.[sh.obchodnik]; const sk = n?.skore ?? 0;
+  if(sk >= 25){ m -= 0.1; why.push('obchodník tě má rád'); } else if(sk <= -25){ m += 0.25; why.push('obchodník tě nemá rád'); }
+  if(c.zlato >= 150){ m += 0.1; why.push('vypadáš zámožně'); }
+  if(sh.haggle === 'ok'){ m -= 0.15; why.push('usmlouváno'); } else if(sh.haggle === 'bad'){ m += 0.1; why.push('naštval jsi ho smlouváním'); }
+  if(diff() === 'kruta'){ m += 0.1; } else if(diff() === 'pribeh'){ m -= 0.1; }
+  return { m:clamp(m, 0.6, 1.6), why };
+}
+const buyPrice = it => Math.max(1, Math.round(itemValue(it) * priceMod().m));
+const sellPrice = it => Math.max(0, Math.floor(itemValue(it) * 0.5 / priceMod().m));
+function openShopFrom(raw){
+  if(!raw || typeof raw !== 'object') return null;
+  const zbozi = arr(raw.zbozi).slice(0, 10).map(x => { const it = sanitizeItem({ vzacnost:'bezna', ...x }); if(it){ it.cena = clamp(int(x.cena) || itemValue(it), 1, 5000); } return it; }).filter(Boolean);
+  if(!zbozi.length) return null;
+  S.shop = { obchodnik:String(raw.obchodnik || raw.nazev || 'Obchodník').slice(0, 40), loc:S.location, zbozi, haggle:null };
+  return { c:'shop', t:`🛒 ${S.shop.obchodnik}` };
+}
+function shopSheet(){
+  const sh = S.shop; if(!sh) return;
+  const pm = priceMod(), c = S.char;
+  const buy = sh.zbozi.map((it, i) => { const p = buyPrice(it), can = c.zlato >= p;
+    return `<div class="shrow"><span class="ico">${TYPES[it.typ].i}</span><span class="mid"><b class="${RAR[it.vzacnost].c}">${esc(it.nazev)}${it.pocet > 1 ? ' ×' + it.pocet : ''}</b><small>${esc(itemStats(it) || it.popis || TYPES[it.typ].n)}</small></span>
+      <button class="shb" data-act="shopbuy" data-k="${i}" ${can ? '' : 'disabled'}>${p} zl.</button></div>`; }).join('') || '<div class="empty">Obchodník už nic nemá.</div>';
+  const sell = sortItems(S.inv).map(it => { const p = sellPrice(it);
+    return `<div class="shrow"><span class="ico">${TYPES[it.typ].i}</span><span class="mid"><b class="${RAR[it.vzacnost].c}">${esc(it.nazev)}${it.pocet > 1 ? ' ×' + it.pocet : ''}${isEquipped(it) ? ' <span class="badge">nasazeno</span>' : ''}</b><small>${esc(itemStats(it) || TYPES[it.typ].n)}</small></span>
+      <button class="shb sell" data-act="shopsell" data-k="${it.id}" ${p > 0 ? '' : 'disabled'}>+${p} zl.</button></div>`; }).join('') || '<div class="empty">Nemáš co prodat.</div>';
+  openSheet(`<h3>🛒 ${esc(sh.obchodnik)}</h3>
+    <div class="shtop"><span>💰 Máš <b>${c.zlato}</b> zl.</span><span>Ceny ×${pm.m.toFixed(2)}${pm.why.length ? ' <small>(' + esc(pm.why.join(', ')) + ')</small>' : ''}</span></div>
+    ${sh.haggle ? '' : `<button class="btn ghost" data-act="haggle" style="margin-top:6px">🗣️ Smlouvat o ceně (hod na charisma)</button>`}
+    <div class="flbl">Koupit</div>${buy}
+    <div class="flbl">Prodat</div>${sell}
+    <button class="cancel" data-act="closesheet">Odejít od obchodníka</button>`);
+}
+function shopBuy(i){
+  const sh = S.shop, it = sh?.zbozi[i]; if(!it) return;
+  const p = buyPrice(it);
+  if(S.char.zlato < p){ alert('Na to nemáš dost zlata.'); return; }
+  if(S.inv.length >= INV_MAX && !(TYPES[it.typ].stack && S.inv.some(x => x.typ === it.typ && low(x.nazev) === low(it.nazev)))){ alert('Batoh je plný.'); return; }
+  const copy = { ...it, id:newId('i') }; delete copy.cena;
+  addItem(copy); S.char.zlato -= p; sh.zbozi.splice(i, 1);
+  sfx('coin');
+  addLog({ t:'fx', notes:[{ c:'good', t:`🛒 Koupeno: ${it.nazev} (−${p} zl.)` }] });
+  hist(`Hráč koupil u obchodníka ${sh.obchodnik}: ${it.nazev} za ${p} zl. (už je v inventáři, zlato odečteno).`);
+  save(); render(); shopSheet();
+}
+function shopSell(id){
+  const it = S.inv.find(x => x.id === id); if(!it || !S.shop) return;
+  const p = sellPrice(it);
+  if(isEquipped(it) && !confirm(`${it.nazev} máš nasazené. Opravdu prodat?`)) return;
+  takeOut(it, 1); S.char.zlato += p;
+  sfx('coin');
+  addLog({ t:'fx', notes:[{ c:'gold', t:`🪙 Prodáno: ${it.nazev} (+${p} zl.)` }] });
+  hist(`Hráč prodal obchodníkovi ${S.shop.obchodnik}: ${it.nazev} za ${p} zl.`);
+  save(); render(); shopSheet();
+}
+async function haggle(){
+  const sh = S.shop; if(!sh || sh.haggle || rolling) return;
+  closeSheet();
+  rolling = true;
+  const d = d20(); await diceAnim(d); rolling = false;
+  const bonus = mod(S.char.stats.charisma) + (CLASSES[S.char.cls].odbornost?.charisma || 0);
+  const dc = 15 + (diff() === 'kruta' ? 2 : diff() === 'pribeh' ? -3 : 0);
+  const total = d + bonus, ok = d === 20 || (d !== 1 && total >= dc);
+  sh.haggle = ok ? 'ok' : 'bad';
+  addLog({ t:'roll', title:`Smlouvání s obchodníkem ${sh.obchodnik}`, d, parts:[{ n:'Charisma', v:bonus }], total, dc, dcl:'obtížnost', ok, res:ok ? 'Usmlouváno! Ceny −15 %' : 'Nevyšlo – naštval se, ceny +10 %' });
+  hist(`Hráč smlouval s obchodníkem ${sh.obchodnik}: ${ok ? 'ÚSPĚCH, dá slevu 15 %' : 'NEÚSPĚCH, obchodník je dotčený a zvedl ceny o 10 %'}.`);
+  save(); render(); setTimeout(shopSheet, 300);
+}
+const shopHere = () => S.shop && S.shop.loc === S.location && !inCombat();
+
+/* =========================================================
+   DRUŽINÍK – stálý parťák
+   ========================================================= */
+function setCompanion(raw){
+  if(!raw || typeof raw !== 'object' || !raw.jmeno) return null;
+  const lv = S.char.level;
+  const hp = clamp(int(raw.hp) || 8 + lv * 5, 4, 10 + lv * 8);
+  S.comp = { jmeno:String(raw.jmeno).trim().slice(0, 40), popis:String(raw.popis || '').slice(0, 160), povaha:String(raw.povaha || '').slice(0, 120),
+    hp, maxHp:hp, obrana:clamp(int(raw.obrana) || 12, 9, 18), utok:clamp(int(raw.utok) || 2 + Math.ceil(lv / 2), 1, 3 + lv),
+    zraneni:capDice(raw.zraneni, 20, '1d6'), down:false, since:S.time.day };
+  const k = S.comp.jmeno;
+  if(!S.npcs[k]) S.npcs[k] = { popis:S.comp.popis, vztah:'přátelský', skore:40 };
+  else S.npcs[k].skore = Math.max(S.npcs[k].skore ?? 0, 25);
+  if(portraitMode() !== 'off'){ if(libGet(k)) S.npcs[k].img ||= libGet(k); else if(portraitReady()) setTimeout(() => queuePortrait(k), 50); }
+  return { c:'npc', t:`🤝 ${k} se k tobě přidává jako družiník` };
+}
+const compUp = () => S.comp && !S.comp.down && S.comp.hp > 0;
+/* Útok družiníka – jednou za kolo, počítá kód. */
+function compAttack(){
+  if(!compUp() || !S.cb || !S.foes.length || S.cb.compDone === S.cb.round) return;
+  S.cb.compDone = S.cb.round;
+  const cp = S.comp, f = S.foes.slice().sort((a, b) => a.hp - b.hp)[0];
+  const d = d20(), total = d + cp.utok, hit = d === 20 || (d !== 1 && total >= f.obrana);
+  let res = 'Minul';
+  if(hit){ const dmg = Math.max(1, rollDice(cp.zraneni, d === 20).total); res = `Zásah! · zranění ${dmg}`; hist(`Družiník ${cp.jmeno} zaútočil na ${f.jmeno}: ${total} proti obraně ${f.obrana} → ZÁSAH za ${dmg}. ${hurtFoe(f, dmg)}`); }
+  else hist(`Družiník ${cp.jmeno} zaútočil na ${f.jmeno}: ${total} proti obraně ${f.obrana} → MINUL.`);
+  addLog({ t:'roll', comp:true, title:`🤝 ${cp.jmeno} útočí na ${f.jmeno}`, d, parts:[{ n:'útok', v:cp.utok }], total, dc:f.obrana, dcl:'obrana', ok:hit, res });
+}
+/* Nepřítel místo hráče zaútočí na družiníka. */
+function foeHitsComp(f){
+  const cp = S.comp, d = d20(), total = d + f.utok, hit = d === 20 || (d !== 1 && total >= cp.obrana);
+  let res = 'Minul';
+  if(hit){
+    const dmg = Math.max(1, rollDice(f.zraneni, d === 20).total);
+    cp.hp = Math.max(0, cp.hp - dmg); res = `Zásah! ${cp.jmeno} −${dmg} HP`;
+    if(cp.hp <= 0){ cp.down = true; addLog({ t:'fx', notes:[{ c:'bad', t:`🩸 ${cp.jmeno} padá k zemi – mimo boj` }] }); }
+  }
+  addLog({ t:'roll', enemy:true, title:`${f.jmeno} útočí na ${cp.jmeno}`, d, parts:[{ n:'útok', v:f.utok }], total, dc:cp.obrana, dcl:'obrana', ok:!hit, res });
+  hist(`${f.jmeno} zaútočil na družiníka ${cp.jmeno}: ${hit ? `ZÁSAH, ${cp.jmeno} má ${cp.hp}/${cp.maxHp} HP${cp.down ? ' a padl(a) – je mimo boj, ale žije' : ''}` : 'MINUL'}.`);
+}
+function compAfterCombat(){
+  if(S.comp?.down){ S.comp.down = false; S.comp.hp = Math.max(1, S.comp.hp); addLog({ t:'fx', notes:[{ c:'good', t:`🤝 ${S.comp.jmeno} se zvedá ze země (1 HP)` }] }); hist(`Družiník ${S.comp.jmeno} se po boji zvedl s 1 HP.`); }
+}
+function compLeaves(why){
+  if(!S.comp) return null;
+  const k = S.comp.jmeno; S.comp = null;
+  hist(`Družiník ${k} odešel: ${why}.`);
+  return { c:'bad', t:`🚶 ${k} odchází: ${String(why).slice(0, 80)}` };
+}
+function compHTML(){
+  const cp = S.comp; if(!cp) return '';
+  const n = S.npcs[cp.jmeno] || {}, sk = n.skore ?? 0;
+  return `<div class="comprow">${n.img ? `<button class="npcp" data-npcpic="${esc(cp.jmeno)}">${portraitImg(n, 'npcpic')}</button>` : '<span class="npcp none">🤝</span>'}
+    <div class="npcm"><b>${esc(cp.jmeno)} <span class="tag npc" style="color:${relColor(sk)}">${esc(relLabel(sk))}</span></b><small>${esc(cp.popis)}${cp.povaha ? ' · ' + esc(cp.povaha) : ''}</small>
+    <div class="compst">${cp.down ? '🩸 mimo boj' : `❤️ ${cp.hp}/${cp.maxHp}`} · 🛡️ ${cp.obrana} · ⚔️ +${cp.utok} · ${esc(cp.zraneni)}</div>
+    <div class="hpbar"><div style="width:${100 * cp.hp / cp.maxHp}%"></div></div></div></div>`;
+}
+
+/* =========================================================
+   RYCHLOST – vykresluje se jen konec kroniky
+   ========================================================= */
+let logWindow = 120;
+
 const INTRUDERS = {
   mesto:['městská stráž, která někoho hledá','opilec, který se chce dát do řeči nebo do rvačky','posel s naléhavou zprávou pro někoho z přítomných','kapsář, který se tváří nenápadně','potulný bard, co hledá příběhy','obchodník, který něco nabízí','žebrák, který ví víc, než by měl','dítě, které něco vidělo','kněz nebo poutník s prosbou','starý známý hráče, kterého nečekal','výběrčí daní nebo úředník','žena v kápi, která si hráče prohlíží'],
   divocina:['lovec nebo stopař','poutník, který zabloudil','uprchlík pronásledovaný někým','bylinkářka sbírající byliny','zraněný voják','tajemný cizinec u ohně','skupinka obchodníků, co táboří opodál','zvíře, které se chová podivně'],
@@ -2118,6 +2388,7 @@ function applyResponse(res, needSummary, input = {}){
     attackers = S.foes.filter(f => (f.ini ?? 0) > S.cb.pIni && !f.st.neschopen).map(f => f.jmeno);
     if(attackers.length) addLog({ t:'sys', text:'⚡ Nepřátelé jsou rychlejší – útočí jako první.' });
   }
+  compAttack();
   foeAttacks(attackers);
   S.suggestions = arr(res.navrhy).slice(0,4).map(x => String(x).slice(0,70)).filter(x => x.trim());
   setPending(res.zkouska);
@@ -2331,6 +2602,10 @@ function applyEffects(ef){
     S.rep[key] = clamp((S.rep[key] || 0) + z, -100, 100);
     notes.push({ c:z > 0 ? 'good' : 'bad', t:`🏛️ Pověst (${S.places?.[key]?.nazev || placeBase(pv.misto || S.location)}) ${z > 0 ? '+' : ''}${z}` });
   }
+  notes.push(...addClues(ef.stopa || ef.stopy));
+  if(ef.obchod){ const n = openShopFrom(ef.obchod); if(n) notes.push(n); }
+  if(ef.druzinik && !S.comp){ const n = setCompanion(ef.druzinik); if(n) notes.push(n); }
+  if(ef.druzinik_odchazi && S.comp){ const n = compLeaves(typeof ef.druzinik_odchazi === 'string' ? ef.druzinik_odchazi : 'rozhodl se jít vlastní cestou'); if(n) notes.push(n); }
   if(notes.length) addLog({ t:'fx', notes });
   if(S.questXP){ const x = S.questXP; S.questXP = 0; grantXP(x, 'splněný úkol'); }
 }
@@ -2755,7 +3030,7 @@ function lootHTML(e){
 }
 
 /* Zápisky pod vyprávěním (úkol, postava, místo, zlato…) – jednotný úhledný seznam; na co jde klepnout, má šipku. */
-const FX_KIND = { quest:['Úkol','quests'], npc:['Postava','npcs'], loc:['Místo','map'], wx:['Počasí',''] };
+const FX_KIND = { quest:['Úkol','quests'], npc:['Postava','npcs'], loc:['Místo','map'], wx:['Počasí',''], clue:['Stopa','quests'], shop:['Obchod','shop'] };
 function fxHTML(notes){
   const list = notes.map(n => ({ ...n }));
   /* „Nové místo na mapě: X“ + „📍 X…“ → jeden řádek */
@@ -2772,15 +3047,19 @@ function fxHTML(notes){
     const k = FX_KIND[n.c];
     let lbl = '';
     if(k && n.c === 'quest') lbl = ic === '✅' ? 'Splněno' : ic === '📖' ? 'Příběh' : 'Nový úkol';
-    else if(k && n.c === 'npc') lbl = 'Nová postava';
+    else if(k && n.c === 'npc') lbl = ic === '🤝' ? 'Družiník' : 'Nová postava';
     else if(k && n.c === 'loc' && (ic === '📍' || ic === '🗺️')) lbl = n.nove ? 'Nové místo' : 'Jsi v';
     else if(n.c === 'wx') lbl = 'Počasí';
+    else if(n.c === 'clue') lbl = 'Nová stopa';
+    else if(n.c === 'shop') lbl = 'Obchod – klepni a nakupuj';
+    else if(n.c === 'npc' && ic === '🤝') lbl = 'Družiník';
     const go = k && lbl && k[1] ? k[1] : '';
     return `<${go ? `button data-goto="${go}"` : 'div'} class="fxr ${n.c}"><span class="fi">${esc(ic)}</span><span class="ft">${lbl ? `<i>${lbl}</i>` : ''}${esc(txt)}</span>${go ? '<span class="fa">›</span>' : ''}</${go ? 'button' : 'div'}>`;
   };
   return `<div class="e fx">${list.map(row).join('')}</div>`;
 }
 function logHTML(e, i){
+  if(e.t === 'older') return `<button class="older" data-older="1">📜 Zobrazit starší záznamy (${e.n}) – celý příběh je i v Kronice jako kniha</button>`;
   switch(e.t){
     case 'dm': return `<div class="e dm${e.anim ? ' tw' : ''}" data-li="${i}">${dmRich(e.text)}
       ${e.img ? `<img class="illu" data-src="${esc(e.img)}" alt="Ilustrace scény">` : ''}
@@ -2813,15 +3092,16 @@ function render(){
   $('#hMeta').textContent = `${dp[1]} Den ${S.time.day} · ${clockStr()} · ${season()[2]} ${wxIcon()} ${wx().n}${S.char.cls === 'druid' && S.wxNext && S.wxNext !== S.weather?.typ ? ' → ' + WEATHER[S.wxNext].i : ''}` + (S.travel ? ` · 🧭 na cestě do ${S.travel.cil}` : S.location ? ` · 📍 ${S.location}` : '');
   $('#sndBtn').textContent = sfxOn() || ambOn() ? '🔊' : '🔇';
   $('#mic').hidden = !SR;
-  $('#conds').innerHTML = allConds().map((x,i) =>
+  $('#conds').innerHTML = (S.comp ? `<button class="cond comp${S.comp.down ? ' down' : ''}" data-npcpic="${esc(S.comp.jmeno)}">🤝 ${esc(S.comp.jmeno)} ${S.comp.down ? '🩸' : '❤️ ' + S.comp.hp + '/' + S.comp.maxHp}</button>` : '') + allConds().map((x,i) =>
     `<button class="cond ${x.derived ? 'need' : x.typ === 'pozehnani' ? 'good' : ''}" data-cond="${i}">${x.i} ${esc(x.nazev)}</button>`).join('');
 
   $('#foes').classList.toggle('on', S.foes.length > 0);
   $('#foes').innerHTML = iniBar() + S.foes.map(f => `<div class="foe${f.st.neschopen ? ' down' : ''}"><b title="${esc(f.jmeno)}">👹 ${esc(f.jmeno)}</b><div class="hpbar"><div style="width:${100*f.hp/f.maxHp}%"></div></div><small><span class="hp">${f.hp}/${f.maxHp}</span> · 🛡️${f.obrana}</small>${Object.keys(f.st).length || f.vex ? `<small class="fst">${Object.keys(f.st).map(k => FOE_ST[k]).concat(f.vex ? [FOE_ST.vex] : []).join(' ')}</small>` : ''}</div>`).join('');
 
   const log = $('#log');
-  const merged = [];
-  S.log.forEach((e, i) => { const last = merged[merged.length - 1]; if(e.t === 'fx' && last && last.e.t === 'fx') last.e = { ...last.e, notes:last.e.notes.concat(e.notes) }; else merged.push({ e, i }); });
+  const merged = [], from = Math.max(0, S.log.length - logWindow);
+  if(from > 0) merged.push({ e:{ t:'older', n:from }, i:-1 });
+  S.log.forEach((e, i) => { if(i < from) return; const last = merged[merged.length - 1]; if(e.t === 'fx' && last && last.e.t === 'fx') last.e = { ...last.e, notes:last.e.notes.concat(e.notes) }; else merged.push({ e, i }); });
   log.innerHTML = merged.map(x => logHTML(x.e, x.i)).join('') + choicesHTML();
   twApply(); hydrateImages();
   /* Po novém vyprávění skoč na jeho začátek, ať se čte odshora. Jinak dolů. */
@@ -2886,6 +3166,7 @@ function quickActions(){
   else if(S.char.level >= 3 && !S.char.obor && OBORY[S.char.cls]) q.push(['obor', '🎓 Zvolit specializaci']);
   if(knownAbilities().length) q.push(['abil', `✨ Schopnosti${slotMax() ? ' ' + S.slots + '/' + slotMax() : ''}`]);
   if(c.hp < c.maxHp && healPotion()) q.push(['heal', `🧪 Lektvar (${healPotion().pocet})`]);
+  if(shopHere()) q.unshift(['shop', `🛒 ${S.shop.obchodnik}`]);
   if(S.needs.hlad >= 40 && food() && !S.foes.length) q.push(['eat', `🍖 Najíst se (${food().pocet})`]);
   if((S.needs.unava >= 50 || isNight()) && !S.foes.length) q.push(['sleep', '🏕️ Vyspat se']);
   return q;
@@ -3053,6 +3334,7 @@ function tabSheet(){
   ${filters}
   <div class="vyb">${groups || '<div class="vline empty"><span class="vn">Batoh je prázdný.</span></div>'}<div class="vline blank"></div><div class="vline blank"></div></div>
 
+  ${S.comp ? `${rib('🤝', 'Družiník')}${compHTML()}` : ''}
   ${rib('👁', 'Jak tě vidí ostatní')}
   <div class="imps">${firstImpression().map(t => `<div>${esc(t)}</div>`).join('')}</div>
 
@@ -3083,12 +3365,15 @@ function storyHTML(){
 function tabQuests(){
   const open = S.quests.filter(q => !q.done), done = S.quests.filter(q => q.done);
   const row = q => `<div class="qrow ${q.done?'done':''}"><b>${q.done ? '✅' : '📜'} ${esc(q.title)}</b>${q.popis ? `<small>${esc(q.popis)}</small>` : ''}</div>`;
-  if(!S.quests.length) return storyHTML() + '<div class="empty">Zatím žádné úkoly.</div>';
-  return storyHTML() + `<div class="sec"><span>Aktivní</span><span>${open.length}</span></div>${open.length ? open.map(row).join('') : '<div class="empty">Nic rozpracovaného.</div>'}
+  if(!S.quests.length) return storyHTML() + '<div class="empty">Zatím žádné úkoly.</div>' + cluesHTML();
+  return storyHTML() + cluesHTML() + `<div class="sec"><span>Aktivní</span><span>${open.length}</span></div>${open.length ? open.map(row).join('') : '<div class="empty">Nic rozpracovaného.</div>'}
     ${done.length ? `<div class="sec"><span>Splněné</span><span>${done.length}</span></div>${done.map(row).join('')}` : ''}`;
 }
 
 function tabNpcs(){
+  return (S.comp ? `<div class="sec"><span>🤝 Družiník</span></div>${compHTML()}<div class="sec"><span>Postavy</span></div>` : '') + tabNpcs0();
+}
+function tabNpcs0(){
   const npcs = Object.entries(S.npcs);
   if(!npcs.length) return '<div class="empty">Nikoho jsi zatím nepotkal.</div>';
   return npcs.sort((a,b) => (b[1].skore ?? 0) - (a[1].skore ?? 0)).map(([k,n]) => { const sk = n.skore ?? 0;
@@ -3160,11 +3445,12 @@ $('#chips').onclick = e => {
   if(q && q.startsWith('c:')) return combatChip(q.slice(2));
   if(q === 'lvl'){ S._lvlAsked = false; return levelUpPick(); }
   if(q === 'abil') return abilitiesSheet();
+  if(q === 'shop') return shopSheet();
   if(q === 'obor') return subclassPick();
   if(q === 'sleep') return act(S.location && /hostin|krčm|hospod|pokoj|dům|chalup|domov/i.test(S.location) ? 'Pronajmu si pokoj / uložím se a vyspím se do rána.' : 'Rozdělám oheň, utábořím se a vyspím se.', '🏕️ Vyspat se');
   act(b.textContent);
 };
-$('#conds').onclick = e => { const b = e.target.closest('[data-cond]'); if(!b) return; const x = allConds()[int(b.dataset.cond)]; if(x) openSheet(condDetail(x), x.derived || x.typ === 'pozehnani' ? 'r0' : ''); };
+$('#conds').onclick = e => { const cp = e.target.closest('[data-npcpic]'); if(cp) return npcSheet(cp.dataset.npcpic); const b = e.target.closest('[data-cond]'); if(!b) return; const x = allConds()[int(b.dataset.cond)]; if(x) openSheet(condDetail(x), x.derived || x.typ === 'pozehnani' ? 'r0' : ''); };
 $('#rollBtn').onclick = roll;
 /* Hráč nemusí hodit – může si to rozmyslet (kromě záchranných hodů, které na něj hra uvalila). */
 $('#rollAlt').onclick = () => {
@@ -3178,9 +3464,12 @@ $('#log').onclick = e => {
   if(e.target.closest('#retry')){ const inp = S.lastFailed; S.log.pop(); return callDM(inp); }
   const il = e.target.closest('[data-illu]'); if(il) return illustrate(int(il.dataset.illu));
   const pp = e.target.closest('img[data-npcpic]'); if(pp) return npcSheet(pp.dataset.npcpic);
+  if(e.target.closest('[data-older]')){ const lg = $('#log'), h0 = lg.scrollHeight; logWindow += 120; render(); requestAnimationFrame(() => { lg.scrollTop = lg.scrollHeight - h0; }); return; }
   const ch = e.target.closest('[data-choice]');
   if(ch){ if(ch.dataset.choice === 'own'){ $('#input').focus(); $('#input').scrollIntoView?.({ block:'nearest' }); return; } const t = S.suggestions[int(ch.dataset.choice)]; if(t) act(t); return; }
-  const go = e.target.closest('[data-goto]'); if(go){ jTab = go.dataset.goto; openDrawer(); $('#drawer .jbody').scrollTop = 0; return; }
+  const go = e.target.closest('[data-goto]');
+  if(go && go.dataset.goto === 'shop'){ if(shopHere()) shopSheet(); else alert('Obchodník už není poblíž.'); return; }
+  if(go){ jTab = go.dataset.goto; openDrawer(); $('#drawer .jbody').scrollTop = 0; return; }
   const sy = e.target.closest('[data-say]'); if(sy) return speak(S.log[int(sy.dataset.say)]?.text || '');
   if(TW && e.target.closest('.e.dm.tw')) return twFinish();
   const t = e.target.closest('[data-ltog]');
@@ -3228,8 +3517,12 @@ function journalAction(b){
   else if(a === 'cloud') cloudSheet();
   else if(a === 'book') printBook();
   else if(a === 'toggle'){ const k = b.dataset.k, def = b.dataset.def === '1'; ls.set(k, togOn(k, def) ? (def ? 'off' : '') : (def ? '' : 'on')); if(k === 'dz_tts' && !ttsOn()) stopSpeak(); if(k === 'dz_tw' && !twOn()) twFinish(); SND.kind = undefined; settingsSheet(); render(); }
-  else if(a === 'theme'){ ls.set('dz_theme', b.dataset.k === 'parch' ? 'parch' : ''); applyTheme(); settingsSheet(); render(); }
+  else if(a === 'theme'){ ls.set('dz_theme', b.dataset.k === 'light' ? 'light' : ''); applyTheme(); settingsSheet(); render(); }
   else if(a === 'redraw'){ closeSheet(); queuePortrait(b.dataset.k, true); renderDrawer(); }
+  else if(a === 'shopbuy') shopBuy(int(b.dataset.k));
+  else if(a === 'shopsell') shopSell(b.dataset.k);
+  else if(a === 'haggle') haggle();
+  else if(a === 'diff'){ S.diff = b.dataset.k; hist(`Hráč změnil obtížnost hry na: ${D().n}.`); save(); settingsSheet(); render(); }
   else if(a === 'pmode'){ ls.set('dz_portrait', b.dataset.k); settingsSheet(); }
   else if(a === 'imgmode'){ ls.set('dz_img', b.dataset.k === 'off' ? '' : b.dataset.k); settingsSheet(); render(); }
   else if(a === 'newcode'){ $('#cfgCode').value = randomCode(); }
@@ -3706,6 +3999,10 @@ async function deathSave(){
   }
   if(d === 1) D.ko += 2; else if(d >= 10) D.ok++; else D.ko++;
   addLog({ t:'roll', title:`Záchranný hod proti smrti (${'✔'.repeat(D.ok)}${'✘'.repeat(Math.min(3, D.ko))})`, d, parts:[], total:d, dc:10, dcl:'potřeba', ok:d >= 10, res:d === 1 ? 'Dvě selhání!' : d >= 10 ? 'Držíš se' : 'Život uniká' });
+  if(D.ko >= 3 && diff() === 'pribeh'){
+    addLog({ t:'sys', text:'🕯️ Smrt si pro tebe tentokrát nepřišla… (obtížnost Příběh)' });
+    S.dying = null; S.char.hp = 1; return afterDying(false, true);
+  }
   if(D.ko >= 3){
     S.dying = null; S.dead = true;
     addLog({ t:'sys', text:`☠️ ${S.char.name} zemřel. Tady jeho příběh končí.` });
@@ -3718,7 +4015,7 @@ async function deathSave(){
 }
 function afterDying(miracle, stabilized){
   let inj = null;
-  if(stabilized && Math.random() < 0.6){
+  if(stabilized && Math.random() < (diff() === 'kruta' ? 0.9 : diff() === 'pribeh' ? 0.25 : 0.6)){
     const t = LASTING[Math.floor(Math.random() * LASTING.length)];
     S.effects = S.effects.filter(e => e.nazev !== t.nazev);
     inj = { id:newId('e'), typ:'zraneni', hp:0, blokuje:false, ...t };
@@ -4090,6 +4387,7 @@ function load(id){
   for(const e of g.log || []) delete e.imgBusy;
   if(g.recap?.err) delete g.recap.err;
   for(const n of Object.values(g.npcs || {})) delete n.imgBusy;
+  g.diff ||= 'normal'; g.clues ||= []; g.comp ||= null; g.shop ||= null;
   for(const [k, n] of Object.entries(g.npcs || {})) if(typeof n.skore !== 'number') n.skore = /přát|vděč|věrn/i.test(n.vztah || '') ? 30 : /nepřát|zl|nenávid/i.test(n.vztah || '') ? -30 : 0;
   return g;
 }
@@ -4372,16 +4670,23 @@ const TOGGLES = [
   ['dz_autoreact', '↺ Automatické reakce', 'Štít, odražení, úhyb… se použijí samy, když tě v boji zasáhnou', true]
 ];
 /* Vzhled: pergamen v pixelovém písmu (výchozí) nebo klasický hladký pergamen. */
-const theme = () => 'parch';
+const theme = () => ls.get('dz_theme') === 'light' ? 'light' : 'dark';   /* výchozí je temný */
 function applyTheme(){
-  const px = theme() === 'px';
-  document.body.classList.toggle('px', px);
+  const dark = theme() === 'dark';
+  document.body.classList.remove('px');
+  document.body.classList.toggle('dark', dark);
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0b0703' : '#1c1007');
 }
 const togOn = (k, def) => def ? ls.get(k) !== 'off' : ls.get(k) === 'on';
 function settingsSheet(){
   const im = imgMode();
   openSheet(`<h3>⚙️ Nastavení hry</h3>
+    <div class="flbl" style="margin-top:0">🎨 Vzhled</div>
+    <div class="seg">${[['dark','🕯️ Temný'],['light','📜 Pergamen']].map(([k,n]) => `<button class="${theme() === k ? 'on' : ''}" data-act="theme" data-k="${k}">${n}</button>`).join('')}</div>
     ${TOGGLES.map(([k, n, d, def]) => `<button class="tog ${togOn(k, def) ? 'on' : ''}" data-act="toggle" data-k="${k}" data-def="${def ? 1 : 0}"><span class="mid"><b>${n}</b><small>${d}</small></span><span class="sw"></span></button>`).join('')}
+    ${S ? `<div class="flbl">⚔️ Obtížnost této hry</div>
+    <div class="seg">${Object.entries(DIFFS).map(([k,x]) => `<button class="${diff() === k ? 'on' : ''}" data-act="diff" data-k="${k}">${x.i} ${x.n}</button>`).join('')}</div>
+    <div class="dnote" style="text-align:left">${esc(D().d)}</div>` : ''}
     <div class="flbl">👤 Portréty postav (Gemini)</div>
     <div class="seg">${[['auto','Automaticky'],['tap','Po klepnutí'],['off','Vypnuto']].map(([k,n]) => `<button class="${portraitMode() === k ? 'on' : ''}" data-act="pmode" data-k="${k}">${n}</button>`).join('')}</div>
     <div class="dnote" style="text-align:left">${cleanKey(ls.get('kroniky_key_gemini')) ? 'Portrét se nakreslí jen jednou pro každou pojmenovanou postavu a uloží se – i pro další hry ve stejném světě (stejné jméno = stejná tvář). Cena zhruba 0,80 Kč za obrázek (placený Gemini účet).' : 'Potřebuje Gemini klíč s placeným účtem – zadej ho v Kronice (AI → Gemini → 🔑). Text může dál psát Claude.'}</div>
@@ -4443,7 +4748,7 @@ function sanitizeFoe(raw, fresh){
     let k = 2; while(S.foes.some(f => low(f.jmeno) === low(base + ' ' + k))) k++;
     name = base + ' ' + k;
   }
-  const hp = clamp(int(raw.hp) || 8, 1, 150), utok = clamp(int(raw.utok) || 3, 0, 12);
+  const hp = clamp(Math.round((int(raw.hp) || 8) * D().hp), 1, 200), utok = clamp((int(raw.utok) || 3) + D().utok, 0, 13);
   return { id:newId('f'), jmeno:name, hp, maxHp:hp, obrana:clamp(int(raw.obrana) || 12, 6, 22), utok, zraneni:capDice(raw.zraneni, 30, '1d6'),
     iniB:clamp(raw.iniciativa === undefined ? 1 : int(raw.iniciativa), -2, 6), save:clamp(raw.zachrana === undefined ? Math.floor(utok / 2) : int(raw.zachrana), -2, 9),
     dalka:raw.dalka === true || raw.dalka === 'true', st:{} };
@@ -4464,6 +4769,7 @@ function startCombat(prekvapeni){
 /* Pozdě přidaný nepřítel dostane iniciativu taky. */
 function joinCombat(){ for(const f of S.foes) if(f.ini === undefined){ f.ini = d20() + f.iniB; } }
 function endCombat(){
+  compAfterCombat();
   S.cb = null; S.tah = { bonus:false, slot:false, reakce:false, cleave:false };
   for(const k of ['skryty','uhyb','odpoutani','neschopen','vystrasen','uchopen']) delete pc()[k];
   S.effects = S.effects.filter(e => !e.kola);
@@ -4549,6 +4855,7 @@ function foeAttacks(names){
     if(!f || done.has(f.id)) continue;
     done.add(f.id);
     if(f.st.neschopen){ addLog({ t:'fx', notes:[{ c:'good', t:`😵 ${f.jmeno} nemůže jednat` }] }); hist(`${f.jmeno} je neschopen akce a neútočí.`); continue; }
+    if(compUp() && Math.random() < 0.3){ foeHitsComp(f); continue; }   /* část útoků schytá družiník */
     if(f.st.srazen){ delete f.st.srazen; addLog({ t:'fx', notes:[{ c:'foe', t:`🧍 ${f.jmeno} vstává` }] }); }
     let adv = 0; const why = [];
     if(pc().srazen){ adv += f.dalka ? -1 : 1; why.push(f.dalka ? 'ležíš – na dálku hůř' : 'ležíš na zemi'); }
