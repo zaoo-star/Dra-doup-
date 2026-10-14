@@ -385,6 +385,9 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .e.ini b{display:block;font-family:var(--fc);color:var(--blood);font-size:14px}
 .e.ini span{font-size:15px}.e.ini i{font-style:normal;font-weight:600}
 .abil.react{border-style:dashed}
+.e.dm .say{margin:4px 0 9px;padding:3px 0 3px 12px;border-left:3px solid var(--sc)}
+.e.dm .say b{display:block;font-family:var(--fc);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sc);font-weight:700}
+.e.dm .say span{display:block;font-style:italic}
 .stdots{display:flex;gap:4px;margin:6px 0 4px}.stdots i{flex:1;height:7px;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}.stdots i.on{background:var(--gold)}
 .abil .val small{font-size:11px;color:var(--muted)}
 /* ---------- Deník postavy (papírový character sheet) ---------- */
@@ -464,6 +467,7 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 /* vybavení – linkovaný papír */
 .dsheet .filters{margin-bottom:6px}
 .dsheet .fchip{width:auto}
+.imps{border:2px solid var(--line2);background:rgba(255,253,246,.35);padding:2px 10px}.imps div{padding:6px 0;border-bottom:1px solid rgba(33,60,92,.25);color:var(--ink,#1f2a52);font-size:15px;line-height:1.3}.imps div:last-child{border-bottom:none}
 .wm:empty{display:none}
 .vyb{border:2px solid var(--line2);background:repeating-linear-gradient(transparent 0 33px,rgba(44,77,114,.28) 33px 34px),rgba(255,253,246,0.375);padding:0 8px}
 .vcat{font-family:var(--fc);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);height:34px;line-height:40px}
@@ -1069,6 +1073,25 @@ const int = v => { const n = parseInt(v); return isNaN(n) ? 0 : n; };
 const arr = v => Array.isArray(v) ? v : (v ? [v] : []);
 const low = s => String(s || '').trim().toLowerCase();
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* Vyprávění Pána jeskyně: řádky „**Jméno:** …“ se zobrazí jako replika postavy s barevným jménem. */
+const SAY_COLORS = ['#7e1d12','#213c5c','#2d561b','#5b2a6e','#8e4a0e','#1f5a5a','#6b3a1a'];
+const sayColor = n => SAY_COLORS[[...low(n)].reduce((a,c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % SAY_COLORS.length];
+const SAY_RE = /^\s*\*\*([^*\n]{1,32}?)\s*:?\*\*\s*:?\s*(.+)$/;
+function dmRich(text){
+  const out = [];
+  for(const block of String(text).split(/\n{2,}/)){
+    let para = [];
+    const flush = () => { if(para.length){ out.push('<p>' + para.map(l => rich1(l)).join('<br>') + '</p>'); para = []; } };
+    for(const line of block.split('\n')){
+      const m = line.match(SAY_RE);
+      if(m && /[„"“«»'‚]/.test(m[2].slice(0, 3)) ){ flush(); out.push(`<div class="say" style="--sc:${sayColor(m[1])}"><b>${esc(m[1].trim())}</b><span>${rich1(m[2].trim())}</span></div>`); }
+      else if(line.trim()) para.push(line);
+    }
+    flush();
+  }
+  return out.join('');
+}
+const rich1 = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>');
 const rich = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>')
   .split(/\n{2,}/).map(p => '<p>' + p.replace(/\n/g,'<br>') + '</p>').join('');
 const d20 = () => 1 + Math.floor(Math.random() * 20);
@@ -1079,7 +1102,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v10';
+const APP_VERSION = '14. 10. 2026 · v12';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1267,7 +1290,107 @@ function needStates(){
   const lr = S.inv ? loadRatio() : 0;
   if(lr > 1.5) out.push({ nazev:'Těžce přetížen', i:'🏋️', popis:`Neseš ${carried()} kg, uneseš ${capacity()} kg. Cesty trvají mnohem déle a rychle se unavíš.`, postih:{ obratnost:-3, vse:-1 }, lecba:'odlehčit batoh nebo pořídit koně' });
   else if(lr > 1) out.push({ nazev:'Přetížení', i:'🏋️', popis:`Neseš ${carried()} kg, uneseš ${capacity()} kg. Cesty trvají déle a víc se unavíš.`, postih:{ obratnost:-2 }, lecba:'odlehčit batoh nebo pořídit koně' });
+  if(S.weather && S.time) out.push(...weatherConds());
   return out.map(x => ({ ...x, derived:true }));
+}
+/* Co na hráči vidí ostatní – podle toho reagují NPC (rasa, povolání, výbava, stav, pověst). */
+const SPECIES_LOOK = {
+  clovek:'člověk – nikoho nepřekvapí', elf:'elf – mnozí ho mají za povýšeného, ale obdivují jeho ladnost',
+  trpaslik:'trpaslík – řemeslníci a obchodníci uznávají jeho rod, elfové méně', pulcik:'půlčík – lidé ho přehlížejí a podceňují',
+  gnom:'gnom – budí zvědavost i posměšky', ork:'ork – mnozí se ho bojí nebo mu nedůvěřují, stráže ho sledují',
+  golias:'goliáš – mohutný obr, budí respekt i strach', drak:'dračí zrozený – vzácný, budí úžas i strach',
+  tiefling:'tiefling – rohy a ocas; pověrčiví lidé se ho štítí, kněží mu nedůvěřují', aasimar:'aasimar – vyzařuje jemné světlo, prostí lidé v něm vidí posla bohů'
+};
+const CLASS_LOOK = {
+  paladin:'nosí svatý symbol – věřící mu důvěřují, zločinci se mají na pozoru', knez:'kněžský symbol – věřící ho ctí, nevěřící se vyhýbají',
+  mag:'učenec s knihou kouzel – lidé ctí vzdělání, ale magie je znepokojuje', carodej:'čaroděj – kolem něj občas zajiskří magie, lidé znervózní',
+  cernokneznik:'černokněžník – je z něj cítit cosi temného, citliví lidé se odtahují', druid:'druid – venkované a lovci mu věří, měšťané ho mají za podivína',
+  barbar:'barbar – divoký vzhled, budí strach; snadno zastrašuje, hůř přesvědčuje', bard:'bard – hudebníka všude rádi uvidí, ale nikdo mu úplně nevěří',
+  zlodej:'vypadá jako někdo, kdo si dává pozor na stráže', mnich:'mnich – prostý oděv, působí klidně a skromně',
+  hranicar:'hraničář – pach lesa, lovci a venkované ho berou za svého', valecnik:'válečník – zkušený bojovník, vojáci a žoldnéři ho respektují'
+};
+function firstImpression(){
+  const c = S.char, out = [];
+  out.push(SPECIES_LOOK[c.druh] || species().nazev);
+  if(CLASS_LOOK[c.cls]) out.push(CLASS_LOOK[c.cls]);
+  const z = equipped('zbroj'), w = usableWeapon(), d = equipped('doplnek');
+  if(z && (z.obrana || 0) >= 4) out.push(`v těžké zbroji (${z.nazev}) – vypadá jako rytíř nebo voják, stráže ho berou vážně`);
+  else if(z) out.push(`ve zbroji (${z.nazev})`);
+  if(w && (w.vzacnost === 'vzacna' || w.vzacnost === 'legendarni')) out.push(`nese nápadnou zbraň: ${w.nazev}`);
+  if(d && d.vzacnost !== 'bezna') out.push(`nosí cenný kousek: ${d.nazev} – lákavý pro zloděje`);
+  if(c.zlato >= 150) out.push('vypadá zámožně – obchodníci zvednou ceny, zloději zbystří');
+  else if(c.zlato < 5 && !z) out.push('vypadá jako chudý poutník');
+  if(c.hp <= c.maxHp / 3) out.push('je zakrvácený a pochroumaný');
+  if(S.effects.some(e => e.typ === 'nemoc')) out.push('vypadá nemocně – lidé se odtahují ze strachu z nákazy');
+  if(S.effects.some(e => e.typ === 'prokleti')) out.push('jde z něj cosi zlověstného (kletba)');
+  if(S.needs.unava >= 60) out.push('je viditelně vyčerpaný');
+  if(S.needs.hlad >= 60) out.push('je vyhladovělý a pohublý');
+  if(!indoors() && (S.weather?.typ === 'dest' || S.weather?.typ === 'bourka')) out.push('je promoklý na kost');
+  const r = S.rep?.[S.here];
+  if(r !== undefined && Math.abs(r) >= 20) out.push(`zdejší ho znají: ${repLabel(r)}`);
+  return out;
+}
+
+/* Dopady počasí – platí jen venku (pod střechou ne). Hlídá je kód, AI je vidí ve stavu. */
+const heavyArmor = () => { const z = equipped('zbroj'); return !!z && (z.obrana || 0) >= 4; };
+const metalArmor = () => { const z = equipped('zbroj'); return !!z && ((z.obrana || 0) >= 4 || /kroužk|plát|plech|šupin|kovov|ocel|železn/i.test(z.nazev)); };
+/* Kdo snese zimu a vedro: výbava, rodokmen, povolání. Vrací důvod (text) nebo ''. */
+function coldOk(){
+  const c = S.char;
+  if(hasWarm()) return 'teplé oblečení';
+  if(c.druh === 'drak' && c.linie === 'mraz') return 'mrazivý dračí rodokmen';
+  if(c.druh === 'golias' && c.linie === 'mraz') return 'mrazivý obří rodokmen';
+  if(c.cls === 'druid') return 'druid – spřízněný s přírodou';
+  if(c.cls === 'barbar') return 'barbar – otužilý';
+  return '';
+}
+function heatOk(){
+  const c = S.char;
+  if(c.druh === 'drak' && c.linie === 'ohen') return 'ohnivý dračí rodokmen';
+  if(c.druh === 'golias' && c.linie === 'ohen') return 'ohnivý obří rodokmen';
+  if(c.druh === 'tiefling' && c.linie === 'infernal') return 'pekelné dědictví';
+  if(c.cls === 'druid') return 'druid – spřízněný s přírodou';
+  return '';
+}
+const wildOk = () => S.char.cls === 'hranicar';   /* hraničáře mlha ani liják neomezí */
+const hasLight = () => S.inv.some(i => /lucern|lampa|pochod|louč|svíc/i.test(i.nazev));
+const isFireSpell = () => /ohn|oheň|plam|žhav|spal|pek/i.test(spell()?.nazev || '');
+function weatherConds(){
+  if(indoors()) return [];
+  const t = S.weather?.typ, out = [];
+  const W = wildOk(), metal = metalArmor() ? ' Kovová zbroj v bouři přitahuje blesky!' : '';
+  if(t === 'mlha') out.push({ nazev:'Mlha', i:'🌫️', wx:true, postih:{}, popis:W ? 'Vidíš sotva na pár kroků, ale jako hraničář se v ní vyznáš – nevýhodu nemáš. Nepřátelé střílejí s nevýhodou.'
+    : 'Vidíš sotva na pár kroků. Útoky na dálku (tvoje i nepřátel) mají nevýhodu' + (hasLight() ? '; hledání ti usnadní světlo.' : ' a hledání či vnímání (moudrost) taky – pomohla by lucerna nebo pochodeň.') });
+  if(t === 'bourka') out.push({ nazev:'Bouře', i:'⛈️', wx:true, postih:{}, popis:(W ? 'Liják a vichr, ale hraničáře nezaskočí – střílí normálně. Ohnivá kouzla mají nevýhodu.' : 'Liják a vichr. Útoky na dálku a ohnivá kouzla mají nevýhodu, unavuješ se o polovinu rychleji.') + ' Pochodeň zhasne.' + metal });
+  if(t === 'dest') out.push({ nazev:'Déšť', i:'🌧️', wx:true, postih:{}, popis:'Mokro a bláto. Ohnivá kouzla mají nevýhodu' + (W ? '.' : ', unavuješ se o čtvrtinu rychleji.') + (coldOk() ? '' : ' Bez pláště hrozí prochladnutí.') });
+  if(t === 'mraz' || t === 'snih'){
+    const ok = coldOk();
+    if(!ok) out.push({ nazev:'Zima', i:'🥶', wx:true, popis:`Ztuhlé prsty a zimnice: −1 obratnost, ${S.char.druh === 'trpaslik' ? 'jako otužilý trpaslík se ale unavuješ jen o trochu víc' : 'unavuješ se rychleji'} a hrozí prochladnutí. Pomůže plášť, kožich nebo oheň.`, postih:{ obratnost:-1 }, lecba:'teplé oblečení nebo jít pod střechu' });
+  }
+  if(t === 'vedro'){
+    const ok = heatOk();
+    if(!ok) out.push({ nazev:'Vedro', i:'🥵', wx:true, popis:'Úmorné horko: hlad a žízeň přicházejí o polovinu rychleji.' + (heavyArmor() ? ' V těžké zbroji se rychle vyčerpáš (−1 odolnost).' : ''), postih:heavyArmor() ? { odolnost:-1 } : {}, lecba:'stín, voda, odložit těžkou zbroj' });
+  }
+  return out;
+}
+/* Násobitele únavy a hladu podle počasí (jen venku a vzhůru). */
+function weatherRates(){
+  if(indoors()) return { unava:1, hlad:1 };
+  const t = S.weather?.typ;
+  let u = 1, h = 1;
+  if(!wildOk()){ if(t === 'bourka') u += 0.5; else if(t === 'dest') u += 0.25; }
+  if((t === 'mraz' || t === 'snih') && !coldOk()) u += S.char.druh === 'trpaslik' ? 0.125 : 0.25;
+  if(t === 'vedro' && !heatOk()){ h += 0.5; if(heavyArmor()) u += 0.5; }
+  return { unava:u, hlad:h };
+}
+/* Výhoda/nevýhoda z počasí k hodu. Vrací [změna, důvod]. */
+function weatherAdv(vl, utok, ranged){
+  if(indoors()) return [0, ''];
+  const t = S.weather?.typ;
+  if(t === 'mlha' && !wildOk() && (ranged || (!utok && vl === 'moudrost' && !hasLight()))) return [-1, 'mlha'];
+  if(t === 'bourka' && ((ranged && !wildOk()) || (utok === 'kouzlo' && isFireSpell()))) return [-1, 'bouře'];
+  if(t === 'dest' && utok === 'kouzlo' && isFireSpell()) return [-1, 'déšť'];
+  return [0, ''];
 }
 const allConds = () => needStates().concat(S.pc ? pcondList() : [], S.effects.map(e => ({ ...e, i:EFF_TYPES[e.typ].i })));
 const postihText = p => Object.entries(p || {}).map(([k,v]) => `${fmtMod(v)} ${k === 'vse' ? 'ke všem hodům' : statName(k)}`).join(', ');
@@ -1302,8 +1425,9 @@ function advanceTime(hours, sleeping){
         if(add){ S.healAcc -= add; const b = c.hp; c.hp = Math.min(c.maxHp, c.hp + add); healed += c.hp - b; }
       }
     }else{
-      n.unava = Math.min(100, n.unava + 4 * h * (loadRatio() > 1 ? 1.5 : 1));
-      n.hlad = Math.min(100, n.hlad + 3 * h);
+      const wr = weatherRates();
+      n.unava = Math.min(100, n.unava + 4 * h * (loadRatio() > 1 ? 1.5 : 1) * wr.unava);
+      n.hlad = Math.min(100, n.hlad + 3 * h * wr.hlad);
     }
     S.wAcc = (S.wAcc || 0) + h;
     while(S.wAcc >= 4){ S.wAcc -= 4; rollWeather(); }
@@ -1537,9 +1661,15 @@ CESTOVÁNÍ A NÁHODNÉ UDÁLOSTI
 POSTUP, VZTAHY A SVĚT
 - "xp": odměň hráče zkušenostmi za chytré řešení, objev, přesvědčení bez boje nebo dobře zahranou roli (25–150). Za poražené nepřátele a splněné úkoly dává XP hra sama – ty nepřidávej.
 - Hráč má schopnosti a kouzla podle povolání a úrovně (viz stav). Používá je tlačítkem a výsledek ti hra pošle. Když hráč tvrdí, že použije schopnost, kterou nemá, odmítni to.
+- PRVNÍ DOJEM: NPC reagují na to, co na hráči VIDÍ – stav → "jak_te_vidi_ostatni" (rasa, povolání, výbava, zranění, nemoc, bohatství, pověst). Projev to v chování (nedůvěra, úcta, strach, posměch, ceny) a podle světa (v temné fantasy jsou lidé pověrčivější). U zkoušek charismatu (přesvědčování, klam, zastrašování, smlouvání) dej "vyhoda"/"nevyhoda" podle dojmu, vztahu a situace – např. barbar nebo ork zastrašuje snáz; tiefling u kněze nebo nemocný u kohokoli hůř; paladin u věřících a šlechtic u úředníků snáz.
 - NPC mají vztah k hráči od -100 do 100 (viz stav). Když hráč někomu pomůže, urazí ho, zradí, podplatí nebo ho okouzlí, pošli v "npc" pole "zmena" (-30 až +30). Vztah se MUSÍ projevit: přátelé pomáhají, prozradí víc a dají slevu; nepřátelé lžou, zdražují nebo škodí.
 - Pověst: "povest": [{"misto": "název místa", "zmena": -25 až +25}] za činy, o kterých se lidé dozví (hrdinství, krádež, vražda, pomoc). Projev ji ve vyprávění (stráže, ceny, důvěra, ochota).
-- Počasí a roční období jsou ve stavu. Popisuj je a ať mají smysl (v zimě mráz a sníh, v létě vedro, v noci tma).
+ROZHOVORY
+- Když je ve scéně víc postav, nech je mluvit mezi sebou i k hráči – každá svým hlasem, skáčou si do řeči, nesouhlasí, mají vlastní cíle.
+- Repliky postav piš na SAMOSTATNÉ řádky přesně ve tvaru: **Jméno:** „replika“ (jméno tučně a dvojtečka). Popis děje piš mezi nimi normálně.
+- Když hráč osloví konkrétní postavu jménem („Bořku, …“), odpovídá hlavně ona; ostatní mohou reagovat, šeptat si nebo se vmísit.
+- Do rozhovoru se občas může nečekaně někdo připojit (hra ti to řekne v zadání) – vždy uvěřitelně podle místa a času.
+- Počasí a roční období jsou ve stavu. Popisuj je a ať mají smysl (v zimě mráz a sníh, v létě vedro, v noci tma). Herní dopady počasí venku (mlha, bouře, déšť, zima, vedro) jsou ve "stavy" a počítá je hra – ve vyprávění je zohledni (v mlze nic nevidíš, v dešti oheň nechce hořet, v mrazu tuhnou prsty).
 - Kůň/mula/vůz: "jezdecke": {"typ": "kun|mula|vuz", "nazev": "jméno"} když ho hráč koupí či získá (spolu se záporným "zlato"; kůň 40–80 zl., mula 20–30, vůz 100+), "jezdecke": "ztraceno" když o něj přijde.
 - Kovář opraví výbavu: "oprava": ["přesný název"] nebo "vse", spolu se záporným "zlato" (5–30 za kus). Rozbitá zbraň nefunguje, dokud ji neopraví.
 - Předmět může mít "vaha" v kg a "teple": true (teplé oblečení chrání před zimou a deštěm).
@@ -1602,7 +1732,8 @@ function publicState(){
     inventar:S.inv.map(itemLine),
     boj:S.foes.length ? { kolo:S.cb?.round || 1, nepratele:S.foes.map(f => `${f.jmeno}: ${f.hp}/${f.maxHp} HP${Object.keys(f.st).length ? ' (' + Object.keys(f.st).join(', ') + ')' : ''}`), stav_hrace:Object.keys(S.pc || {}).filter(k => S.pc[k]).map(k => PCOND[k]?.n || k) } : 'žádný boj',
     cas:timeStr(),
-    pocasi:`${wx().n}, ${season()[1].toLowerCase()}${indoors() ? ' (hráč je pod střechou)' : ''}`,
+    pocasi:`${wx().n}, ${season()[1].toLowerCase()}${indoors() ? ' (hráč je pod střechou)' : ''}${S.char.cls === 'druid' && S.wxNext ? '; druid cítí, že brzy přijde: ' + WEATHER[S.wxNext].n.toLowerCase() : ''}`,
+    jak_te_vidi_ostatni:firstImpression(),
     povest:Object.fromEntries(Object.entries(S.rep || {}).map(([k,v]) => [S.places?.[k]?.nazev || k, repLabel(v)])),
     unava:`${Math.round(S.needs.unava)}/100`, hlad:`${Math.round(S.needs.hlad)}/100`,
     stavy:allConds().length ? allConds().map(c => `${c.nazev}${c.derived ? '' : ' [' + EFF_TYPES[c.typ].n.toLowerCase() + ']'}: ${c.popis}${postihText(c.postih) ? '; postih ' + postihText(c.postih) : ''}${c.hp ? `; ${c.hp > 0 ? '+' : ''}${c.hp} HP/den` : ''}${c.derived ? '' : c.trvani === null ? '; trvá do vyléčení' : '; odezní za ' + fmtHours(c.trvani)}${c.lecba ? '; léčba: ' + c.lecba : ''}`) : 'žádné',
@@ -1625,6 +1756,7 @@ function buildPrompt(b){
   else if(v.typ === 'bezvedomi') task = `HRÁČ PADL DO BEZVĚDOMÍ na pokraji smrti a přežil. ${v.zazrak ? 'Zázrakem se probral hned s 1 HP.' : `Ležel v bezvědomí asi ${v.hodiny} h, teď (${v.cas}) se probírá s 1 HP.`} ${v.nepratele.length ? 'Před pádem bojoval s: ' + v.nepratele.join(', ') + '.' : ''} ${v.zraneni ? 'Utrpěl trvalé zranění: ' + v.zraneni + '.' : ''}\nRozhodni uvěřitelně podle situace, co se mezitím stalo: zachránil ho někdo, nepřátelé ho okradli a nechali ležet, odvlekli ho, nebo utekli. Hráč NESMÍ zemřít. Můžeš použít "odebrat", záporné "zlato" (okradení), "lokace" (odvlečen) nebo "nepratele" (věznitelé, ti ale neútočí hned). Nevyplňuj "cas_hodiny".`;
   else if(v.typ === 'noc') task = `NOČNÍ UDÁLOST: hráč spal ${v.hodiny} h na nebezpečném místě a teď (${v.cas}) ho něco vzbudí: ${v.popis}\nPopiš probuzení a situaci. Nevyplňuj "spanek" ani "cas_hodiny".`;
   else task = `Akce hráče: "${v.text}"`;
+  if(v.vyrus) task += `\nNEČEKANÝ PŘÍCHOZÍ: Po odpovědi na akci hráče se do scény nebo rozhovoru nečekaně vloží nová postava – ${v.vyrus}. Přizpůsob ji místu, času, světu a ději (může mít vztah k hlavnímu příběhu). Dej jí jméno, nech ji promluvit a zapiš ji do "npc". Nesmí zablokovat, co hráč právě udělal.`;
   const who = k => k === 'hrac' ? 'HRÁČ' : k === 'pj' ? 'PÁN JESKYNĚ' : 'HRA';
   const hist = b.historie.map(h => `${who(h.kdo)}: ${h.text}`).join('\n\n');
   const sb = storyBlock();
@@ -1895,9 +2027,22 @@ async function makeRecap(){
   }
 }
 
+const INTRUDERS = {
+  mesto:['městská stráž, která někoho hledá','opilec, který se chce dát do řeči nebo do rvačky','posel s naléhavou zprávou pro někoho z přítomných','kapsář, který se tváří nenápadně','potulný bard, co hledá příběhy','obchodník, který něco nabízí','žebrák, který ví víc, než by měl','dítě, které něco vidělo','kněz nebo poutník s prosbou','starý známý hráče, kterého nečekal','výběrčí daní nebo úředník','žena v kápi, která si hráče prohlíží'],
+  divocina:['lovec nebo stopař','poutník, který zabloudil','uprchlík pronásledovaný někým','bylinkářka sbírající byliny','zraněný voják','tajemný cizinec u ohně','skupinka obchodníků, co táboří opodál','zvíře, které se chová podivně'],
+  more:['opilý námořník','pašerák s nabídkou','přístavní stráž','mořská čarodějnice v převleku','mladý plavčík, co utekl z lodi','kapitán, který shání posádku']
+};
+function rollIntruder(){
+  if(!S || S.foes.length || S.travel || S.dying || S.dead || S.pending) return null;
+  if(S.turn - (S.lastIntr ?? -99) < 6 || Math.random() > 0.14) return null;
+  const pool = S.setting === 'piratska' && /přístav|pajzl|loď|pláž|bradl|kormid|ostrov/i.test(S.location) ? INTRUDERS.more : indoors() || /ves|měst|brod|osad|tržišt|náměst|ulic|hostin/i.test(S.location) ? INTRUDERS.mesto : INTRUDERS.divocina;
+  S.lastIntr = S.turn;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
 async function callDM(input){
   if(busy) return;
   busy = true; S.lastFailed = null; render();
+  if(input && input.typ === 'akce' && !input.vyrus){ const v = rollIntruder(); if(v) input = { ...input, vyrus:v }; }
   const needSummary = S.history.length >= SUMMARY_AT;
   const req = { stav:publicState(), shrnuti:S.summary, historie:S.history.slice(-HIST_SEND), vstup:input, potrebaShrnuti:needSummary };
   try{
@@ -1968,16 +2113,16 @@ function passTime(ef, input){
     const cil = String(ef.cesta.cil).trim().slice(0,80), danger = ['nizke','stredni','vysoke'].includes(ef.cesta.nebezpeci) ? ef.cesta.nebezpeci : 'stredni';
     let hodiny = clamp(Number(ef.cesta.hodiny) || 2, 0.5, 48);
     const M = S.mount ? MOUNTS[S.mount.typ] : null, w = wx(), lr = loadRatio();
-    hodiny = Math.round(hodiny * w.travel * (M ? M.travel : 1) * (!M && species().rychlost > 30 ? 0.9 : 1) * (lr > 1.5 ? 1.6 : lr > 1 ? 1.3 : 1) * 10) / 10;
+    hodiny = Math.round(hodiny * (wildOk() ? 1 : w.travel) * (M ? M.travel : 1) * (!M && species().rychlost > 30 ? 0.9 : 1) * (lr > 1.5 ? 1.6 : lr > 1 ? 1.3 : 1) * 10) / 10;
     const ev = rollTravelEvent(danger);
     if(ev?.hodiny) hodiny += ev.hodiny;
     if(ev?.unava) S.needs.unava = Math.min(100, S.needs.unava + ev.unava);
     S.travel = { cil, from:S.here, hodiny, danger };
-    const why = [w.travel > 1 ? `${w.i} ${w.n.toLowerCase()} zdržuje` : '', M ? `${M.i} ${M.n.toLowerCase()}` : '', lr > 1 ? '🏋️ přetížený' : ''].filter(Boolean).join(', ');
+    const why = [w.travel > 1 && !wildOk() ? `${w.i} ${w.n.toLowerCase()} zdržuje` : '', M ? `${M.i} ${M.n.toLowerCase()}` : '', lr > 1 ? '🏋️ přetížený' : ''].filter(Boolean).join(', ');
     addLog({ t:'sys', text:`🧭 Cesta do: ${cil} · ${fmtHours(hodiny)}${why ? ' (' + why + ')' : ''}` });
     book('sys', `Vydal se na cestu do ${cil}.`);
     /* počasí unavuje víc, kůň méně */
-    S.needs.unava = clamp(S.needs.unava + hodiny * ((w.unava || 0) - (M ? 4 * (1 - M.unava) : 0)), 0, 100);
+    S.needs.unava = clamp(S.needs.unava + hodiny * ((wildOk() ? 0 : w.unava || 0) - (M ? 4 * (1 - M.unava) : 0)), 0, 100);
     exposure(hodiny);
     if(ev){
       const part = Math.round(hodiny * (0.35 + Math.random() * 0.3) * 10) / 10;   /* událost přijde někde v půlce cesty */
@@ -2217,7 +2362,9 @@ function setPending(z){
     if(pc().skryty) adv++;
     if(foe){ const rg = utok === 'kouzlo' || isRanged(usableWeapon()); if(foe.st?.srazen) adv += rg ? -1 : 1; if(foe.vex) adv++; }
   }
-  S.pending = { vlastnost:vl, obtiznost:dc, duvod:String(z.duvod || '').slice(0,100), utok, cilId:foe ? foe.id : null, proti, adv:clamp(adv, -1, 1) };
+  const [wa, ww] = weatherAdv(vl, utok, utok === 'zbran' && isRanged(usableWeapon()));
+  adv += wa;
+  S.pending = { vlastnost:vl, obtiznost:dc, duvod:String(z.duvod || '').slice(0,100), utok, cilId:foe ? foe.id : null, proti, adv:clamp(adv, -1, 1), wxWhy:wa ? ww : '' };
 }
 
 function rollParts(p){
@@ -2288,7 +2435,7 @@ async function roll(){
   let popis = `${title}: d20=${d}${advTxt}${luck} ${partsText(parts)} = ${total} proti ${p.utok && foe ? 'obraně ' + foe.jmeno : 'obtížnosti'} ${p.obtiznost} → ${ok ? (p.utok ? 'ZÁSAH' : 'ÚSPĚCH') : (p.utok ? 'MINUL' : 'NEÚSPĚCH')}${krit ? ' (' + krit + ')' : ''}.`;
   let res = ok ? (p.utok ? 'Zásah!' : 'Úspěch') : (p.utok ? 'Minul' : 'Neúspěch');
   if(krit) res += ' – ' + krit;
-  const rollEntry = { t:'roll', title:title + (adv ? (adv > 0 ? ' · výhoda' : ' · nevýhoda') : '') + (luck ? ' · štěstí' : ''), d, d2:adv ? (d === d1 ? d2 : d1) : null, parts, total, dc:p.obtiznost, dcl:p.utok && foe ? 'obrana' : 'obtížnost', ok, res };
+  const rollEntry = { t:'roll', title:title + (adv ? (adv > 0 ? ' · výhoda' : ' · nevýhoda') + (adv < 0 && p.wxWhy ? ' (' + p.wxWhy + ')' : '') : '') + (luck ? ' · štěstí' : ''), d, d2:adv ? (d === d1 ? d2 : d1) : null, parts, total, dc:p.obtiznost, dcl:p.utok && foe ? 'obrana' : 'obtížnost', ok, res };
   addLog(rollEntry);
   if(ok && p.utok){
     const crit = d >= critMin;
@@ -2544,7 +2691,7 @@ function lootHTML(e){
 
 function logHTML(e, i){
   switch(e.t){
-    case 'dm': return `<div class="e dm${e.anim ? ' tw' : ''}" data-li="${i}">${rich(e.text)}
+    case 'dm': return `<div class="e dm${e.anim ? ' tw' : ''}" data-li="${i}">${dmRich(e.text)}
       ${e.img ? `<img class="illu" data-src="${esc(e.img)}" alt="Ilustrace scény">` : ''}
       <div class="dmtools">${e.imgBusy ? '<span class="busyimg">🖌️ Kreslím ilustraci…</span>' : imgMode() !== 'off' && !e.img ? `<button data-illu="${i}">🖼️ Ilustrace</button>` : ''}${window.speechSynthesis ? `<button data-say="${i}">🔊 Přečíst</button>` : ''}</div></div>`;
     case 'lvl': return `<div class="e lvl"><b>${esc(e.title || '⭐ ' + e.level + '. úroveň!')}</b><small>${e.gain ? '+' + e.gain + ' max. HP' : ''}${e.nove.length ? (e.gain ? ' · nové: ' : '') + esc(e.nove.join(', ')) : ''}${e.title ? '' : ' · zvyš si vlastnost'}</small></div>`;
@@ -2572,7 +2719,7 @@ function render(){
   $('#mHun').textContent = hu; $('#hunFill').style.width = hu + '%'; $('#hunFill').style.background = needCol(hu);
   $('#mAc').textContent = armorClass();
   const dp = dayPart(S.time.hour);
-  $('#hMeta').textContent = `${dp[1]} Den ${S.time.day} · ${clockStr()} · ${season()[2]} ${wxIcon()} ${wx().n}` + (S.travel ? ` · 🧭 na cestě do ${S.travel.cil}` : S.location ? ` · 📍 ${S.location}` : '');
+  $('#hMeta').textContent = `${dp[1]} Den ${S.time.day} · ${clockStr()} · ${season()[2]} ${wxIcon()} ${wx().n}${S.char.cls === 'druid' && S.wxNext && S.wxNext !== S.weather?.typ ? ' → ' + WEATHER[S.wxNext].i : ''}` + (S.travel ? ` · 🧭 na cestě do ${S.travel.cil}` : S.location ? ` · 📍 ${S.location}` : '');
   $('#sndBtn').textContent = sfxOn() || ambOn() ? '🔊' : '🔇';
   $('#mic').hidden = !SR;
   $('#conds').innerHTML = allConds().map((x,i) =>
@@ -2802,6 +2949,9 @@ function tabSheet(){
   ${rib('🎒', 'Vybavení', `${S.inv.length}/${INV_MAX} věcí`)}
   ${filters}
   <div class="vyb">${groups || '<div class="vline empty"><span class="vn">Batoh je prázdný.</span></div>'}<div class="vline blank"></div><div class="vline blank"></div></div>
+
+  ${rib('👁', 'Jak tě vidí ostatní')}
+  <div class="imps">${firstImpression().map(t => `<div>${esc(t)}</div>`).join('')}</div>
 
   ${Object.keys(S.rep || {}).length ? `${rib('🏛', 'Pověst')}${Object.entries(S.rep).map(([k,v]) => `<div class="vline"><span class="vn">${esc(S.places?.[k]?.nazev || k)}</span><span class="vs">${esc(repLabel(v))}</span></div>`).join('')}` : ''}
   </div>`;
@@ -3346,7 +3496,9 @@ const wxIcon = () => (isNight() && wx().ni) || wx().i;
 function rollWeather(force){
   const w = WEATHER_W[season()[0]];
   if(!force && S.weather && w[S.weather.typ] && Math.random() < 0.55) return;
-  const t = pickWeighted(Object.entries(w).map(([k,v]) => ({ k, w:v }))).k;
+  const draw = () => pickWeighted(Object.entries(w).map(([k,v]) => ({ k, w:v }))).k;
+  const t = !force && S.wxNext && w[S.wxNext] ? S.wxNext : draw();
+  S.wxNext = draw();   /* předpověď – zná ji druid */
   if(S.weather?.typ !== t){
     S.weather = { typ:t };
     if(!force){ addLog({ t:'fx', notes:[{ c:'loc', t:`${WEATHER[t].i} ${WEATHER[t].n}` }] }); hist(`Počasí se změnilo: ${WEATHER[t].n}.`); }
@@ -3358,7 +3510,7 @@ const indoors = () => INDOOR_RE.test(low(S.location)) && !S.travel;
 /* Pobyt venku v chladu nebo dešti může přinést prochladnutí. */
 function exposure(hours){
   const w = wx();
-  if(!(w.cold || w.wet) || hasWarm() || S.effects.some(e => e.nazev === 'Prochladnutí')) return;
+  if(!(w.cold || w.wet) || coldOk() || S.effects.some(e => e.nazev === 'Prochladnutí')) return;
   const ch = Math.min(0.6, (w.cold ? 0.12 : 0.05) * hours);
   if(Math.random() < ch){
     S.effects.push({ id:newId('e'), nazev:'Prochladnutí', typ:'nemoc', popis:'Rýma, zimnice a bolavé klouby.', postih:{ odolnost:-1, vse:-1 }, hp:-2, trvani:48, lecba:'teplo, odpočinek, horký odvar', blokuje:false });
@@ -4215,6 +4367,7 @@ function foeAttacks(names){
     if(pc().uhyb){ adv--; why.push('uhýbáš'); }
     if(f.st.vystrasen){ adv--; why.push('je zastrašen'); }
     if(f.st.sap){ adv--; why.push('oslaben'); delete f.st.sap; }
+    if(f.dalka && !indoors() && (S.weather?.typ === 'mlha' || S.weather?.typ === 'bourka')){ adv--; why.push(S.weather.typ === 'mlha' ? 'mlha' : 'bouře'); }
     adv = clamp(adv, -1, 1);
     const d1 = d20(), d2 = adv ? d20() : null, d = adv > 0 ? Math.max(d1, d2) : adv < 0 ? Math.min(d1, d2) : d1;
     let ac = armorClass(), total = d + f.utok;
