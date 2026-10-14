@@ -130,7 +130,15 @@ input,textarea{font:inherit;color:inherit}
 .e.player span{display:inline-block;font-style:italic;max-width:85%;text-align:left;color:#4a3420;padding:4px 12px 4px 14px;border-right:3px solid var(--gold);
   background:linear-gradient(270deg,rgba(154,106,18,.14),transparent)}
 .e.player span::before{content:'✒ ';color:var(--gold);font-style:normal}
-.e.fx{display:flex;flex-wrap:wrap;gap:6px}
+.e.fx{display:flex;flex-direction:column;border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:4px;background:rgba(255,250,235,.16);overflow:hidden}
+.fxr{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:6px 10px;font-size:16px;line-height:1.25;border-bottom:1px dotted var(--line)}
+.fxr:last-child{border-bottom:none}
+.fxr .fi{width:22px;text-align:center;flex:none}
+.fxr .ft{flex:1;min-width:0}
+.fxr .ft i{display:block;font-style:normal;font-family:var(--fc);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.2}
+.fxr .fa{color:var(--line2);font-size:20px;flex:none}
+button.fxr:active{background:rgba(201,154,58,.18)}
+.fxr.good{color:var(--green)}.fxr.bad{color:var(--blood)}.fxr.gold{color:var(--gold)}.fxr.quest{color:var(--gold)}.fxr.loc{color:var(--blue)}.fxr.npc{color:var(--purple)}.fxr.foe{color:var(--blood)}
 .tag{font-size:15px;padding:1px 10px;border-radius:3px;border:1px solid var(--line)}
 .tag.good{color:var(--green);border-color:#8fae72}.tag.bad{color:var(--blood);border-color:#c48a77}.tag.gold{color:var(--gold);border-color:#c8a35a}
 .tag.quest{color:var(--gold);border-style:dashed}.tag.loc{color:var(--blue)}.tag.npc{color:var(--purple)}.tag.foe{color:var(--blood)}
@@ -1102,7 +1110,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v12';
+const APP_VERSION = '14. 10. 2026 · v13';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1662,6 +1670,7 @@ POSTUP, VZTAHY A SVĚT
 - "xp": odměň hráče zkušenostmi za chytré řešení, objev, přesvědčení bez boje nebo dobře zahranou roli (25–150). Za poražené nepřátele a splněné úkoly dává XP hra sama – ty nepřidávej.
 - Hráč má schopnosti a kouzla podle povolání a úrovně (viz stav). Používá je tlačítkem a výsledek ti hra pošle. Když hráč tvrdí, že použije schopnost, kterou nemá, odmítni to.
 - PRVNÍ DOJEM: NPC reagují na to, co na hráči VIDÍ – stav → "jak_te_vidi_ostatni" (rasa, povolání, výbava, zranění, nemoc, bohatství, pověst). Projev to v chování (nedůvěra, úcta, strach, posměch, ceny) a podle světa (v temné fantasy jsou lidé pověrčivější). U zkoušek charismatu (přesvědčování, klam, zastrašování, smlouvání) dej "vyhoda"/"nevyhoda" podle dojmu, vztahu a situace – např. barbar nebo ork zastrašuje snáz; tiefling u kněze nebo nemocný u kohokoli hůř; paladin u věřících a šlechtic u úředníků snáz.
+- "novy_ukol" je CÍL na delší dobu (např. „Tajemství krvavého svitku“, „Najít ztracenou dceru“), nikdy ne jednotlivý krok jako „Přečíst svitek“ nebo „Promluvit s Bořkem“ – ty patří do "navrhy". Úkolů zakládej málo.
 - NPC mají vztah k hráči od -100 do 100 (viz stav). Když hráč někomu pomůže, urazí ho, zradí, podplatí nebo ho okouzlí, pošli v "npc" pole "zmena" (-30 až +30). Vztah se MUSÍ projevit: přátelé pomáhají, prozradí víc a dají slevu; nepřátelé lžou, zdražují nebo škodí.
 - Pověst: "povest": [{"misto": "název místa", "zmena": -25 až +25}] za činy, o kterých se lidé dozví (hrdinství, krádež, vražda, pomoc). Projev ji ve vyprávění (stráže, ceny, důvěra, ochota).
 ROZHOVORY
@@ -2689,6 +2698,31 @@ function lootHTML(e){
     <div class="lbtns"><button data-ltake="none">Nechat</button><button data-ltake="all">Vše</button><button class="main" data-ltake="sel">Vzít vybrané</button></div></div>`;
 }
 
+/* Zápisky pod vyprávěním (úkol, postava, místo, zlato…) – jednotný úhledný seznam; na co jde klepnout, má šipku. */
+const FX_KIND = { quest:['Úkol','quests'], npc:['Postava','npcs'], loc:['Místo','map'] };
+function fxHTML(notes){
+  const list = notes.map(n => ({ ...n }));
+  /* „Nové místo na mapě: X“ + „📍 X…“ → jeden řádek */
+  const mapN = list.find(n => n.c === 'loc' && n.t.startsWith('🗺️'));
+  if(mapN){
+    const name = mapN.t.replace(/^🗺️\s*Nové místo na mapě:\s*/, '');
+    const locN = list.find(n => n !== mapN && n.c === 'loc' && n.t.startsWith('📍') && low(n.t).includes(low(name)));
+    if(locN){ locN.nove = true; list.splice(list.indexOf(mapN), 1); }
+    else { mapN.t = '📍 ' + name; mapN.nove = true; }
+  }
+  const row = n => {
+    const m = n.t.match(/^(\S+)\s+([\s\S]*)$/), emo = m && !/^[\p{L}\p{N}+\-−]/u.test(m[1]);
+    const ic = emo ? m[1] : ({ gold:'💰', good:'✨', bad:'⚠️', foe:'👹', quest:'📜', loc:'📍', npc:'👤' }[n.c] || '•'), txt = emo ? m[2] : n.t;
+    const k = FX_KIND[n.c];
+    let lbl = '';
+    if(k && n.c === 'quest') lbl = ic === '✅' ? 'Splněno' : ic === '📖' ? 'Příběh' : 'Nový úkol';
+    else if(k && n.c === 'npc') lbl = 'Nová postava';
+    else if(k && n.c === 'loc' && (ic === '📍' || ic === '🗺️')) lbl = n.nove ? 'Nové místo' : 'Jsi v';
+    const go = k && lbl ? k[1] : '';
+    return `<${go ? `button data-goto="${go}"` : 'div'} class="fxr ${n.c}"><span class="fi">${esc(ic)}</span><span class="ft">${lbl ? `<i>${lbl}</i>` : ''}${esc(txt)}</span>${go ? '<span class="fa">›</span>' : ''}</${go ? 'button' : 'div'}>`;
+  };
+  return `<div class="e fx">${list.map(row).join('')}</div>`;
+}
 function logHTML(e, i){
   switch(e.t){
     case 'dm': return `<div class="e dm${e.anim ? ' tw' : ''}" data-li="${i}">${dmRich(e.text)}
@@ -2696,7 +2730,7 @@ function logHTML(e, i){
       <div class="dmtools">${e.imgBusy ? '<span class="busyimg">🖌️ Kreslím ilustraci…</span>' : imgMode() !== 'off' && !e.img ? `<button data-illu="${i}">🖼️ Ilustrace</button>` : ''}${window.speechSynthesis ? `<button data-say="${i}">🔊 Přečíst</button>` : ''}</div></div>`;
     case 'lvl': return `<div class="e lvl"><b>${esc(e.title || '⭐ ' + e.level + '. úroveň!')}</b><small>${e.gain ? '+' + e.gain + ' max. HP' : ''}${e.nove.length ? (e.gain ? ' · nové: ' : '') + esc(e.nove.join(', ')) : ''}${e.title ? '' : ' · zvyš si vlastnost'}</small></div>`;
     case 'player': return `<div class="e player"><span>${esc(e.text)}</span></div>`;
-    case 'fx': return `<div class="e fx">${e.notes.map(n => `<span class="tag ${n.c}">${esc(n.t)}</span>`).join('')}</div>`;
+    case 'fx': return fxHTML(e.notes);
     case 'roll': return `<div class="e roll ${e.ok ? 'good' : 'bad'} ${e.enemy ? 'enemy' : ''}"><div class="die">${e.d}</div><div><b>${esc(e.res)}</b><small>${esc(e.title)}</small><small>d20 ${e.d}${e.d2 ? ` <s>${e.d2}</s>` : ''} ${esc(partsText(e.parts))} = <b>${e.total}</b> vs. ${esc(e.dcl)} ${e.dc}</small></div></div>`;
     case 'loot': return lootHTML(e);
     case 'sys': return `<div class="e sys">${esc(e.text)}</div>`;
@@ -2729,7 +2763,9 @@ function render(){
   $('#foes').innerHTML = iniBar() + S.foes.map(f => `<div class="foe${f.st.neschopen ? ' down' : ''}"><b title="${esc(f.jmeno)}">👹 ${esc(f.jmeno)}</b><div class="hpbar"><div style="width:${100*f.hp/f.maxHp}%"></div></div><small><span class="hp">${f.hp}/${f.maxHp}</span> · 🛡️${f.obrana}</small>${Object.keys(f.st).length || f.vex ? `<small class="fst">${Object.keys(f.st).map(k => FOE_ST[k]).concat(f.vex ? [FOE_ST.vex] : []).join(' ')}</small>` : ''}</div>`).join('');
 
   const log = $('#log');
-  log.innerHTML = S.log.map(logHTML).join('');
+  const merged = [];
+  S.log.forEach((e, i) => { const last = merged[merged.length - 1]; if(e.t === 'fx' && last && last.e.t === 'fx') last.e = { ...last.e, notes:last.e.notes.concat(e.notes) }; else merged.push({ e, i }); });
+  log.innerHTML = merged.map(x => logHTML(x.e, x.i)).join('');
   twApply(); hydrateImages();
   /* Po novém vyprávění skoč na jeho začátek, ať se čte odshora. Jinak dolů. */
   const toNew = scrollNew; scrollNew = false;
@@ -3061,6 +3097,7 @@ $('#rollBtn').onclick = roll;
 $('#log').onclick = e => {
   if(e.target.closest('#retry')){ const inp = S.lastFailed; S.log.pop(); return callDM(inp); }
   const il = e.target.closest('[data-illu]'); if(il) return illustrate(int(il.dataset.illu));
+  const go = e.target.closest('[data-goto]'); if(go){ jTab = go.dataset.goto; openDrawer(); $('#drawer .jbody').scrollTop = 0; return; }
   const sy = e.target.closest('[data-say]'); if(sy) return speak(S.log[int(sy.dataset.say)]?.text || '');
   if(TW && e.target.closest('.e.dm.tw')) return twFinish();
   const t = e.target.closest('[data-ltog]');
