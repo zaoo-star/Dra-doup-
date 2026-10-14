@@ -393,9 +393,16 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .e.ini b{display:block;font-family:var(--fc);color:var(--blood);font-size:14px}
 .e.ini span{font-size:15px}.e.ini i{font-style:normal;font-weight:600}
 .abil.react{border-style:dashed}
-.e.dm .say{margin:4px 0 9px;padding:3px 0 3px 12px;border-left:3px solid var(--sc)}
+.e.dm .say{clear:both;margin:4px 0 9px;padding:3px 0 3px 12px;border-left:3px solid var(--sc)}
 .e.dm .say b{display:block;font-family:var(--fc);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sc);font-weight:700}
 .e.dm .say span{display:block;font-style:italic}
+.e.dm .say.hasp{padding-left:62px;position:relative;min-height:54px}
+.saypic{position:absolute;left:10px;top:4px;width:44px;height:44px;object-fit:cover;border-radius:50%;border:2px solid var(--sc);box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.npcrow{display:flex;gap:12px;align-items:flex-start}.npcm{flex:1;min-width:0}
+.npcp{width:58px;height:58px;flex:none;border-radius:50%;overflow:hidden;border:2px solid var(--line2);display:grid;place-items:center;font-size:24px;background:rgba(255,250,235,.2);padding:0}
+.npcp img{width:100%;height:100%;object-fit:cover;display:block}
+.npcp.busy{animation:pulse 1.2s infinite}
+.npcbig img{display:block;width:min(78vw,320px);aspect-ratio:1;object-fit:cover;margin:4px auto 10px;border-radius:6px;border:3px double var(--line2);box-shadow:0 3px 10px rgba(0,0,0,.35)}
 .stdots{display:flex;gap:4px;margin:6px 0 4px}.stdots i{flex:1;height:7px;background:#a8916a;box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}.stdots i.on{background:var(--gold)}
 .abil .val small{font-size:11px;color:var(--muted)}
 /* ---------- Deník postavy (papírový character sheet) ---------- */
@@ -1092,7 +1099,7 @@ function dmRich(text){
     const flush = () => { if(para.length){ out.push('<p>' + para.map(l => rich1(l)).join('<br>') + '</p>'); para = []; } };
     for(const line of block.split('\n')){
       const m = line.match(SAY_RE);
-      if(m && /[„"“«»'‚]/.test(m[2].slice(0, 3)) ){ flush(); out.push(`<div class="say" style="--sc:${sayColor(m[1])}"><b>${esc(m[1].trim())}</b><span>${rich1(m[2].trim())}</span></div>`); }
+      if(m && /[„"“«»'‚]/.test(m[2].slice(0, 3)) ){ flush(); const np = npcByName(m[1]); out.push(`<div class="say${np?.img ? ' hasp' : ''}" style="--sc:${sayColor(m[1])}">${portraitImg(np, 'saypic')}<b>${esc(m[1].trim())}</b><span>${rich1(m[2].trim())}</span></div>`); }
       else if(line.trim()) para.push(line);
     }
     flush();
@@ -1110,7 +1117,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v13';
+const APP_VERSION = '14. 10. 2026 · v14';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -2297,8 +2304,9 @@ function applyEffects(ef){
     const k = String(n.jmeno).slice(0,40), prev = S.npcs[k], isNew = !prev;
     const z = clamp(int(n.zmena), -30, 30);
     const base = prev ? (prev.skore ?? 0) : (/přát|vděč|věrn|milý/i.test(n.vztah || '') ? 25 : /nepřát|zl|nenávid|podezí/i.test(n.vztah || '') ? -25 : 0);
-    S.npcs[k] = { popis:String(n.popis || prev?.popis || '').slice(0,160), vztah:String(n.vztah || prev?.vztah || 'neutrální').slice(0,30), skore:clamp(base + z, -100, 100) };
+    S.npcs[k] = { ...(prev || {}), popis:String(n.popis || prev?.popis || '').slice(0,160), vztah:String(n.vztah || prev?.vztah || 'neutrální').slice(0,30), skore:clamp(base + z, -100, 100) };
     if(isNew) notes.push({ c:'npc', t:'👤 ' + k });
+    if(isNew && portraitMode() === 'auto' && portraitReady() && namedNpc(k)) setTimeout(() => queuePortrait(k), 50);
     else if(z) notes.push({ c:z > 0 ? 'good' : 'bad', t:`👤 ${k} ${z > 0 ? '💚 +' + z : '💔 ' + z}` });
   }
   for(const pv of arr(ef.povest).slice(0,3)){
@@ -3025,8 +3033,12 @@ function tabNpcs(){
   const npcs = Object.entries(S.npcs);
   if(!npcs.length) return '<div class="empty">Nikoho jsi zatím nepotkal.</div>';
   return npcs.sort((a,b) => (b[1].skore ?? 0) - (a[1].skore ?? 0)).map(([k,n]) => { const sk = n.skore ?? 0;
-    return `<div class="qrow"><b>👤 ${esc(k)} <span class="tag npc" style="color:${relColor(sk)}">${esc(relLabel(sk))}</span></b><small>${esc(n.popis)}</small>
-      <div class="bar relbar"><div style="width:${(sk + 100) / 2}%;background:${relColor(sk)}"></div></div></div>`; }).join('');
+    const pic = n.img ? `<button class="npcp" data-npcpic="${esc(k)}">${portraitImg(n, 'npcpic')}</button>`
+      : n.imgBusy ? `<span class="npcp busy">🖌️</span>`
+      : portraitReady() || portraitMode() !== 'off' && cleanKey(ls.get('kroniky_key_gemini')) ? `<button class="npcp none" data-npcdraw="${esc(k)}" title="Nakreslit portrét">🎨</button>` : `<span class="npcp none">👤</span>`;
+    return `<div class="qrow npcrow">${pic}<div class="npcm"><b>${esc(k)} <span class="tag npc" style="color:${relColor(sk)}">${esc(relLabel(sk))}</span></b><small>${esc(n.popis)}</small>
+      <div class="bar relbar"><div style="width:${(sk + 100) / 2}%;background:${relColor(sk)}"></div></div>${n.imgErr && !n.img ? `<small style="color:var(--blood)">Portrét se nepovedl: ${esc(n.imgErr.slice(0,90))}</small>` : ''}</div></div>`; }).join('')
+    + (portraitMode() !== 'off' && !cleanKey(ls.get('kroniky_key_gemini')) ? '<div class="dnote">Pro portréty postav zadej Gemini klíč (Kronika → AI → Gemini → 🔑). Na text může dál běžet Claude.</div>' : '');
 }
 
 function tabChron(){
@@ -3059,6 +3071,7 @@ function renderDrawer(){
     <div class="tabs">${tabs.map(([k,n]) => `<button class="tab ${jTab===k?'on':''}" data-tab="${k}">${n}</button>`).join('')}</div>
     <div class="jbody">${body}</div>`;
   $('#drawer .jbody').scrollTop = sc;
+  hydrateImages();
   if(detailId && $('#sheet').classList.contains('on')){
     const it = S.inv.find(x => x.id === detailId);
     if(it) $('#sheet').innerHTML = '<div class="grip"></div>' + itemDetail(it); else closeSheet();
@@ -3114,6 +3127,10 @@ $('#drawer').onclick = e => {
   if(pl) return placeSheet(pl.dataset.place);
   const ab = e.target.closest('[data-openabil]');
   if(ab) return abilitiesSheet();
+  const nd = e.target.closest('[data-npcdraw]');
+  if(nd){ delete S.npcs[nd.dataset.npcdraw]?.imgErr; queuePortrait(nd.dataset.npcdraw, true); renderDrawer(); return; }
+  const np = e.target.closest('[data-npcpic]');
+  if(np){ const k = np.dataset.npcpic, n = S.npcs[k]; if(n){ openSheet(`<div class="npcbig">${portraitImg(n, 'npcpic')}</div><h3 style="text-align:center">${esc(k)}</h3><p class="ddesc" style="text-align:center">${esc(n.popis)}</p><button class="btn ghost" data-act="redraw" data-k="${esc(k)}">🔄 Nakreslit znovu</button><button class="cancel" data-act="closesheet">Zavřít</button>`); hydrateImages(); } return; }
   const cd = e.target.closest('[data-cond]');
   if(cd){ const x = allConds()[int(cd.dataset.cond)]; if(x) openSheet(condDetail(x), x.derived || x.typ === 'pozehnani' ? 'r0' : ''); return; }
   const cat = e.target.closest('[data-cat]');
@@ -3142,6 +3159,8 @@ function journalAction(b){
   else if(a === 'book') printBook();
   else if(a === 'toggle'){ const k = b.dataset.k, def = b.dataset.def === '1'; ls.set(k, togOn(k, def) ? (def ? 'off' : '') : (def ? '' : 'on')); if(k === 'dz_tts' && !ttsOn()) stopSpeak(); if(k === 'dz_tw' && !twOn()) twFinish(); SND.kind = undefined; settingsSheet(); render(); }
   else if(a === 'theme'){ ls.set('dz_theme', b.dataset.k === 'parch' ? 'parch' : ''); applyTheme(); settingsSheet(); render(); }
+  else if(a === 'redraw'){ closeSheet(); queuePortrait(b.dataset.k, true); renderDrawer(); }
+  else if(a === 'pmode'){ ls.set('dz_portrait', b.dataset.k); settingsSheet(); }
   else if(a === 'imgmode'){ ls.set('dz_img', b.dataset.k === 'off' ? '' : b.dataset.k); settingsSheet(); render(); }
   else if(a === 'newcode'){ $('#cfgCode').value = randomCode(); }
   else if(a === 'cloudsave'){
@@ -4005,6 +4024,7 @@ function load(id){
   for(const e of g.log || []) delete e.anim;
   for(const e of g.log || []) delete e.imgBusy;
   if(g.recap?.err) delete g.recap.err;
+  for(const n of Object.values(g.npcs || {})) delete n.imgBusy;
   for(const [k, n] of Object.entries(g.npcs || {})) if(typeof n.skore !== 'number') n.skore = /přát|vděč|věrn/i.test(n.vztah || '') ? 30 : /nepřát|zl|nenávid/i.test(n.vztah || '') ? -30 : 0;
   return g;
 }
@@ -4079,10 +4099,71 @@ async function geminiImageModel(){
   if(!r.ok) throw gemErr(r, d);
   const ids = (d?.models || []).filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
     .map(m => m.name.replace(/^models\//, '')).filter(n => /gemini/.test(n) && /image/.test(n));
-  const p = ids.find(n => /flash/.test(n) && !/preview/.test(n)) || ids.find(n => /flash/.test(n)) || ids[0];
+  const p = ids.find(n => /lite/.test(n) && !/preview/.test(n)) || ids.find(n => /lite/.test(n))   /* „Lite“ je nejlevnější */
+    || ids.find(n => /flash/.test(n) && !/preview/.test(n)) || ids.find(n => /flash/.test(n)) || ids[0];
   if(!p) throw new Error('tvůj účet nemá žádný obrázkový model Gemini');
   ls.set('dz_img_model', p); return p;
 }
+/* Jeden obrázek z Gemini → uloží se do IndexedDB, vrací 'idb:…'. */
+async function geminiImage(prompt){
+  const model = await geminiImageModel();
+  const r = await gemFetch(`${GEM}models/${model}:generateContent`, { method:'POST', headers:{ 'Content-Type':'application/json' },
+    body:JSON.stringify({ contents:[{ role:'user', parts:[{ text:prompt }] }], generationConfig:{ responseModalities:['TEXT','IMAGE'] } }) });
+  const d = await r.json().catch(() => null);
+  if(!r.ok){ if(r.status === 404) ls.set('dz_img_model', ''); throw gemErr(r, d); }
+  const part = (d?.candidates?.[0]?.content?.parts || []).find(p => p.inlineData || p.inline_data);
+  const inl = part && (part.inlineData || part.inline_data);
+  if(!inl) throw new Error('model nevrátil obrázek');
+  const id = 'img' + Date.now() + Math.floor(Math.random() * 1000);
+  const url = `data:${inl.mimeType || inl.mime_type || 'image/png'};base64,${inl.data}`;
+  await idbPut(id, url); IMGCACHE[id] = url;
+  return 'idb:' + id;
+}
+
+/* ---------- Portréty postav ---------- */
+const portraitMode = () => ['auto','tap','off'].includes(ls.get('dz_portrait')) ? ls.get('dz_portrait') : 'auto';
+const portraitReady = () => portraitMode() !== 'off' && !!cleanKey(ls.get('kroniky_key_gemini')) && !isDemoNoKey();
+const isDemoNoKey = () => new URLSearchParams(location.search).has('demo');
+/* Jen pojmenované postavy – ne „stráž“, „vesničan 2“… */
+const GENERIC_NPC = ['stráž','voják','vojác','muž','žena','chlap','stařec','stařen','dítě','kluk','holk','vesničan','sedlák','měšťan','hostinsk','obchodník','kupec','bandit','lupič','zbojník','goblin','vlk','krys','kostlivec','zombi','nemrtv','pirát','námořník','cizinec','posel','žebrák','opilec','kněz','mnich','tulák','lovec','rybář','sluh','děvečk','žoldnéř','hlídk','kultist','skřet','ork'];
+/* Jen pojmenované postavy: musí mít vlastní jméno (velké písmeno, ne obecné označení ani přídavné jméno).
+   „Hostinský Bořek“ ano, „Městská stráž“ / „Opilý námořník“ / „Vesničan 2“ ne. */
+const namedNpc = n => {
+  if(/\d/.test(n)) return false;
+  const gen = x => GENERIC_NPC.some(p => x.startsWith(p) && x.length - p.length <= 4);
+  const words = n.replace(/[()„“"]/g, ' ').split(/[\s,]+/).filter(Boolean);
+  if(words.length === 1) return !gen(low(words[0]));
+  return words.some(w => /^\p{Lu}/u.test(w) && !gen(low(w)) && !/(ý|á|é|í)$/.test(low(w)));
+};
+let portraitQ = [], portraitBusy = false;
+function queuePortrait(name, force){
+  const n = S?.npcs?.[name]; if(!n || n.imgBusy || (n.img && !force) || portraitQ.includes(name)) return;
+  portraitQ.push(name); runPortraits();
+}
+async function runPortraits(){
+  if(portraitBusy || !portraitQ.length) return;
+  portraitBusy = true;
+  const slot = S?.slot;
+  while(portraitQ.length && S && S.slot === slot){
+    const name = portraitQ.shift(), n = S.npcs[name]; if(!n) continue;
+    n.imgBusy = true; renderDrawer(); render();
+    try{
+      const img = await geminiImage(`Portrét postavy z fantasy hry ve stylu středověkého dřevorytu a iluminovaného rukopisu: sépiový inkoust na zestárlém pergamenu, jemné šrafování, pohled zepředu, hlava a ramena, čtvercový formát, bez jakéhokoli textu, písmen či rámečku. Svět: ${SETTINGS[S.setting].nazev}. Postava: ${name} – ${n.popis || 'obyvatel kraje'}.`);
+      if(S && S.slot === slot && S.npcs[name]){ S.npcs[name].img = img; save(); }
+    }catch(e){ if(S?.npcs?.[name]) S.npcs[name].imgErr = e.message; }
+    if(S?.npcs?.[name]) delete S.npcs[name].imgBusy;
+    render(); if($('#drawer').classList.contains('on')) renderDrawer();
+  }
+  portraitBusy = false;
+}
+/* Portrét k replice v rozhovoru – podle jména (i zkráceného). */
+function npcByName(nm){
+  if(!S?.npcs) return null;
+  const t = low(nm.trim());
+  const k = Object.keys(S.npcs).find(k => low(k) === t) || Object.keys(S.npcs).find(k => low(k).split(/[\s,(]+/)[0] === t.split(/[\s,(]+/)[0] && t.length > 2);
+  return k ? S.npcs[k] : null;
+}
+const portraitImg = (n, cls) => n?.img ? `<img class="${cls}" data-src="${esc(n.img)}" alt="">` : '';
 async function illustrate(idx){
   const e = S.log[idx];
   if(!e || e.t !== 'dm' || e.imgBusy || imgMode() === 'off') return;
@@ -4092,26 +4173,14 @@ async function illustrate(idx){
     if(imgMode() === 'pollinations'){
       e.img = `https://image.pollinations.ai/prompt/${encodeURIComponent('medieval woodcut illustration, sepia ink on aged parchment, fine hatching, no text, no letters. ' + scene.slice(0, 380))}?width=768&height=512&nologo=true&seed=${hashStr(e.text) % 100000}`;
     }else{
-      const model = await geminiImageModel();
-      const r = await gemFetch(`${GEM}models/${model}:generateContent`, { method:'POST',
-        headers:{ 'Content-Type':'application/json' },
-        body:JSON.stringify({ contents:[{ role:'user', parts:[{ text:'Nakresli ilustraci ve stylu středověkého dřevorytu a iluminovaného rukopisu: sépiový inkoust na zestárlém pergamenu, jemné šrafování, bez jakéhokoli textu či písmen. Scéna: ' + scene }] }],
-          generationConfig:{ responseModalities:['TEXT','IMAGE'] } }) });
-      const d = await r.json().catch(() => null);
-      if(!r.ok){ if(r.status === 404) ls.set('dz_img_model', ''); throw gemErr(r, d); }
-      const part = (d?.candidates?.[0]?.content?.parts || []).find(p => p.inlineData || p.inline_data);
-      const inl = part && (part.inlineData || part.inline_data);
-      if(!inl) throw new Error('model nevrátil obrázek');
-      const id = 'img' + Date.now();
-      await idbPut(id, `data:${inl.mimeType || inl.mime_type || 'image/png'};base64,${inl.data}`);
-      e.img = 'idb:' + id;
+      e.img = await geminiImage('Nakresli ilustraci ve stylu středověkého dřevorytu a iluminovaného rukopisu: sépiový inkoust na zestárlém pergamenu, jemné šrafování, bez jakéhokoli textu či písmen. Scéna: ' + scene);
     }
   }catch(err){ alert('Ilustraci se nepodařilo vytvořit: ' + err.message); }
   e.imgBusy = false; render(); save();
 }
 /* Načte obrázky uložené v IndexedDB do vykreslených <img>. */
 function hydrateImages(){
-  document.querySelectorAll('#log img.illu[data-src]').forEach(async im => {
+  document.querySelectorAll('img.illu[data-src], img.npcpic[data-src], img.saypic[data-src]').forEach(async im => {
     const src = im.dataset.src;
     if(!src.startsWith('idb:')){ if(im.src !== src) im.src = src; return; }
     const k = src.slice(4);
@@ -4233,6 +4302,9 @@ function settingsSheet(){
   const im = imgMode();
   openSheet(`<h3>⚙️ Nastavení hry</h3>
     ${TOGGLES.map(([k, n, d, def]) => `<button class="tog ${togOn(k, def) ? 'on' : ''}" data-act="toggle" data-k="${k}" data-def="${def ? 1 : 0}"><span class="mid"><b>${n}</b><small>${d}</small></span><span class="sw"></span></button>`).join('')}
+    <div class="flbl">👤 Portréty postav (Gemini)</div>
+    <div class="seg">${[['auto','Automaticky'],['tap','Po klepnutí'],['off','Vypnuto']].map(([k,n]) => `<button class="${portraitMode() === k ? 'on' : ''}" data-act="pmode" data-k="${k}">${n}</button>`).join('')}</div>
+    <div class="dnote" style="text-align:left">${cleanKey(ls.get('kroniky_key_gemini')) ? 'Portrét se nakreslí jen jednou pro každou pojmenovanou postavu a uloží se. Cena zhruba 0,80 Kč za obrázek (placený Gemini účet).' : 'Potřebuje Gemini klíč s placeným účtem – zadej ho v Kronice (AI → Gemini → 🔑). Text může dál psát Claude.'}</div>
     <div class="flbl">🖼️ Ilustrace scén</div>
     <div class="seg">${[['off','Vypnuto'],['gemini','Gemini'],['pollinations','Pollinations']].map(([k,n]) => `<button class="${im === k ? 'on' : ''}" data-act="imgmode" data-k="${k}">${n}</button>`).join('')}</div>
     <div class="dnote" style="text-align:left">${im === 'gemini' ? 'Gemini obrázky jsou <b>placené</b> (bezplatný tarif je nepokrývá). Ilustraci si vyžádáš tlačítkem 🖼️ pod vyprávěním.' : im === 'pollinations' ? 'Pollinations je zdarma bez klíče, ale <b>nespolehlivé</b>: služba bezplatný přístup omezila, může být pomalá, dávat vodoznak nebo nefungovat.' : 'Pod vyprávěním se objeví tlačítko 🖼️, až ilustrace zapneš.'}</div>
