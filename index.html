@@ -190,6 +190,7 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .panel{display:none;text-align:center}
 .panel.on{display:block}
 .why{font-size:16px;color:var(--muted);margin-bottom:6px}
+.why .dcl{font-size:14px;opacity:.85}
 .rollalt{display:block;width:100%;margin-top:8px;padding:8px;font-size:15px;color:var(--muted);font-style:italic;border:1px dashed var(--line2);border-radius:5px}
 .e.choices{border:1px solid var(--line2);border-radius:5px;background:rgba(255,250,235,.16);padding:4px 0 2px;margin-top:4px}
 .chh{font-family:var(--fc);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--blood);padding:4px 12px 6px;font-weight:700}
@@ -1130,7 +1131,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v19';
+const APP_VERSION = '14. 10. 2026 · v20';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1720,7 +1721,7 @@ Typické zbraně: dýka 1d4, krátký meč 1d6, sekera/meč 1d8, obouruční 1d1
 VÝSTUP – vrať POUZE platný JSON:
 {
   "vypraveni": "text pro hráče, **tučně** důležité názvy",
-  "zkouska": null nebo {"vlastnost": "obratnost", "obtiznost": 12, "duvod": "krátce", "utok": null, "cil": null, "proti": null, "vyhoda": false, "nevyhoda": false},
+  "zkouska": null nebo {"vlastnost": "obratnost", "obtiznost": 5–30 podle tabulky OBTÍŽNOST, "duvod": "krátce", "utok": null, "cil": null, "proti": null, "vyhoda": false, "nevyhoda": false},
   "efekty": {
     "hp": 0, "zlato": 0,
     "pridat": [PŘEDMĚT], "odebrat": ["přesný název z inventáře"],
@@ -1738,6 +1739,7 @@ VÝSTUP – vrať POUZE platný JSON:
   "shrnuti": null
 }
 - "efekty" obsahují JEN to, co se v tomto kroku skutečně stalo. hp a zlato jsou změny (např. -3), ne nové hodnoty. Nepoužitá pole vynech nebo nech prázdná.
+- OBTÍŽNOST zkoušky (D&D 2024) urči podle toho, jak těžký úkol je PRO KAŽDÉHO, ne podle hráče: 5 velmi snadná (přelézt nízkou zídku), 10 snadná (vylézt po laně s uzly, uklidnit vyplašeného koně), 15 středně těžká (vypáčit obyčejný zámek, přesvědčit podezíravého strážného), 20 těžká (přeskočit propast 4 m, oklamat zkušeného vyšetřovatele), 25 velmi těžká (vylézt po kluzké kolmé stěně v bouři), 30 téměř nemožná. Okolnosti obtížnost mění: tma, déšť, spěch, zranění, odpor NPC zvyšují; dobrá příprava, nástroje a pomoc snižují (nebo dej výhodu/nevýhodu). NEDÁVEJ pořád stejné číslo.
 - Když vyplňuješ "zkouska", nedávej do efektů výsledek té zkoušky. Vyprávění pak skonči POPISEM POKUSU (hráč se natahuje, zkoumá, přesvědčuje…), NIKDY otázkou „co uděláš?“ – teď hráč hází. Na další krok se ptej až po výsledku.
 - "navrhy": vždy 3–4 opravdu odlišné možnosti, které v situaci dávají smysl – např. opatrná, odvážná, mluvení s někým, chytrý nápad nebo využití věci z inventáře. Hráč si vybere jednu, nebo napíše vlastní.`;
 
@@ -2372,7 +2374,7 @@ function setPending(z){
   if(!z || typeof z !== 'object' || S.dead) return;
   let utok = ['zbran','kouzlo'].includes(z.utok) ? z.utok : null;
   if(utok === 'kouzlo' && !spell()) utok = 'zbran';
-  let vl = z.vlastnost, foe = null, dc = clamp(int(z.obtiznost) || 12, 5, 25);
+  let vl = z.vlastnost, foe = null, dc = clamp(int(z.obtiznost) || 15, 5, 30);
   if(utok){
     const w = usableWeapon();
     vl = utok === 'kouzlo' ? spell().vlastnost : (w ? w.vlastnost : fists().stat);
@@ -2842,7 +2844,7 @@ function render(){
     const p = S.pending, parts = rollParts(p), foe = p.cilId ? S.foes.find(f => f.id === p.cilId) : null;
     $('#rollWhy').innerHTML = p.utok
       ? `⚔️ <b>${esc(attackInfo(p).nazev)}</b>${foe ? ' → <b>' + esc(foe.jmeno) + '</b>' : ''} · d20 ${esc(partsText(parts))} · obrana <b>${p.obtiznost}</b><br>zranění ${esc(attackInfo(p).dice)} ${fmtMod(mod(c.stats[p.vlastnost]) + attackInfo(p).bonus)}`
-      : `Zkouška: <b>${esc(statName(p.vlastnost))}</b> (d20 ${esc(partsText(parts))}) · obtížnost <b>${p.obtiznost}</b>${p.duvod ? '<br>' + esc(p.duvod) : ''}`;
+      : `Zkouška: <b>${esc(statName(p.vlastnost))}</b> (d20 ${esc(partsText(parts))}) · obtížnost <b>${p.obtiznost}</b> <i class="dcl">${dcLabel(p.obtiznost)}</i>${p.duvod ? '<br>' + esc(p.duvod) : ''}`;
   }
 
   const locked = !canAct();
@@ -2857,6 +2859,7 @@ function render(){
   if(S.statPicks && canAct() && !$('#sheet').classList.contains('on') && !S._lvlAsked){ S._lvlAsked = true; setTimeout(levelUpPick, 900); }
 }
 
+const dcLabel = dc => dc <= 7 ? 'velmi snadná' : dc <= 12 ? 'snadná' : dc <= 17 ? 'středně těžká' : dc <= 22 ? 'těžká' : dc <= 27 ? 'velmi těžká' : 'téměř nemožná';
 /* Možnosti od Pána jeskyně pod posledním vyprávěním + vlastní akce. */
 function choicesHTML(){
   if(!S || busy || S.dead || S.dying || S.pending || S.loot || !canAct()) return '';
