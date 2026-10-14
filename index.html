@@ -395,9 +395,9 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .abil.react{border-style:dashed}
 .e.dm .say{clear:both;margin:4px 0 9px;padding:3px 0 3px 12px;border-left:3px solid var(--sc)}
 .e.dm .say b{display:block;font-family:var(--fc);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sc);font-weight:700}
-.e.dm .say span{display:block;font-style:italic}
-.e.dm .say.hasp{padding-left:62px;position:relative;min-height:54px}
-.saypic{position:absolute;left:10px;top:4px;width:44px;height:44px;object-fit:cover;border-radius:50%;border:2px solid var(--sc);box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.e.dm .say > span{display:block;font-style:italic}
+.e.dm .say.hasp{padding-left:100px;position:relative;min-height:92px}
+.saypic{position:absolute;left:12px;top:4px;width:80px;height:80px;object-fit:cover;border-radius:50%;border:3px solid var(--sc);box-shadow:0 2px 6px rgba(0,0,0,.4);cursor:pointer}
 .npcrow{display:flex;gap:12px;align-items:flex-start}.npcm{flex:1;min-width:0}
 .npcp{width:58px;height:58px;flex:none;border-radius:50%;overflow:hidden;border:2px solid var(--line2);display:grid;place-items:center;font-size:24px;background:rgba(255,250,235,.2);padding:0}
 .npcp img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1117,7 +1117,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v14';
+const APP_VERSION = '14. 10. 2026 · v15';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -3110,6 +3110,7 @@ $('#rollBtn').onclick = roll;
 $('#log').onclick = e => {
   if(e.target.closest('#retry')){ const inp = S.lastFailed; S.log.pop(); return callDM(inp); }
   const il = e.target.closest('[data-illu]'); if(il) return illustrate(int(il.dataset.illu));
+  const pp = e.target.closest('img[data-npcpic]'); if(pp) return npcSheet(pp.dataset.npcpic);
   const go = e.target.closest('[data-goto]'); if(go){ jTab = go.dataset.goto; openDrawer(); $('#drawer .jbody').scrollTop = 0; return; }
   const sy = e.target.closest('[data-say]'); if(sy) return speak(S.log[int(sy.dataset.say)]?.text || '');
   if(TW && e.target.closest('.e.dm.tw')) return twFinish();
@@ -3130,7 +3131,7 @@ $('#drawer').onclick = e => {
   const nd = e.target.closest('[data-npcdraw]');
   if(nd){ delete S.npcs[nd.dataset.npcdraw]?.imgErr; queuePortrait(nd.dataset.npcdraw, true); renderDrawer(); return; }
   const np = e.target.closest('[data-npcpic]');
-  if(np){ const k = np.dataset.npcpic, n = S.npcs[k]; if(n){ openSheet(`<div class="npcbig">${portraitImg(n, 'npcpic')}</div><h3 style="text-align:center">${esc(k)}</h3><p class="ddesc" style="text-align:center">${esc(n.popis)}</p><button class="btn ghost" data-act="redraw" data-k="${esc(k)}">🔄 Nakreslit znovu</button><button class="cancel" data-act="closesheet">Zavřít</button>`); hydrateImages(); } return; }
+  if(np){ npcSheet(np.dataset.npcpic); return; }
   const cd = e.target.closest('[data-cond]');
   if(cd){ const x = allConds()[int(cd.dataset.cond)]; if(x) openSheet(condDetail(x), x.derived || x.typ === 'pozehnani' ? 'r0' : ''); return; }
   const cat = e.target.closest('[data-cat]');
@@ -4161,9 +4162,16 @@ function npcByName(nm){
   if(!S?.npcs) return null;
   const t = low(nm.trim());
   const k = Object.keys(S.npcs).find(k => low(k) === t) || Object.keys(S.npcs).find(k => low(k).split(/[\s,(]+/)[0] === t.split(/[\s,(]+/)[0] && t.length > 2);
-  return k ? S.npcs[k] : null;
+  return k ? { ...S.npcs[k], key:k } : null;
 }
-const portraitImg = (n, cls) => n?.img ? `<img class="${cls}" data-src="${esc(n.img)}" alt="">` : '';
+const portraitImg = (n, cls) => n?.img ? `<img class="${cls}" data-src="${esc(n.img)}" alt=""${n.key ? ` data-npcpic="${esc(n.key)}"` : ''}>` : '';
+function npcSheet(k){
+  const n = S.npcs[k]; if(!n) return;
+  openSheet(`<div class="npcbig">${portraitImg(n, 'npcpic')}</div><h3 style="text-align:center">${esc(k)}</h3><p class="ddesc" style="text-align:center">${esc(n.popis)}</p>
+    <p style="text-align:center;margin-bottom:8px"><span class="tag npc" style="color:${relColor(n.skore ?? 0)}">${esc(relLabel(n.skore ?? 0))}</span></p>
+    ${n.img || portraitMode() !== 'off' ? `<button class="btn ghost" data-act="redraw" data-k="${esc(k)}">${n.img ? '🔄 Nakreslit znovu' : '🎨 Nakreslit portrét'}</button>` : ''}<button class="cancel" data-act="closesheet">Zavřít</button>`);
+  hydrateImages();
+}
 async function illustrate(idx){
   const e = S.log[idx];
   if(!e || e.t !== 'dm' || e.imgBusy || imgMode() === 'off') return;
@@ -4181,6 +4189,7 @@ async function illustrate(idx){
 /* Načte obrázky uložené v IndexedDB do vykreslených <img>. */
 function hydrateImages(){
   document.querySelectorAll('img.illu[data-src], img.npcpic[data-src], img.saypic[data-src]').forEach(async im => {
+    if(im.dataset.done) return; im.dataset.done = 1;
     const src = im.dataset.src;
     if(!src.startsWith('idb:')){ if(im.src !== src) im.src = src; return; }
     const k = src.slice(4);
