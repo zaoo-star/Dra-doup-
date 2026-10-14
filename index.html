@@ -190,6 +190,14 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .panel{display:none;text-align:center}
 .panel.on{display:block}
 .why{font-size:16px;color:var(--muted);margin-bottom:6px}
+.rollalt{display:block;width:100%;margin-top:8px;padding:8px;font-size:15px;color:var(--muted);font-style:italic;border:1px dashed var(--line2);border-radius:5px}
+.e.choices{border:1px solid var(--line2);border-radius:5px;background:rgba(255,250,235,.16);padding:4px 0 2px;margin-top:4px}
+.chh{font-family:var(--fc);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--blood);padding:4px 12px 6px;font-weight:700}
+.cho{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:9px 12px;border-top:1px dotted var(--line);font-size:17px;line-height:1.3}
+.cho b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-family:var(--fc);font-size:13px;color:#f6e6c4;background:var(--seal);margin-top:1px}
+.cho.own b{background:none;color:inherit;font-size:16px}
+.cho.own span{font-style:italic;color:var(--muted)}
+.cho:active{background:rgba(201,154,58,.2)}
 .why b{color:var(--text)}
 #rollBtn{width:100%;padding:13px;border-radius:6px;background:var(--seal);color:#f6e6c4;font-family:var(--fc);font-weight:700;font-size:18px;letter-spacing:.05em;border:1px solid #5a1209;box-shadow:0 2px 5px rgba(60,20,5,.35);text-shadow:0 1px 1px rgba(0,0,0,.4)}
 #lootHint{color:var(--blood);font-size:16px;padding:6px 0;font-style:italic}
@@ -572,6 +580,7 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
     <div class="panel" id="rollPanel">
       <div class="why" id="rollWhy"></div>
       <button id="rollBtn">🎲 Hoď d20</button>
+      <button id="rollAlt" class="rollalt">↩️ Rozmyslet si to – udělat něco jiného</button>
     </div>
     <div class="panel" id="lootPanel"><div id="lootHint">👆 Vyber, co si z nálezu vezmeš</div></div>
     <div id="actPanel">
@@ -1121,7 +1130,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v17';
+const APP_VERSION = '14. 10. 2026 · v19';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1725,11 +1734,12 @@ VÝSTUP – vrať POUZE platný JSON:
     "xp": 0, "povest": [], "jezdecke": null, "oprava": null,
     "npc": [{"jmeno": "...", "popis": "krátce", "vztah": "přátelský/neutrální/podezíravý/nepřátelský", "zmena": 0}]
   },
-  "navrhy": ["2–3 krátké návrhy dalších akcí, max 5 slov"],
+  "navrhy": ["3–4 krátké a RŮZNÉ možnosti, co může hráč udělat teď (max 6 slov)"],
   "shrnuti": null
 }
 - "efekty" obsahují JEN to, co se v tomto kroku skutečně stalo. hp a zlato jsou změny (např. -3), ne nové hodnoty. Nepoužitá pole vynech nebo nech prázdná.
-- Když vyplňuješ "zkouska", nedávej do efektů výsledek té zkoušky.`;
+- Když vyplňuješ "zkouska", nedávej do efektů výsledek té zkoušky. Vyprávění pak skonči POPISEM POKUSU (hráč se natahuje, zkoumá, přesvědčuje…), NIKDY otázkou „co uděláš?“ – teď hráč hází. Na další krok se ptej až po výsledku.
+- "navrhy": vždy 3–4 opravdu odlišné možnosti, které v situaci dávají smysl – např. opatrná, odvážná, mluvení s někým, chytrý nápad nebo využití věci z inventáře. Hráč si vybere jednu, nebo napíše vlastní.`;
 
 function publicState(){
   const c = S.char, w = equipped('zbran'), sp = spell();
@@ -2107,7 +2117,7 @@ function applyResponse(res, needSummary, input = {}){
     if(attackers.length) addLog({ t:'sys', text:'⚡ Nepřátelé jsou rychlejší – útočí jako první.' });
   }
   foeAttacks(attackers);
-  S.suggestions = arr(res.navrhy).slice(0,3).map(x => String(x).slice(0,60));
+  S.suggestions = arr(res.navrhy).slice(0,4).map(x => String(x).slice(0,70)).filter(x => x.trim());
   setPending(res.zkouska);
   if(S.cb){ if(!S.foes.length) endCombat(); else if(!S.pending) newPlayerTurn(); }
   if(needSummary && res.shrnuti){
@@ -2491,12 +2501,47 @@ async function roll(){
    ========================================================= */
 const canAct = () => S && !busy && !S.pending && !S.loot && !S.dead && !S.queue && !S.dying;
 
+/* Kontrola inventáře: když hráč napíše, že použije/vytáhne/vypije… věc, kterou nemá, hra to AI výslovně řekne. */
+const fold = t => low(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const ITEM_VERB = /\b(pouziju|pouziji|pouzij|vypiju|vypiji|vytahnu|vytahnu si|vytahuju|vyndam|nasadim|navleknu|obleknu|pripnu|hodim|vrhnu|mrstim|zapalim|rozsvitim|prectu|snim|sniju|zahraju na|zatroubim na|nabidnu mu|nabidnu ji|nabidnu|daruju|dam mu|dam ji|ukazu mu|ukazu ji|ukazu|vystrelim z|strelim z|odemknu|pacim|pripravim si|natru|obvazu)\s+([^.,;!?]+)/g;
+const SKIP_W = /^(ho|ji|je|to|ten|ta|tu|tom|svuj|svou|svoje|svym|svymi|si|se|mu|jim|na|do|z|ze|s|se|proti|a|pak|hned|rychle|opatrne|jeho|jeji|jejich|vsechno|vse|neco|nejaky|nejakou|nejake|posledni|cely|celou|tento|tuto|toto|ruce|ruku|rukou|pest|pesti|nohu|hlas|oci|kouzlo|schopnost|plan|lest|trik|odvahu|silu|vsechnu|dvere|zamek|okno|bednu|truhlu)$/;
+const ITEM_SYN = { zbran:'zbran mec sekera dyka luk kuse kopi palcat hul', zbroj:'zbroj brneni kosile', stit:'stit puklir', lektvar:'lektvar napoj elixir lahvicka', svitek:'svitek svitky', jidlo:'jidlo zasoby chleba chleb maso syr davku', doplnek:'prsten amulet nahrdelnik', ostatni:'' };
+function missingItems(text){
+  if(!S) return [];
+  const T = fold(text), out = [];
+  const have = new Set();
+  for(const it of S.inv){ for(const w of fold(it.nazev + ' ' + (ITEM_SYN[it.typ] || '')).split(/[^a-z0-9]+/)) if(w.length >= 3) have.add(w.slice(0, 4)); }
+  if(S.char.zlato > 0) for(const w of ['zlat','penez','penize','minc','mesec']) have.add(w.slice(0, 4));
+  for(const a of knownAbilities ? knownAbilities() : []) for(const w of fold(a.nazev).split(/[^a-z0-9]+/)) if(w.length >= 3) have.add(w.slice(0, 4));
+  const sp = spell(); if(sp) for(const w of fold(sp.nazev).split(/[^a-z0-9]+/)) if(w.length >= 3) have.add(w.slice(0, 4));
+  let m; ITEM_VERB.lastIndex = 0;
+  while((m = ITEM_VERB.exec(T))){
+    /* úsek za slovesem: přeskoč úvodní zájmena/předložky („po něm“), pak ber slova do první spojky či předložky */
+    const PREP = /^(a|i|na|s|se|do|po|z|ze|k|ke|proti|u|v|ve|za|pred|pod|nad|mezi|aby|kdyz|nebo|pak|abych)$/;
+    const PRON = /^(nem|ni|nej|nemu|ho|mu|ji|je|jim|si|se|to|ten|ta|tu|svuj|svou|svoje|svym|jeho|jeji|jejich)$/;
+    const raw = m[2].split(/\s+/).filter(Boolean), st0 = m.index + m[0].length - m[2].length;
+    let i = 0; while(i < raw.length && (PREP.test(raw[i]) || PRON.test(raw[i]))) i++;
+    const words = []; for(; i < raw.length && words.length < 3; i++){ if(PREP.test(raw[i])) break; if(!SKIP_W.test(raw[i])) words.push(raw[i]); }
+    if(!words.length || words.every(w => w.length < 3)) continue;
+    if(words.some(w => w.length >= 3 && have.has(w.slice(0, 4)))) continue;
+    /* stejná slova v původním textu (fold() nemění délku) */
+    const origAll = String(text).substr(st0, m[2].length).split(/\s+/).filter(Boolean);
+    const orig = words.map(w => origAll[raw.indexOf(w)] || w).slice(0, 2).join(' ').replace(/[„“"]/g, '');
+    if(!out.includes(orig)) out.push(orig);
+  }
+  return out.slice(0, 3);
+}
 function act(text, shown){
   text = String(text || '').trim().slice(0,500);
   if(!text || !canAct()) return;
   twFinish(); stopSpeak();
   addLog({ t:'player', text:shown || text });
   book('hrac', shown || text);
+  const miss = missingItems(text);
+  if(miss.length){
+    addLog({ t:'fx', notes:miss.map(x => ({ c:'bad', t:`🎒 V batohu nic jako „${x}“ nemáš` })) });
+    text += ` [HRA: hráč NEMÁ v inventáři nic jako ${miss.map(x => '„' + x + '“').join(', ')} (ověřeno hrou). Pokud to není věc z okolí, která tam ve scéně opravdu je, v příběhu ji použít nemůže – akci odmítni nebo popiš, že ji nenašel.]`;
+  }
   S.history.push({ kdo:'hrac', text });
   $('#input').value = ''; autosize();
   callDM({ typ:'akce', text });
@@ -2775,7 +2820,7 @@ function render(){
   const log = $('#log');
   const merged = [];
   S.log.forEach((e, i) => { const last = merged[merged.length - 1]; if(e.t === 'fx' && last && last.e.t === 'fx') last.e = { ...last.e, notes:last.e.notes.concat(e.notes) }; else merged.push({ e, i }); });
-  log.innerHTML = merged.map(x => logHTML(x.e, x.i)).join('');
+  log.innerHTML = merged.map(x => logHTML(x.e, x.i)).join('') + choicesHTML();
   twApply(); hydrateImages();
   /* Po novém vyprávění skoč na jeho začátek, ať se čte odshora. Jinak dolů. */
   const toNew = scrollNew; scrollNew = false;
@@ -2791,6 +2836,7 @@ function render(){
   $('#lootPanel').classList.toggle('on', mode === 'loot');
   $('#actPanel').style.display = mode === 'act' ? 'block' : 'none';
   $('#rollBtn').textContent = S.dying ? '🎲 Hoď o život' : '🎲 Hoď d20';
+  $('#rollAlt').style.display = mode === 'roll' && S.pending && !S.dying && !S.pending.proti ? 'block' : 'none';
   if(S.dying) $('#rollWhy').innerHTML = `💀 <b>Na pokraji smrti</b> · 10+ = úspěch · 3 úspěchy = přežiješ, 3 selhání = smrt<br><b style="color:var(--green)">${'✔ '.repeat(S.dying.ok) || '–'}</b> &nbsp; <b style="color:var(--blood)">${'✘ '.repeat(Math.min(3, S.dying.ko)) || '–'}</b>`;
   else if(S.pending){
     const p = S.pending, parts = rollParts(p), foe = p.cilId ? S.foes.find(f => f.id === p.cilId) : null;
@@ -2803,7 +2849,7 @@ function render(){
   $('#chips').innerHTML = S.dead
     ? `<button class="chip" id="newChip">⚔️ Nový hrdina</button>`
     : quickActions().map(([k,l,c2]) => `<button class="chip ${c2 ? '' : 'quick'}" data-quick="${k}" ${locked && k !== 'c:stand' ? 'disabled' : ''}>${l}</button>`).join('')
-      + S.suggestions.map(s => `<button class="chip" ${locked?'disabled':''}>${esc(s)}</button>`).join('');
+      ;
   $('#input').disabled = locked; $('#send').disabled = locked;
   $('#input').placeholder = S.dead ? 'Příběh skončil.' : 'Co uděláš?';
   renderDrawer();
@@ -2811,6 +2857,14 @@ function render(){
   if(S.statPicks && canAct() && !$('#sheet').classList.contains('on') && !S._lvlAsked){ S._lvlAsked = true; setTimeout(levelUpPick, 900); }
 }
 
+/* Možnosti od Pána jeskyně pod posledním vyprávěním + vlastní akce. */
+function choicesHTML(){
+  if(!S || busy || S.dead || S.dying || S.pending || S.loot || !canAct()) return '';
+  const last = S.log[S.log.length - 1];
+  if(!S.suggestions?.length || !last || last.t === 'player') return '';
+  return `<div class="e choices"><div class="chh">Co uděláš?</div>${S.suggestions.map((t, i) => `<button class="cho" data-choice="${i}"><b>${i + 1}</b><span>${esc(t)}</span></button>`).join('')}
+    <button class="cho own" data-choice="own"><b>✍️</b><span>Vlastní akce – napiš, co uděláš</span></button></div>`;
+}
 /* Rychlé akce podle situace – nabízí se jen, když dávají smysl. */
 const healPotion = () => S.inv.find(i => i.typ === 'lektvar' && i.leceni);
 const food = () => S.inv.find(i => i.typ === 'jidlo');
@@ -3109,10 +3163,20 @@ $('#chips').onclick = e => {
 };
 $('#conds').onclick = e => { const b = e.target.closest('[data-cond]'); if(!b) return; const x = allConds()[int(b.dataset.cond)]; if(x) openSheet(condDetail(x), x.derived || x.typ === 'pozehnani' ? 'r0' : ''); };
 $('#rollBtn').onclick = roll;
+/* Hráč nemusí hodit – může si to rozmyslet (kromě záchranných hodů, které na něj hra uvalila). */
+$('#rollAlt').onclick = () => {
+  if(!S.pending || rolling || busy || S.dying || S.pending.proti) return;
+  const p = S.pending; S.pending = null;
+  hist(`Hráč si to rozmyslel a ${p.utok ? 'neútočí' : 'zkoušku (' + statName(p.vlastnost) + ') nehází'} – udělá něco jiného.`);
+  addLog({ t:'sys', text:'↩️ Rozmyslel sis to.' });
+  render(); save(); $('#input').focus();
+};
 $('#log').onclick = e => {
   if(e.target.closest('#retry')){ const inp = S.lastFailed; S.log.pop(); return callDM(inp); }
   const il = e.target.closest('[data-illu]'); if(il) return illustrate(int(il.dataset.illu));
   const pp = e.target.closest('img[data-npcpic]'); if(pp) return npcSheet(pp.dataset.npcpic);
+  const ch = e.target.closest('[data-choice]');
+  if(ch){ if(ch.dataset.choice === 'own'){ $('#input').focus(); $('#input').scrollIntoView?.({ block:'nearest' }); return; } const t = S.suggestions[int(ch.dataset.choice)]; if(t) act(t); return; }
   const go = e.target.closest('[data-goto]'); if(go){ jTab = go.dataset.goto; openDrawer(); $('#drawer .jbody').scrollTop = 0; return; }
   const sy = e.target.closest('[data-say]'); if(sy) return speak(S.log[int(sy.dataset.say)]?.text || '');
   if(TW && e.target.closest('.e.dm.tw')) return twFinish();
