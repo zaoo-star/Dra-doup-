@@ -1258,7 +1258,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '15. 10. 2026 · v32';
+const APP_VERSION = '15. 10. 2026 · v33';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -2013,7 +2013,43 @@ function parseJSON(text){
   try{ return JSON.parse(text); }catch(e){}
   const m = String(text).match(/\{[\s\S]*\}/);
   if(m){ try{ return JSON.parse(m[0]); }catch(e){} }
+  return repairJSON(text);
+}
+/* Oprava drobných chyb AI: ```json obal, čárka před závorkou, useknutý konec (dovře řetězec a závorky). */
+function repairJSON(text){
+  let t = String(text || '').replace(/```(?:json)?/gi, '');
+  const i = t.indexOf('{'); if(i < 0) return null;
+  t = t.slice(i).replace(/,\s*([}\]])/g, '$1');
+  try{ return JSON.parse(t); }catch(e){}
+  const stack = []; let inStr = false, esc = false, lastSafe = 0;
+  for(let k = 0; k < t.length; k++){
+    const ch = t[k];
+    if(inStr){ if(esc) esc = false; else if(ch === '\\') esc = true; else if(ch === '"') inStr = false; continue; }
+    if(ch === '"') inStr = true;
+    else if(ch === '{' || ch === '[') stack.push(ch === '{' ? '}' : ']');
+    else if(ch === '}' || ch === ']'){ stack.pop(); if(!stack.length){ lastSafe = k + 1; break; } }
+    else if(ch === ',') lastSafe = k;
+  }
+  if(!stack.length && lastSafe){ try{ return JSON.parse(t.slice(0, lastSafe)); }catch(e){} }
+  /* useknuté: zahodit rozepsanou poslední položku a dovřít */
+  let cut = t;
+  if(inStr) cut += '"';
+  const close = () => { const st = []; let s2 = false, e2 = false; for(const ch of cut){ if(s2){ if(e2) e2 = false; else if(ch === '\\') e2 = true; else if(ch === '"') s2 = false; continue; } if(ch === '"') s2 = true; else if(ch === '{' || ch === '[') st.push(ch === '{' ? '}' : ']'); else if(ch === '}' || ch === ']') st.pop(); } return st.reverse().join(''); };
+  for(let tries = 0; tries < 6; tries++){
+    try{ return JSON.parse(cut.replace(/,\s*$/, '') + close()); }catch(e){}
+    const c = Math.max(cut.lastIndexOf(','), 0); if(!c) break;
+    cut = cut.slice(0, c);
+  }
   return null;
+}
+/* Když se JSON nedá zachránit, ale vyprávění je celé, použije se aspoň ono (bez efektů) – raději než přepsat tah jinou AI. */
+function salvageDM(text){
+  const v = partialField(String(text || ''), 'vypraveni');
+  if(v.length < 40) return null;
+  const nav = (String(text).match(/"navrhy"\s*:\s*\[([^\]]*)\]/) || [])[1];
+  let navrhy = [];
+  try{ navrhy = nav ? JSON.parse('[' + nav + ']') : []; }catch(e){}
+  return { vypraveni:v, efekty:{}, navrhy, _salvaged:true };
 }
 function checkRaw(out){
   if(!out || typeof out !== 'object') throw new Error('AI vrátila nečitelnou odpověď');
@@ -2030,7 +2066,15 @@ const fallbackFor = p => ['mistral','gemini','claude'].find(x => x !== p && hasK
 async function fetchDM(req){
   const p = getProvider();
   try{ return await fetchVia(p, req); }
-  catch(e){
+  catch(e0){
+    let e = e0;
+    /* přechodná chyba (přetížení, přerušený stream): nejdřív zkusit stejnou AI znovu, až pak zálohu */
+    if(e.retry){
+      if(!req.prompt && e.partial){ const sv = salvageDM(e.partial); if(sv && /"(navrhy|efekty)"/.test(e.partial)) return sv; }
+      liveText = ''; document.getElementById('liveDM')?.remove();
+      await new Promise(r => setTimeout(r, 1500));
+      try{ return await fetchVia(p, { ...req, noStream:true }); }catch(e2){ e = e2; }
+    }
     const alt = fallbackFor(p);
     if(!alt || ls.get('dz_fallback') === 'off') throw e;
     liveText = ''; document.getElementById('liveDM')?.remove();
@@ -2080,7 +2124,7 @@ async function readClaudeStream(r, usage){
       if(ev.type === 'message_start') Object.assign(usage, ev.message?.usage || {});
       else if(ev.type === 'content_block_delta' && ev.delta?.type === 'text_delta'){ text += ev.delta.text; liveDM(text); }
       else if(ev.type === 'message_delta' && ev.usage) Object.assign(usage, ev.usage);
-      else if(ev.type === 'error') throw new Error(ev.error?.message || 'přerušené spojení');
+      else if(ev.type === 'error'){ const er = new Error(ev.error?.message || 'přerušené spojení'); er.retry = true; er.partial = text; throw er; }
     }
   }
   return text;
@@ -2093,8 +2137,8 @@ const claudeModel = () => CLAUDE_MODELS[0][0];   /* jen Haiku – levné a rychl
 const claudeName = id => (CLAUDE_MODELS.find(m => m[0] === id) || [id, id])[1];
 const claudeKey = () => cleanKey(ls.get('kroniky_key_claude'));
 async function fetchClaude(req){
-  const stream = !req.prompt && ls.get('dz_stream') !== 'off' && typeof TextDecoder !== 'undefined';
-  const body = { model:claudeModel(), max_tokens:2500, temperature:0.9, ...(stream ? { stream:true } : {}),
+  const stream = !req.prompt && !req.noStream && ls.get('dz_stream') !== 'off' && typeof TextDecoder !== 'undefined';
+  const body = { model:claudeModel(), max_tokens:4000, temperature:0.9, ...(stream ? { stream:true } : {}),
     system:req.sys ? [{ type:'text', text:req.sys, cache_control:{ type:'ephemeral' } }]
       : [{ type:'text', text:SYSTEM }, ...(storyStatic() ? [{ type:'text', text:storyStatic() }] : [])].map((b, i, a) => i === a.length - 1 ? { ...b, cache_control:{ type:'ephemeral' } } : b),
     messages:[{ role:'user', content:req.prompt || buildPrompt(req) }] };
@@ -2113,7 +2157,8 @@ async function fetchClaude(req){
   if(stream && r.body && r.body.getReader) text = await readClaudeStream(r, usage);
   else { const d = await r.json().catch(() => null); Object.assign(usage, d?.usage || {}); text = (d?.content || []).filter(c => c.type === 'text').map(c => c.text).join(''); }
   trackClaude(usage);
-  const out = parseJSON(text);
+  let out = parseJSON(text);
+  if(!req.prompt && !out?.vypraveni) out = salvageDM(text);       /* Claudovo vyprávění nezahazovat kvůli chybě ve formátu */
   return req.prompt ? checkRaw(out) : checkOut(out);
 }
 function claudeErr(r, d){
@@ -2122,7 +2167,7 @@ function claudeErr(r, d){
   if(/credit balance|billing/i.test(m)) return new Error('Na účtu Claude došel kredit – dobij ho na platform.claude.com → Billing.');
   if(r.status === 404 || /model/i.test(m) && r.status === 400) return new Error('Model Claude ' + claudeName(claudeModel()) + ' není na tvém účtu dostupný. [' + m + ']');
   if(r.status === 429) return new Error('Moc dotazů najednou – chvilku počkej a zkus to znovu.');
-  if(r.status === 529 || r.status >= 500) return new Error('Claude je teď přetížený – zkus to za chvilku znovu.');
+  if(r.status === 529 || r.status >= 500){ const er = new Error('Claude je teď přetížený – zkus to za chvilku znovu.'); er.retry = true; return er; }
   return new Error(m);
 }
 
@@ -2188,7 +2233,7 @@ async function fetchGemini(req){
   });
   /* Různé modely přijímají různá nastavení. Zkoušíme od nejlevnějšího po nejjednodušší
      a co projde, si zapamatujeme (při chybě 400 „invalid argument“ jdeme o krok dál). */
-  const base = { temperature:0.9, maxOutputTokens:2500 };
+  const base = { temperature:0.9, maxOutputTokens:4000 };
   const modes = [
     { ...base, responseMimeType:'application/json', thinkingConfig:{ thinkingBudget:0 } },
     { ...base, responseMimeType:'application/json', thinkingConfig:{ thinkingLevel:'low' } },
@@ -2233,7 +2278,7 @@ async function fetchMistral(req, model){
   try{
     r = await fetch(mistralBase() + '/v1/chat/completions', { method:'POST',
       headers:{ 'Content-Type':'application/json', Authorization:'Bearer ' + key },
-      body:JSON.stringify({ model:model || mistralModel(), temperature:0.8, max_tokens:2500, response_format:{ type:'json_object' },
+      body:JSON.stringify({ model:model || mistralModel(), temperature:0.8, max_tokens:4000, response_format:{ type:'json_object' },
         messages:[{ role:'system', content:req.sys || dmSysText() }, { role:'user', content:req.prompt || buildPrompt(req) }] }) });
   }catch(e){
     throw new Error(ls.get('dz_mistral_proxy') ? 'Prostředník pro Mistral neodpovídá (' + e.message + ')' : 'Prohlížeč spojení s Mistralem zablokoval (CORS) – je potřeba prostředník, viz Kronika → 🧪 Vyzkoušet Mistral');
