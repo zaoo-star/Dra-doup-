@@ -218,7 +218,9 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 .xbtn{width:40px;height:40px;border-radius:4px;background:rgba(0,0,0,.25);border:1px solid #6b4a2a;color:var(--lt);font-size:20px;flex:none}
 .tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:3px double var(--gilt);background:var(--leathertex),linear-gradient(#1f1309,#170d05)}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:1 0 auto;padding:9px 12px 8px;font-size:16px;color:var(--lm);border-bottom:3px solid transparent;white-space:nowrap}
+.tab{flex:1 1 0;min-width:0;padding:6px 2px 5px;font-size:13px;line-height:1.15;color:var(--lm);border-bottom:3px solid transparent;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:1px}
+.tab em{font-style:normal;font-size:20px;line-height:1.1;position:relative}
+.tab em i{position:absolute;top:-3px;right:-14px;font-size:10px!important;padding:0 4px!important;background:var(--blood)!important;color:#fff3dd;border-radius:8px!important;margin:0!important}
 .tab.on{color:#f3dfae;border-bottom-color:var(--gilt);background:rgba(201,154,58,.12)}
 .tab i{font-style:normal;font-size:12px;background:rgba(0,0,0,.35);border-radius:3px;padding:0 6px;margin-left:3px}
 .jbody{flex:1;overflow-y:auto;padding:14px 14px calc(24px + env(safe-area-inset-bottom))}
@@ -299,6 +301,8 @@ button.fxr:active{background:rgba(201,154,58,.18)}
 /* ---------- vyprávění: nástroje, ilustrace, brk ---------- */
 .dmtools{display:flex;gap:6px;justify-content:flex-end;margin-top:2px}
 .dmtools:empty{display:none}
+.e.dm.live{opacity:.92}.e.dm.live::after{content:'▍';animation:blink 1s infinite;color:var(--gold)}
+.dmtools{flex-wrap:wrap}
 .dmtools button{font-size:13px;color:var(--muted);border:1px dotted var(--line2);border-radius:3px;padding:1px 8px;opacity:.75}
 .busyimg{font-size:14px;color:var(--gold);font-style:italic}
 img.illu{display:block;width:100%;margin:8px 0 4px;border:1px solid var(--line2);border-radius:3px;box-shadow:0 2px 6px rgba(60,35,10,.3);filter:sepia(.25)}
@@ -430,6 +434,11 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .npcp{width:58px;height:58px;flex:none;border-radius:50%;overflow:hidden;border:2px solid var(--line2);display:grid;place-items:center;font-size:24px;background:rgba(var(--hl),.2);padding:0}
 .npcp img{width:100%;height:100%;object-fit:cover;display:block}
 .npcp.busy{animation:pulse 1.2s infinite}
+.heropic{width:76px;height:76px;border-radius:50%;overflow:hidden;border:3px double var(--gilt,var(--line2));margin-bottom:6px;display:grid;place-items:center;background:rgba(0,0,0,.25);font-size:22px;line-height:1;flex:none}
+.heropic img{width:100%;height:100%;object-fit:cover;display:block}
+.heropic.none{flex-direction:column;gap:2px;border-style:dashed;opacity:.8}.heropic.none small{display:block;font-size:10px;font-family:var(--fc);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+img.hav{width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;border:2px solid var(--gilt,#c99a3a);margin-right:2px}
+.heroph{width:min(60vw,220px);aspect-ratio:1;margin:4px auto 10px;border:3px double var(--line2);border-radius:6px;display:grid;place-items:center;font-size:54px;background:rgba(0,0,0,.25)}.heroph small{display:block;font-size:14px}
 .npcbig img{display:block;width:min(78vw,320px);aspect-ratio:1;object-fit:cover;margin:4px auto 10px;border-radius:6px;border:3px double var(--line2);box-shadow:0 3px 10px rgba(0,0,0,.35)}
 .stdots{display:flex;gap:4px;margin:6px 0 4px}.stdots i{flex:1;height:7px;background:var(--pbar);box-shadow:inset 0 1px 2px rgba(80,50,20,.35)}.stdots i.on{background:var(--gold)}
 .abil .val small{font-size:11px;color:var(--muted)}
@@ -459,7 +468,27 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .tagr{display:block;border:2px solid var(--dark);background:var(--pbox);padding:2px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 50%,100% 100%,0 100%)}
 .tagr i{display:block;line-height:1.1}
 .tagr b{display:block;color:var(--ink);font-weight:600;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:6px}
-.lvtrack{display:flex;gap:3px;margin:16px 0 6px}
+.lvtrack{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin:16px 0 6px}
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;border:2px solid var(--line2);background:var(--pbox);padding:2px 8px}
+.skl{display:flex;align-items:baseline;gap:5px;padding:5px 0;border-bottom:1px dashed var(--line2);font-size:14px;min-width:0}
+.skl i{font-style:normal;color:var(--muted);font-size:11px;width:11px;flex:none}
+.skl span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink,var(--text))}
+.skl span small{color:var(--muted);font-size:10px}
+.skl b{flex:none;font-size:15px;color:var(--ink,var(--text))}
+.skl.pr i{color:var(--gold)}.skl.ex i{color:var(--blood)}.skl.pr span,.skl.ex span{font-weight:600}
+.dtext{padding:7px 2px;font-size:15px;line-height:1.35;color:var(--ink,var(--text));border-bottom:1px solid var(--line2)}
+.povbox{display:block;width:100%;text-align:left;border:2px solid var(--line2);background:var(--pbox);padding:4px 10px 6px;margin-bottom:4px}
+.povbox div{padding:4px 0;border-bottom:1px dashed var(--line2)}
+.povbox i{display:block;font-style:normal;font-family:var(--fc);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.povbox b{font-weight:500;font-size:15px;color:var(--ink,var(--text))}
+.povbox small{display:block;margin-top:5px;color:var(--muted);font-style:italic}
+.aligns{margin-bottom:6px}.aligns button{flex:1 1 30%;font-size:12px;padding:6px 2px}
+.field.pov{margin-top:6px}
+.cinfochk{display:flex;align-items:center;gap:10px;margin:12px 2px 4px;font-size:15px;color:var(--muted);cursor:pointer}
+.cinfochk input{width:24px;height:24px;flex:none;appearance:none;-webkit-appearance:none;margin:0;border:2px solid var(--line2);border-radius:4px;background:rgba(0,0,0,.3);display:grid;place-items:center;cursor:pointer}
+.cinfochk input:checked{background:var(--blood);border-color:#5a1209}.cinfochk input:checked::after{content:'✓';color:#fff3dd;font-size:16px;font-weight:700;line-height:1}
+.rollalt.insp{color:var(--gold);border-color:var(--gold)}
+.rollalts{display:flex;gap:8px}.rollalts .rollalt{flex:1 1 0;min-width:0;margin-top:8px;padding:7px 4px;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lvtrack i{flex:1;text-align:center;font-style:normal;font-family:var(--fc);font-size:13px;border:2px solid var(--line2);background:var(--pbox);color:var(--muted);padding:2px 0}
 .lvtrack i.past{background:var(--pa);color:var(--text)}
 .lvtrack i.on{background:var(--blood);border-color:#5a1209;color:#fff3dd;font-weight:700}
@@ -468,7 +497,7 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .cols{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px}
 .attr{display:flex;align-items:center;justify-content:space-between;gap:6px;border:2px solid var(--line2);background:rgba(var(--hl),0.35);padding:4px 6px 3px;margin-bottom:6px}
 .an{display:flex;flex-direction:column;gap:2px;min-width:0}
-.an > i{font-style:normal;font-family:var(--fc);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.an > i{font-style:normal;font-family:var(--fc);font-size:9.5px;font-weight:700;letter-spacing:0;text-transform:uppercase;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .an .bx b{font-size:17px;min-width:38px}
 .shield{width:48px;height:54px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(var(--pbox),var(--psheet));
   border:2px solid var(--dark);clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%);position:relative;padding-bottom:10px}
@@ -489,7 +518,10 @@ body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,
 .acshield i{font-style:normal;font-family:var(--fc);font-size:8px;font-weight:700;color:var(--dark)}
 .acinfo{font-size:13px;color:var(--muted);line-height:1.3}
 .manabox{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border:2px solid var(--line2);background:rgba(var(--hl),0.35);padding:6px}
-.abl{display:flex;flex-wrap:wrap;gap:4px;font-size:20px;flex-basis:100%}
+.abl{display:flex;flex-direction:column;gap:3px;flex-basis:100%;min-width:0}
+.ab1{display:flex;align-items:baseline;gap:4px;font-size:13px;line-height:1.25;color:var(--ink,var(--text));text-align:left;min-width:0}
+.ab1 b{margin-left:auto;flex:none;font-size:12px;color:var(--gold)}
+.ab1.more{color:var(--muted);font-style:italic}
 .abl sub{font-size:11px;color:var(--ink);font-weight:700;vertical-align:-2px}
 .needs{display:flex;flex-direction:column;gap:5px;border:2px solid var(--line2);background:rgba(var(--hl),0.35);padding:6px}
 .needs > div{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:8px}
@@ -591,6 +623,7 @@ body.dark:not(.night):not(.battle):not(.dying):not(.w-dest):not(.w-bourka) #atmo
 
     <div class="lbl">Jméno hrdiny</div>
     <input id="name" class="field" maxlength="24" placeholder="např. Radegast" autocomplete="off">
+    <input id="vzhled" class="field" maxlength="140" placeholder="Vzhled (nepovinné) – např. žena, rudé copy, jizva přes tvář" autocomplete="off" style="margin-top:8px">
 
     <div class="lbl">Druh</div>
     <div id="species" class="cards cards3"></div>
@@ -603,6 +636,9 @@ body.dark:not(.night):not(.battle):not(.dying):not(.w-dest):not(.w-bourka) #atmo
     <div id="zazemi" class="cards cards4"></div>
 
     <div id="preview" class="preview"></div>
+
+    <div class="lbl">Povaha postavy <span style="text-transform:none;letter-spacing:0;opacity:.7">(nepovinné)</span></div>
+    <div id="povaha"></div>
 
     <div class="lbl">Svět</div>
     <div id="settings" class="cards settings"></div>
@@ -651,7 +687,7 @@ body.dark:not(.night):not(.battle):not(.dying):not(.w-dest):not(.w-bourka) #atmo
     <div class="panel" id="rollPanel">
       <div class="why" id="rollWhy"></div>
       <button id="rollBtn">🎲 Hoď d20</button>
-      <button id="rollAlt" class="rollalt">↩️ Rozmyslet si to – udělat něco jiného</button>
+      <div class="rollalts"><button id="inspBtn" class="rollalt insp">🌟 Inspirace (výhoda)</button><button id="rollAlt" class="rollalt">↩️ Rozmyslet si to</button></div>
     </div>
     <div class="panel" id="lootPanel"><div id="lootHint">👆 Vyber, co si z nálezu vezmeš</div></div>
     <div id="actPanel">
@@ -678,9 +714,10 @@ body.dark:not(.night):not(.battle):not(.dying):not(.w-dest):not(.w-bourka) #atmo
    KONFIGURACE
    ========================================================= */
 const SAVE_KEY = 'kroniky_save_v2';
-const HIST_SEND = 14;               // kolik posledních zpráv posílat AI doslova
-const SUMMARY_AT = 22;              // od kolika zpráv v historii si vyžádat shrnutí
-const KEEP_AFTER_SUMMARY = 8;       // kolik zpráv ponechat po shrnutí
+const HIST_SEND = 20;
+const HIST_FULL = 6;                // kolik posledních zpráv posílat celých (starší se zkrátí)               // kolik posledních zpráv posílat AI doslova
+const SUMMARY_AT = 30;              // od kolika zpráv v historii si vyžádat shrnutí
+const KEEP_AFTER_SUMMARY = 12;       // kolik zpráv ponechat po shrnutí
 const LOG_MAX = 300;                // kolik záznamů držet na obrazovce
 const INV_MAX = 30;                 // max. počet položek v batohu
 
@@ -689,6 +726,8 @@ const PROVIDERS = {
     hint:'Klíč (začíná sk-ant-) získáš na platform.claude.com → API Keys. Platí se z kreditu, používá se nejlevnější model Haiku 5.5.' },
   gemini:{ nazev:'Gemini', ikona:'✨', popis:'Google · má bezplatný limit',
     hint:'Klíč získáš zdarma na aistudio.google.com → Get API key. Aby byl zdarma, projekt NESMÍ mít zapnutou fakturaci.' },
+  mistral:{ nazev:'Mistral', ikona:'🌬️', popis:'Mistral AI · bezplatný plán Experiment',
+    hint:'Klíč získáš na console.mistral.ai → API Keys (plán Experiment je zdarma, chce ověření telefonem). Po zadání ho vyzkoušej tlačítkem 🧪 v Kronice.' },
   grok:{ nazev:'Grok', ikona:'𝕏', popis:'xAI · placené za použití',
     hint:'Klíč získáš na console.x.ai → API Keys. Model se vybere automaticky.' }
 };
@@ -773,7 +812,7 @@ const CLASSES = {
       { nazev:'Kožená zbroj', typ:'zbroj', obrana:1, popis:'Lehká, tichá.' }, POTION, { ...FOOD, pocet:4 }],
     vybava:['Dlouhý luk','Kožená zbroj'] },
   zlodej:{ nazev:'Zloděj', ikona:'🗡️', popis:'Mistr lsti, plížení a zákeřných útoků.', hd:8,
-    prio:['obratnost','inteligence','charisma','odolnost','moudrost','sila'], zlato:25, odbornost:{ obratnost:2, charisma:2 },
+    prio:['obratnost','inteligence','charisma','odolnost','moudrost','sila'], zlato:25,
     veci:[{ nazev:'Dýka', typ:'zbran', zraneni:'1d4', vlastnost:'obratnost', popis:'Lehká a dobře vyvážená.' },
       { nazev:'Krátký luk', typ:'zbran', zraneni:'1d6', vlastnost:'obratnost', popis:'Na útok z dálky.' },
       { nazev:'Kožená zbroj', typ:'zbroj', obrana:1, popis:'Tichá, nepřekáží v pohybu.' }, { nazev:'Paklíče', typ:'ostatni', popis:'Sada háčků na zámky.' }, POTION, FOOD],
@@ -876,11 +915,13 @@ const ABILITIES = {
   ]
 };
 
+/* kouzla se soustředěním (smí běžet jen jedno) */
+for(const [cls, ids] of Object.entries({ knez:['pozehnani'], paladin:['pozehnani'], hranicar:['znacka','stopy'], cernokneznik:['kletba','neviditelnost'] }))
+  for(const a of ABILITIES[cls]) if(ids.includes(a.id)) a.conc = true;
 /* ---------- Druhy (rasy) ---------- */
 const SPECIES = {
   clovek:{ nazev:'Člověk', i:'🧑', popis:'Nejprůbojnější a nejrozmanitější druh.', rychlost:30,
-    rysy:['Hrdinská inspirace: jednou za odpočinek hod s výhodou','Všestrannost: +1 k vlastnosti navíc'], plusStat:true,
-    abil:[{ id:'inspirace_h', nazev:'Hrdinská inspirace', i:'🌟', lvl:1, uses:1, kind:'nextRoll', stat:'*', adv:true, popis:'Příští hod d20 s výhodou (házíš dvakrát, platí lepší).' }] },
+    rysy:['Hrdinská inspirace po každém spánku (hod s výhodou)','Všestrannost: +1 k vlastnosti a jedna dovednost navíc'], plusStat:true },
   aasimar:{ nazev:'Aasimar', i:'😇', popis:'Smrtelník s dotekem nebeských sfér.', rychlost:30, tma:true,
     rysy:['Vidění ve tmě','Odolnost vůči záření a nekrotické síle','Léčivé ruce','Nebeské zjevení (od 3. úr.)'],
     abil:[{ id:'ruce_a', nazev:'Léčivé ruce', i:'🤲', lvl:1, uses:1, kind:'heal', diceV:() => `${profBonus()}d4`, popis:'Vyléčí tolik k4, kolik je tvá zdatnost (od 2k4).' },
@@ -1018,33 +1059,38 @@ const perk = k => obor()?.perk?.[k] ?? null;
 const speciesAbil = () => (species().abil || []).filter(a => !a.linie || a.linie === S.char.linie);
 function classAbilities(){
   const o = obor();
-  return (ABILITIES[S.char.cls] || []).concat(speciesAbil(), o?.abil ? [o.abil] : []);
+  return (ABILITIES[S.char.cls] || []).concat(speciesAbil(), o?.abil ? [o.abil] : [], featAbilities(), learnedSpells());
 }
 const knownAbilities = () => classAbilities().filter(a => a.lvl <= S.char.level);
 const abilityMax = a => typeof a.uses === 'function' ? a.uses(S.char.level) : (a.uses || 0);
 const abilityLeft = a => a.slot ? S.slots : Math.min(abilityMax(a), S.res[a.id] ?? abilityMax(a));
-const SLOT_TABLES = { full:[0,2,3,4,4,5,5,6,6,7,7], half:[0,2,2,3,3,4,4,4,4,5,5], pact:[0,1,2,2,2,2,2,2,2,2,2] };
-const slotMax = () => (SLOT_TABLES[CLASSES[S.char.cls].caster]?.[S.char.level] || 0) + (S.char.level >= 3 ? perk('slotBonus') || 0 : 0);
+const SLOT_TABLES = { full:[0,2,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12], half:[0,2,2,3,3,4,4,4,4,5,5,5,6,6,7,7,7,8,8,8,9], pact:[0,1,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4] };
+const slotMax = () => (SLOT_TABLES[CLASSES[S.char.cls].caster]?.[S.char.level] || 0) + (S.char.level >= 3 ? perk('slotBonus') || 0 : 0) + (featHas('zasvecenec') && CLASSES[S.char.cls].caster ? 1 : 0);
 function rechargeAbilities(){
   S.slots = slotMax();
   for(const a of classAbilities()) if(!a.slot) S.res[a.id] = abilityMax(a);
   S.relentlessUsed = false;
+  S.char.hdLeft = S.char.level; S.arcRec = false;
+  if(S.char.druh === 'clovek' && !S.char.insp){ S.char.insp = true; }
   if(perk('wardTemp')) S.char.temp = Math.max(S.char.temp || 0, 2 * S.char.level);
 }
 /* Kouzlo, které jde sesílat kdykoli: z povolání, specializace nebo druhu (tiefling). */
 function spell(){
-  const c = S.char, k = CLASSES[c.cls].kouzlo || perk('kouzlo');
-  if(k) return k;
-  const t = species().kouzla?.[c.linie];
-  if(t){ const st = ['inteligence','moudrost','charisma'].sort((a,b) => c.stats[b] - c.stats[a])[0]; return { ...t, vlastnost:st }; }
-  return null;
+  const c = S.char;
+  let k = CLASSES[c.cls].kouzlo || perk('kouzlo');
+  if(!k){ const t = species().kouzla?.[c.linie]; if(t){ const st = ['inteligence','moudrost','charisma'].sort((a,b) => c.stats[b] - c.stats[a])[0]; k = { ...t, vlastnost:st }; } }
+  if(!k && featHas('zasvecenec')) k = { nazev:'Ohnivý šíp', vlastnost:castStat(), zraneni:'1d10' };
+  if(!k) return null;
+  /* triky sílí s úrovní jako v D&D: 2 kostky od 5., 3 od 11., 4 od 17. */
+  const n = 1 + (c.level >= 5) + (c.level >= 11) + (c.level >= 17);
+  return n > 1 && /^1d/.test(k.zraneni) ? { ...k, zraneni:k.zraneni.replace(/^1d/, n + 'd') } : k;
 }
-const hpPerLevelBonus = () => (species().hpPerLevel || 0) + (S.char.level >= 3 ? perk('hpPerLevel') || 0 : 0);
+const hpPerLevelBonus = () => (species().hpPerLevel || 0) + (S.char.level >= 3 ? perk('hpPerLevel') || 0 : 0) + (featHas('odolny') ? 2 : 0);
 const hitDie = () => CLASSES[S.char.cls].hd || 8;
 /* Pěsti: mnich má bojová umění, duševní čepel psychické čepele. */
 function fists(){
   const C = CLASSES[S.char.cls];
-  if(C.pesti) return { dice:S.char.level >= 5 ? '1d8' : '1d6', stat:C.pesti.stat };
+  if(C.pesti) return { dice:S.char.level >= 17 ? '1d12' : S.char.level >= 11 ? '1d10' : S.char.level >= 5 ? '1d8' : '1d6', stat:C.pesti.stat };
   if(perk('pesti')) return { dice:perk('pesti'), stat:'obratnost' };
   return { dice:'1d2', stat:'sila' };
 }
@@ -1140,9 +1186,10 @@ const STORIES = {
 };
 const story = () => S && S.story ? STORIES[S.story] : null;
 /* Tajný plán pro AI – posílá se s každým tahem, hráč ho nevidí. */
-function storyBlock(){
+/* Neměnná část plánu – jde do system promptu a ukládá se do mezipaměti (platí se jen zlomek). */
+function storyStatic(){
   const P = story(); if(!P) return '';
-  const st = S.storyStep || 0, L = (a) => a.map(([n,t]) => `- ${n}: ${t}`).join('\n');
+  const L = (a) => a.map(([n,t]) => `- ${n}: ${t}`).join('\n');
   return `HLAVNÍ PŘÍBĚH – TAJNÝ PLÁN PÁNA JESKYNĚ („${P.nazev}“). Hráči ho NIKDY neprozrazuj ani necituj, odhaluj ho postupně skrze situace, stopy a rozhovory.
 Úvod: ${P.uvod}
 Háček: ${P.hacek}
@@ -1152,12 +1199,22 @@ Důležité postavy:
 ${L(P.npc)}
 Klíčová místa:
 ${L(P.mista)}
-Hlavní dějové body (hráč má hotovo ${st} z ${P.body.length}):
-${P.body.map(([n,t],i) => `${i + 1}. ${n}: ${t}${i < st ? ' [HOTOVO]' : i === st ? ' [← TEĎ]' : ''}`).join('\n')}
+Hlavní dějové body:
+${P.body.map(([n,t],i) => `${i + 1}. ${n}: ${t}`).join('\n')}
 Možné konce:
 ${L(P.konce)}
-${S.storyEnd ? `PŘÍBĚH UŽ SKONČIL: ${S.storyEnd}. Teď hráč volně hraje dál ve stejném světě s následky svého konce.` : `Pravidla příběhu: Drž se osnovy, ale nech hráči svobodu volby – konec určují jeho činy. Když hráč odbočí, přizpůsob události tak, aby se hlavní hrozba připomněla sama (útok posluhovačů, zvěsti, zprávy z okolí). Postavy a místa zapisuj přes "npc" a "lokace" až ve chvíli, kdy je hráč opravdu potká. Když hráč dokončí dějový bod, nastav "pribeh_krok" na jeho číslo. Když příběh skončí (jedním z konců nebo jinak podle hráčových činů), nastav "konec_pribehu" na krátký popis konce.`}`;
+Pravidla příběhu: Drž se osnovy, ale nech hráči svobodu volby – konec určují jeho činy. Když hráč odbočí, přizpůsob události tak, aby se hlavní hrozba připomněla sama (útok posluhovačů, zvěsti, zprávy z okolí). Postavy a místa zapisuj přes "npc" a "lokace" až ve chvíli, kdy je hráč opravdu potká. Když hráč dokončí dějový bod, nastav "pribeh_krok" na jeho číslo. Když příběh skončí (jedním z konců nebo jinak podle hráčových činů), nastav "konec_pribehu" na krátký popis konce. Kde v příběhu hráč právě je, najdeš v zadání tahu.`;
 }
+/* Proměnná část – posílá se s každým tahem (krátká). */
+function storyDynamic(){
+  const P = story(); if(!P) return '';
+  const st = S.storyStep || 0;
+  if(S.storyEnd) return `HLAVNÍ PŘÍBĚH UŽ SKONČIL („${P.nazev}“): ${S.storyEnd}. Teď hráč volně hraje dál ve stejném světě s následky svého konce – osnovu už nesleduj.`;
+  return `HLAVNÍ PŘÍBĚH – postup: hotovo ${st} z ${P.body.length} dějových bodů. ${st < P.body.length ? `TEĎ: ${st + 1}. ${P.body[st][0]}.` : 'Všechny body hotové – směřuj ke konci.'}`;
+}
+function storyBlock(){ const a = storyStatic(); return a ? a + '\n' + storyDynamic() : ''; }
+/* System prompt Pána jeskyně jako bloky: pravidla + plán příběhu (oboje v mezipaměti). */
+const dmSysText = () => [SYSTEM, storyStatic()].filter(Boolean).join('\n\n');
 
 
 /* =========================================================
@@ -1201,7 +1258,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '14. 10. 2026 · v23';
+const APP_VERSION = '15. 10. 2026 · v32';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1665,8 +1722,10 @@ function renderCreate(){
       <div class="kit">❤️ ${h.hp} HP · 🛡️ obrana ${h.ac} · 🎲 d${C.hd} · 💰 ${h.gold} zl.${h.kz ? ` · ✨ ${esc(h.kz.nazev)} (${h.kz.zraneni})` : ''}${C.caster ? ` · sloty kouzel ${SLOT_TABLES[C.caster][1]}` : ''}</div>
       ${h.abil.length ? `<div class="kit">⚡ ${h.abil.map(a => esc(a.i + ' ' + a.nazev)).join(', ')}</div>` : ''}
       <div class="kit">🎒 ${h.kit.map(v => esc(v.nazev) + (v.pocet > 1 ? ' ×' + v.pocet : '')).join(', ')}</div>
+      <div class="kit">🎯 Dovednosti: ${previewSkills(selClass, selZaz).map(esc).join(', ')}</div>
       <div class="kit">🎓 Na 3. úrovni specializace: ${(OBORY[selClass] || []).map(o => esc(o.nazev)).join(' · ')}</div>`;
   }
+  if(!$('#povaha').contains(document.activeElement)) $('#povaha').innerHTML = povahaFields(selPovaha, 'c');
   $('#startBtn').disabled = !(selClass && $('#name').value.trim());
   $('#savesBox').innerHTML = savesHTML();
   $('#startBtn').textContent = slotList().length >= MAX_SAVES ? `Maximum ${MAX_SAVES} uložených her – nějakou smaž` : 'Začít dobrodružství';
@@ -1681,6 +1740,11 @@ $('#diffs').onclick = e => { const b = e.target.closest('[data-diff]'); if(b){ s
 $('#stories').onclick = e => { const b = e.target.closest('[data-story]'); if(b){ selStory = b.dataset.story || null; renderCreate(); } };
 $('#providers').onclick = e => { const b = e.target.closest('[data-prov]'); if(b){ setProvider(b.dataset.prov); $('#apiKey').blur(); renderCreate(); } };
 $('#name').oninput = renderCreate;
+$('#povaha').onclick = e => {
+  const al = e.target.closest('[data-align]'); if(al){ selPovaha.presvedceni = al.dataset.align; $('#povaha').innerHTML = povahaFields(selPovaha, 'c'); return; }
+  if(e.target.closest('[data-act="crollpov"]')){ selPovaha = { ...selPovaha, ideal:rnd(IDEALY), pouto:rnd(POUTA), slabost:rnd(SLABOSTI) }; $('#povaha').innerHTML = povahaFields(selPovaha, 'c'); }
+};
+$('#povaha').oninput = e => { const i = e.target.closest('[data-pov]'); if(i) selPovaha[i.dataset.pov] = i.value.slice(0,120); };
 $('#apiKey').oninput = () => { setKey($('#apiKey').value.trim()); ls.set('dz_gem_auth', ''); if(getProvider() !== 'claude') ls.set('kroniky_' + getProvider() + '_model', ''); renderCreate(); };
 $('#savesBox').onclick = e => {
   const l = e.target.closest('[data-load]'), d = e.target.closest('[data-del]');
@@ -1689,10 +1753,10 @@ $('#savesBox').onclick = e => {
 };
 $('#startBtn').onclick = () => {
   const c = CLASSES[selClass], h = previewHero();
-  S = { v:2, nextId:0, slot:newSlotId(), setting:selSetting, diff:selDiff, clues:[], comp:null, shop:null, story:selStory && STORIES[selStory]?.svet === selSetting ? selStory : null, storyStep:0, storyEnd:null,
+  S = { v:2, nextId:0, slot:newSlotId(), setting:selSetting, diff:selDiff, clues:[], fakta:[], kapitoly:[], comp:null, shop:null, story:selStory && STORIES[selStory]?.svet === selSetting ? selStory : null, storyStep:0, storyEnd:null,
     char:{ name:$('#name').value.trim().slice(0,24), cls:selClass, druh:selSpecies, linie:selLinie, zazemi:selZaz, obor:null, level:1, xp:0, temp:0,
-      hp:h.hp, maxHp:h.hp, zlato:h.gold, stats:h.st },
-    res:{}, statPicks:0, places:{}, roads:[], rep:{}, book:[], mount:null, nextAttack:null, nextRoll:null,
+      hp:h.hp, maxHp:h.hp, zlato:h.gold, stats:h.st, povaha:{ ...selPovaha }, vzhled:($('#vzhled')?.value || '').trim().slice(0,140), insp:selSpecies === 'clovek', hdLeft:1, feats:[], kouzla:[] },
+    res:{}, statPicks:0, featPicks:0, spellPicks:spellsPerLevel(selClass), places:{}, roads:[], rep:{}, book:[], mount:null, nextAttack:null, nextRoll:null,
     inv:[], equip:{ zbran:null, zbroj:null, stit:null, doplnek:null }, foes:[], loot:null,
     time:{ day:1, hour:8 }, needs:{ unava:0, hlad:15 }, effects:[], queue:null,
     quests:[], npcs:{}, location:'', summary:'',
@@ -1703,6 +1767,7 @@ $('#startBtn').onclick = () => {
   initState();
   book('sys', `Začíná kronika hrdiny jménem ${S.char.name} – ${SPECIES[selSpecies].nazev.toLowerCase()}, ${CLASSES[selClass].nazev.toLowerCase()}, ${ZAZEMI[selZaz].nazev.toLowerCase()}.${story() ? ` Příběh: ${story().nazev}.` : ''}`);
   save(); show('game'); render(); callDM({typ:'start'});
+  if(portraitMode() === 'auto' && portraitReady()) setTimeout(() => { if(S && !S.char.img) drawHero(); }, 4000);
 };
 
 /* =========================================================
@@ -1760,6 +1825,26 @@ CESTOVÁNÍ A NÁHODNÉ UDÁLOSTI
 - Krátký přesun v rámci místa (do sklepa, k sousedovi, na náměstí) je obyčejná akce: jen "lokace" a "cas_hodiny".
 - Když hráč po náhodné události pokračuje do cíle (viz "na_ceste_do" ve stavu), popiš příjezd a nastav "lokace" (bez "cesta").
 
+PRAVIDLA D&D POSTAVY (zdatnosti počítá hra podle deníku)
+- U zkoušky VŽDY uveď "dovednost" – klíč z: atletika, akrobacie, cachry (zručnost rukou), nenapadnost, mystika, historie, patrani, priroda, nabozenstvi, zvirata, vhled, lekarstvi, vnimani, preziti, klam, zastrasovani, vystupovani, presvedcovani. Holý hod na vlastnost jen když žádná dovednost nesedí (např. síla na vyražení dveří = atletika).
+- ZÁCHRANNÝ HOD (uhnout pasti či výbuchu, odolat jedu, kouzlu, strachu, nemoci): "zachrana": true, "dovednost" vynech, a když sedí, i "proti". Záchranný hod si hráč nemůže rozmyslet.
+- "nastroj": když se zkouška dělá nástrojem (zlodějské náčiní na zámek, bylinkářská sada na protijed, kaligrafie na padělek). Hráč ho musí mít v inventáři, jinak to bez něj nejde nebo s nevýhodou.
+- Pasivní vnímání (stav → pasivni_vnimani): skryté věci s obtížností nejvýš tolik si hráč všimne SÁM bez hodu – zmiň je ve vyprávění.
+- Jazyky: hráč rozumí jen jazykům ve stavu ("jazyky"). Cizí řeč nebo písmo nepřečte – jen pozná, o jaký jazyk jde (bez magie nebo tlumočníka).
+- Povaha (stav → povaha): pouto vplétej do příběhu, slabost občas vyzkoušej pokušením, ideál stav proti těžkým volbám. "inspirace": "krátký důvod" dej za skvěle zahranou roli – když hráč jedná podle své povahy i proti vlastnímu prospěchu, odvážně nebo vtipně. Nejvýš zřídka a jen když ji hráč zrovna nemá.
+- Krátký odpočinek (hodina) a utrácení kostek životů si hráč dělá tlačítkem, "spanek" je dlouhý odpočinek. Kouzla se soustředěním a jejich ztrátu hlídá hra (stav → soustredeni).
+
+FÉROVÝ PÁN JESKYNĚ – jsi nestranný rozhodčí, ne hráčův kamarád
+- Svět je neutrální. Nepomáhej hráči jen proto, že je hráč, a netrestej ho bez důvodu. Vždy se ptej: co by se v tomhle světě skutečně stalo?
+- Riskantní akce (krádež, plížení, lež, přesvědčování neochotné postavy, zastrašování, smlouvání, šplhání, skoky, páčení, stopování) VŽDY přes zkoušku. Výsledek nepopisuj předem – hráč hází.
+- Neúspěch má skutečnou cenu: zranění, ztracený čas, poplach, horší vztah, ztracená nebo poškozená věc, nová komplikace. Nikdy jen „nepovedlo se, zkus to znovu“. Stejnou věc nejde zkoušet donekonečna – po neúspěchu se situace změní (stráž je ostražitá, obchodník uražený, dveře zatarasené).
+- Nemožné je nemožné: řekni to rovnou („to nejde, protože…“) a nech hráče vymyslet realistickou cestu.
+- Postavy mají vlastní vůli: smí odmítnout, lhát, tvrdě smlouvat, utéct, zradit nebo zavolat stráž. Neochotnou postavu nepřemluví jedna hezká věta – rozhoduje hod, vztah, pověst a to, co hráč nabízí.
+- Nepřátelé bojují chytře a podle povahy (kryjí se, jdou po slabších, utíkají, když prohrávají, berou rukojmí) a v boji hráče nešetří. Neupravuj boj tak, aby hráč určitě vyhrál. Velké nebezpečí ale naznač předem (stopy, varování, pověsti), ať má hráč šanci se rozhodnout.
+- Odměny přiměřené: žádné poklady za nic, žádné problémy vyřešené zadarmo, informace za něco (peníze, službu, riziko).
+- Nelichoť hráči a nechval jeho nápady – vyprávěj, co se stalo. Na obtížnosti Příběh buď mírnější v následcích, ale zkoušky vyžaduj stejně.
+- Když hra v zadání označí akci jako RISKANTNÍ a ty přesto usoudíš, že hod není potřeba (akce je v této situaci opravdu triviální, nebo je nemožná), vyplň "bez_hodu": "krátký důvod".
+
 POSTUP, VZTAHY A SVĚT
 - "xp": odměň hráče zkušenostmi za chytré řešení, objev, přesvědčení bez boje nebo dobře zahranou roli (25–150). Za poražené nepřátele a splněné úkoly dává XP hra sama – ty nepřidávej.
 - Hráč má schopnosti a kouzla podle povolání a úrovně (viz stav). Používá je tlačítkem a výsledek ti hra pošle. Když hráč tvrdí, že použije schopnost, kterou nemá, odmítni to.
@@ -1767,6 +1852,13 @@ POSTUP, VZTAHY A SVĚT
 - "novy_ukol" je CÍL na delší dobu (např. „Tajemství krvavého svitku“, „Najít ztracenou dceru“), nikdy ne jednotlivý krok jako „Přečíst svitek“ nebo „Promluvit s Bořkem“ – ty patří do "navrhy". Úkolů zakládej málo.
 - NPC mají vztah k hráči od -100 do 100 (viz stav). Když hráč někomu pomůže, urazí ho, zradí, podplatí nebo ho okouzlí, pošli v "npc" pole "zmena" (-30 až +30). Vztah se MUSÍ projevit: přátelé pomáhají, prozradí víc a dají slevu; nepřátelé lžou, zdražují nebo škodí.
 - Pověst: "povest": [{"misto": "název místa", "zmena": -25 až +25}] za činy, o kterých se lidé dozví (hrdinství, krádež, vražda, pomoc). Projev ji ve vyprávění (stráže, ceny, důvěra, ochota).
+PAMĚŤ PŘÍBĚHU – svět si pamatuje
+- Stav obsahuje "kronika_faktu" (trvalé zápisy), "kapitoly" (co se stalo dřív, od nejstarší), "npc" → "pamet" (co spolu hráč a postava zažili) a shrnutí. To je PRAVDA o minulosti – nikdy jí neodporuj. Mrtví zůstávají mrtví, sliby a dluhy platí, darované věci hráč už nemá, zrada se nezapomíná.
+- Minulost aktivně využívej: postavy připomínají, co pro ně hráč udělal nebo jim provedl, nesplněné sliby se vrací, nepřátelé, kteří utekli, se mohou mstít, dřívější rozhodnutí mají důsledky.
+- "fakt": když se stane něco, co musí platit i za 100 tahů, zapiš to jednou krátkou větou v minulém čase – slib, dluh, dohoda, smrt, zrada, únos, darovaný nebo ukradený důležitý předmět, odhalené tajemství, spálená vesnice, nový nepřítel. Např. "Hráč slíbil Emě, že najde jejího bratra." Ne běžné drobnosti (jídlo, cesta, prohlížení). Fakta, která už platí, znovu nezapisuj; když se fakt změní (slib splněn, dluh splacen), zapiš nový ("Hráč splnil slib Emě…").
+- Ve stavu → "npc" jsou celé karty jen postav, které jsou teď ve hře; ostatní známé postavy jsou zkráceně v "dalsi_postavy" (jméno – vztah). Když některou z nich zapojíš, drž se jejího vztahu – celou kartu dostaneš v dalším tahu.
+- KARTA POSTAVY: když poprvé představíš POJMENOVANOU postavu (nebo ve stavu nějaká karta chybí a postava se objeví), pošli v "npc" i "karta": {"hlas": "jak mluví – slovník, oslovení, zlozvyk, nářečí", "chce": "co chce", "boji_se": "čeho se bojí", "tajemstvi": "co skrývá"}. Pak ji VŽDY hraj přesně podle karty ve stavu → "npc" → "karta": stejný hlas, stejné cíle a strachy po celou hru. Tajemství prozraď jen, když ho hráč odhalí.
+- U NPC v "npc" přidej "pamet": jednou větou, co se mezi nimi a hráčem právě stalo DŮLEŽITÉHO (např. "Hráč mu zachránil syna", "Hráč ho okradl o měšec"). Jen když se opravdu něco stalo.
 OBTÍŽNOST, STOPY, OBCHOD, DRUŽINÍK
 - Obtížnost hry je ve stavu ("obtiznost_hry"). Příběh: víc nápověd a milosrdnější svět. Nemilosrdná: chytřejší a krutější nepřátelé, svět neodpouští. Obtížnost zkoušek i sílu nepřátel upravuje hra sama – zapisuj normální hodnoty.
 - "stopa": když hráč zjistí důležitou indicii, tajemství nebo vodítko (kdo, kde, proč), zapiš ji krátce jednou větou, např. "Rychtářův deník zmiňuje vypálení háje". Jen skutečně důležité věci, ne každý detail. Stopy, které už hráč má, jsou ve stavu → "stopy".
@@ -1800,22 +1892,22 @@ Typické zbraně: dýka 1d4, krátký meč 1d6, sekera/meč 1d8, obouruční 1d1
 VÝSTUP – vrať POUZE platný JSON:
 {
   "vypraveni": "text pro hráče, **tučně** důležité názvy",
-  "zkouska": null nebo {"vlastnost": "obratnost", "obtiznost": 5–30 podle tabulky OBTÍŽNOST, "duvod": "krátce", "utok": null, "cil": null, "proti": null, "vyhoda": false, "nevyhoda": false},
+  "zkouska": null nebo {"vlastnost": "obratnost", "dovednost": "nenapadnost", "zachrana": false, "nastroj": null, "obtiznost": 5–30 podle tabulky OBTÍŽNOST, "duvod": "krátce", "utok": null, "cil": null, "proti": null, "vyhoda": false, "nevyhoda": false},
   "efekty": {
     "hp": 0, "zlato": 0,
     "pridat": [PŘEDMĚT], "odebrat": ["přesný název z inventáře"],
     "nalezeno": null nebo {"predmety": [PŘEDMĚT], "zlato": 0},
     "nepratele": [{"jmeno": "...", "hp": 8, "obrana": 12, "utok": 3, "zraneni": "1d6", "iniciativa": 1, "zachrana": 1, "dalka": false}],
     "utoci": ["jméno nepřítele"], "konec_boje": false, "prekvapeni": null, "stav_boje": null,
-    "novy_ukol": null nebo {"nazev": "krátký název úkolu", "popis": "co, pro koho a proč"}, "splneny_ukol": null nebo "název úkolu", "lokace": null, "pribeh_krok": null, "konec_pribehu": null, "stopa": null, "obchod": null, "druzinik": null, "druzinik_odchazi": null,
+    "novy_ukol": null nebo {"nazev": "krátký název úkolu", "popis": "co, pro koho a proč"}, "splneny_ukol": null nebo "název úkolu", "lokace": null, "pribeh_krok": null, "konec_pribehu": null, "stopa": null, "fakt": null, "zpravy_ze_sveta": null, "obchod": null, "druzinik": null, "druzinik_odchazi": null,
     "cas_hodiny": 0.2, "spanek": null, "jidlo": false, "cesta": null,
     "stavy": [{"nazev": "Bahenní horečka", "typ": "nemoc|jed|prokleti|zraneni|pozehnani|jine", "popis": "krátce, jak se projevuje", "postih": {"odolnost": -2} nebo {"vse": -1}, "hp_za_den": -3, "trvani_hodin": 72 nebo null, "lecba": "jak se léčí", "blokuje_leceni": false}],
     "odebrat_stavy": ["přesný název stavu"],
-    "xp": 0, "povest": [], "jezdecke": null, "oprava": null,
-    "npc": [{"jmeno": "...", "popis": "krátce", "vztah": "přátelský/neutrální/podezíravý/nepřátelský", "zmena": 0}]
+    "xp": 0, "inspirace": null, "povest": [], "jezdecke": null, "oprava": null,
+    "npc": [{"jmeno": "...", "popis": "krátce", "vztah": "přátelský/neutrální/podezíravý/nepřátelský", "zmena": 0, "pamet": null, "karta": null}]
   },
   "navrhy": ["3–4 krátké a RŮZNÉ možnosti, co může hráč udělat teď (max 6 slov)"],
-  "shrnuti": null
+  "shrnuti": null, "kapitola": null, "bez_hodu": null
 }
 - "efekty" obsahují JEN to, co se v tomto kroku skutečně stalo. hp a zlato jsou změny (např. -3), ne nové hodnoty. Nepoužitá pole vynech nebo nech prázdná.
 - Zkoušku vyžaduj JEN tehdy, když neúspěch má zajímavé následky. Běžné věci (prohlédnout místnost, vylézt na plot, zeptat se ochotného NPC) hráč prostě udělá bez hodu.
@@ -1824,6 +1916,7 @@ VÝSTUP – vrať POUZE platný JSON:
 - "navrhy": vždy 3–4 opravdu odlišné možnosti, které v situaci dávají smysl – např. opatrná, odvážná, mluvení s někým, chytrý nápad nebo využití věci z inventáře. Hráč si vybere jednu, nebo napíše vlastní.`;
 
 function publicState(){
+  npcCtx = null;
   const c = S.char, w = equipped('zbran'), sp = spell();
   return {
     svet: SETTINGS[S.setting].nazev,
@@ -1840,7 +1933,17 @@ function publicState(){
       schopnosti:knownAbilities().map(a => `${a.nazev} (${a.slot ? 'stojí slot' : 'zbývá ' + abilityLeft(a) + '×'}): ${a.popis}`),
       sloty_kouzel:slotMax() ? `${S.slots}/${slotMax()}` : undefined,
       naklad:`${carried()} / ${capacity()} kg`,
-      jezdecke:S.mount ? `${MOUNTS[S.mount.typ].n} ${S.mount.nazev}` : 'žádné' },
+      jezdecke:S.mount ? `${MOUNTS[S.mount.typ].n} ${S.mount.nazev}` : 'žádné',
+      dovednosti:[...profSkills()].map(k => `${skillName(k)} ${fmtMod(skillBonus(k))}${expertSkills().has(k) ? ' (odbornost)' : ''}`),
+      zachranne_hody_zdatnost:STAT_KEYS.filter(saveProf).map(statName),
+      pasivni_vnimani:passivePerception(),
+      jazyky:languages(), nastroje:tools(),
+      odbornosti:(c.feats || []).map(k => FEATS[k].n),
+      povaha:c.povaha && (c.povaha.ideal || c.povaha.pouto || c.povaha.slabost) ? { presvedceni:ALIGN[c.povaha.presvedceni] || '', ideal:c.povaha.ideal, pouto:c.povaha.pouto, slabost:c.povaha.slabost } : (ALIGN[c.povaha?.presvedceni] || 'neuvedena'),
+      inspirace:c.insp ? 'má (použije ji sám na hod)' : 'nemá',
+      kostky_zivotu:`${hdLeft()}/${c.level} × d${hitDie()}`,
+      soustredeni:concEffect() ? concEffect().nazev : 'žádné',
+      vzhled:c.vzhled || 'neuvedený (odvoď z rasy a povolání)' },
     inventar:S.inv.map(itemLine),
     boj:S.foes.length ? { kolo:S.cb?.round || 1, nepratele:S.foes.map(f => `${f.jmeno}: ${f.hp}/${f.maxHp} HP${Object.keys(f.st).length ? ' (' + Object.keys(f.st).join(', ') + ')' : ''}`), stav_hrace:Object.keys(S.pc || {}).filter(k => S.pc[k]).map(k => PCOND[k]?.n || k) } : 'žádný boj',
     cas:timeStr(),
@@ -1851,11 +1954,15 @@ function publicState(){
     stavy:allConds().length ? allConds().map(c => `${c.nazev}${c.derived ? '' : ' [' + EFF_TYPES[c.typ].n.toLowerCase() + ']'}: ${c.popis}${postihText(c.postih) ? '; postih ' + postihText(c.postih) : ''}${c.hp ? `; ${c.hp > 0 ? '+' : ''}${c.hp} HP/den` : ''}${c.derived ? '' : c.trvani === null ? '; trvá do vyléčení' : '; odezní za ' + fmtHours(c.trvani)}${c.lecba ? '; léčba: ' + c.lecba : ''}`) : 'žádné',
     na_ceste_do:S.travel ? S.travel.cil : null,
     ukoly:S.quests.map(q => (q.done ? '[splněno] ' : '') + q.title + (q.popis ? ' – ' + q.popis : '')),
-    npc:Object.fromEntries(Object.entries(S.npcs).map(([k,n]) => [k, { popis:n.popis, vztah:`${relLabel(n.skore ?? 0)} (${n.skore ?? 0})` }])),
+    npc:Object.fromEntries(Object.entries(S.npcs).filter(([k]) => npcRelevant(k)).map(([k,n]) => [k, { popis:n.popis, vztah:`${relLabel(n.skore ?? 0)} (${n.skore ?? 0})`, ...(n.karta ? { karta:n.karta } : {}), ...(n.pamet?.length ? { pamet:n.pamet } : {}), ...(n.mrtvy ? { MRTVY:true } : {}) }])),
+    dalsi_postavy:Object.entries(S.npcs).filter(([k]) => !npcRelevant(k)).map(([k,n]) => `${k} – ${relLabel(n.skore ?? 0)}${n.mrtvy ? ', MRTVÝ' : ''}`),
     lokace:S.location || 'neznámá', tah:S.turn,
     obtiznost_hry:`${D().n} – ${D().d}`,
     druzinik:S.comp ? { jmeno:S.comp.jmeno, popis:S.comp.popis, povaha:S.comp.povaha, hp:`${S.comp.hp}/${S.comp.maxHp}${S.comp.down ? ' (padl, mimo boj)' : ''}`, vztah:relLabel(S.npcs[S.comp.jmeno]?.skore ?? 0) } : 'žádný',
-    stopy:(S.clues || []).slice(-12).map(c => c.t),
+    stopy:(S.clues || []).slice(-20).map(c => c.t),
+    kronika_faktu:(S.fakta || []).map(f => `[den ${f.d}] ${f.t}`),
+    kapitoly:(S.kapitoly || []).map((k,i) => `${i + 1}. ${k.t}`),
+    co_se_deje_ve_svete:(S.world?.news || []).slice(-8).map(x => `[den ${x.d}] ${x.t}`),
     obchod:shopHere() ? `hráč má otevřený obchod u ${S.shop.obchodnik} (${S.shop.zbozi.length} věcí)` : null,
     hlavni_pribeh:story() ? `${story().nazev} – hotovo ${S.storyStep || 0} z ${story().body.length} dějových bodů${S.storyEnd ? ', příběh skončil: ' + S.storyEnd : ''}` : 'volné dobrodružství'
   };
@@ -1873,11 +1980,17 @@ function buildPrompt(b){
   else if(v.typ === 'noc') task = `NOČNÍ UDÁLOST: hráč spal ${v.hodiny} h na nebezpečném místě a teď (${v.cas}) ho něco vzbudí: ${v.popis}\nPopiš probuzení a situaci. Nevyplňuj "spanek" ani "cas_hodiny".`;
   else task = `Akce hráče: "${v.text}"`;
   if(v.vyrus) task += `\nNEČEKANÝ PŘÍCHOZÍ: Po odpovědi na akci hráče se do scény nebo rozhovoru nečekaně vloží nová postava – ${v.vyrus}. Přizpůsob ji místu, času, světu a ději (může mít vztah k hlavnímu příběhu). Dej jí jméno, nech ji promluvit a zapiš ji do "npc". Nesmí zablokovat, co hráč právě udělal.`;
+  if(v.svet) task += `\nSVĚT SE HÝBE (mimo scénu): Zatímco hráč jednal, hlavní hrozba – nebo nepřátelé a nevyřešené problémy z úkolů, stop a kroniky faktů – udělala další krok (už ${v.svet}. od začátku hry). Rozhodni co: útok posluhovačů, vypálená ves, únos, nová dohoda padoucha, zvěsti, pomsta někoho, koho hráč naštval… Ať to navazuje na to, co už se stalo. Hráč se o tom dozví PŘIROZENĚ ve scéně (zvěst, posel, kouř na obzoru, uprchlíci, vývěska, přímo to uvidí) – nebo jen náznakem, když se to teď nehodí. Zapiš to do "zpravy_ze_sveta" jednou větou.`;
+  if(v.vynutit) task += `\nFÉROVOST – POVINNÝ HOD: Tuhle akci NESMÍŠ vyhodnotit bez hodu. Vyplň "zkouska" (nejspíš vlastnost ${statName(v.vynutit)}, nebo vhodnější podle situace) s obtížností podle situace a vyprávění skonči popisem pokusu. Výsledek nepopisuj.`;
+  else if(v.riziko) task += `\nFÉROVOST: Hra vyhodnotila tuto akci jako RISKANTNÍ (nejspíš zkouška: ${statName(v.riziko)}). Když může selhat a selhání by mělo následky, vyžádej "zkouska" a výsledek nepopisuj. Bez hodu jen když je to teď opravdu triviální nebo nemožné – pak vyplň "bez_hodu".`;
+  if(v.rezie) task += `\nREŽIE TEMPA (jen pro tebe, hráči to neříkej): ${v.rezie}`;
+  if(v.oprava) task += `\nOPRAVA OD HRÁČE (mimo příběh): Tvoje předchozí verze odpovědi na tuto situaci byla podle hráče špatně: „${String(v.oprava).slice(0,400)}“. Napiš odpověď znovu a oprav to. Pokud jde o trvalou věc o světě, zapiš ji i do "fakt".`;
   const who = k => k === 'hrac' ? 'HRÁČ' : k === 'pj' ? 'PÁN JESKYNĚ' : 'HRA';
-  const hist = b.historie.map(h => `${who(h.kdo)}: ${h.text}`).join('\n\n');
-  const sb = storyBlock();
+  /* posledních 6 zpráv celých, starší zkrácené (paměť drží shrnutí, fakta a kapitoly) */
+  const hist = b.historie.map((h, i, a) => `${who(h.kdo)}: ${i < a.length - HIST_FULL && h.text.length > 300 ? h.text.slice(0, 280).replace(/\s+\S*$/, '') + ' …' : h.text}`).join('\n\n');
+  const sb = storyDynamic();
   return `AKTUÁLNÍ STAV HRY (pravda, ze které vycházíš):
-${JSON.stringify(b.stav, null, 1)}
+${JSON.stringify(b.stav)}
 ${sb ? '\n' + sb + '\n' : ''}
 SHRNUTÍ DOSAVADNÍHO PŘÍBĚHU:
 ${b.shrnuti || '(zatím nic)'}
@@ -1889,8 +2002,8 @@ CO SE DĚJE TEĎ:
 ${task}
 
 ${b.potrebaShrnuti
-  ? 'POVINNĚ vyplň "shrnuti": nové shrnutí CELÉHO příběhu (předchozí shrnutí + poslední dění), max 150 slov. Zachovej jména NPC, sliby, dluhy, nepřátele, důležité předměty a nevyřešené záhady.'
-  : 'Pole "shrnuti" nastav na null.'}`;
+  ? 'POVINNĚ vyplň "shrnuti": nové shrnutí CELÉHO příběhu (předchozí shrnutí + poslední dění), 200–350 slov. Starší události zhusti, ale nevynechávej je; nejnovější dění popiš podrobněji. Zachovej jména NPC a míst, sliby, dluhy, nepřátele, kdo zemřel, důležité předměty, rozhodnutí hráče a nevyřešené záhady. A POVINNĚ vyplň "kapitola": 1–2 věty (max 40 slov), co se stalo v POSLEDNÍM DĚNÍ – jde do trvalé časové osy příběhu.'
+  : 'Pole "shrnuti" a "kapitola" nastav na null.'}`;
 }
 
 /* =========================================================
@@ -1910,28 +2023,101 @@ function checkOut(out){
   if(!out || !out.vypraveni) throw new Error('AI vrátila nečitelnou odpověď');
   return out;
 }
-async function fetchDM(req){ const p = getProvider(); return p === 'claude' ? fetchClaude(req) : p === 'grok' ? fetchGrok(req) : fetchGemini(req); }
+const fetchVia = (p, req) => p === 'claude' ? fetchClaude(req) : p === 'grok' ? fetchGrok(req) : p === 'mistral' ? fetchMistral(req) : fetchGemini(req);
+const hasKeyFor = p => !!cleanKey(ls.get('kroniky_key_' + p));
+/* záloha: nejdřív bezplatný Mistral, pak Gemini, nakonec Claude */
+const fallbackFor = p => ['mistral','gemini','claude'].find(x => x !== p && hasKeyFor(x) && (x !== 'mistral' || ls.get('dz_mistral_ok') !== 'no')) || null;
+async function fetchDM(req){
+  const p = getProvider();
+  try{ return await fetchVia(p, req); }
+  catch(e){
+    const alt = fallbackFor(p);
+    if(!alt || ls.get('dz_fallback') === 'off') throw e;
+    liveText = ''; document.getElementById('liveDM')?.remove();
+    const res = await fetchVia(alt, req);
+    if(!req.prompt && S) addLog({ t:'sys', text:`🛟 ${PROVIDERS[p].nazev} neodpověděl (${String(e.message).slice(0,100)}) – tentokrát vyprávěl ${PROVIDERS[alt].nazev}.` });
+    return res;
+  }
+}
+
+/* Průběžné vypisování: z rozepsaného JSON vytáhne text "vypraveni" a ukáže ho v logu. */
+let liveText = '', lastStreamed = false;
+function partialField(raw, key = 'vypraveni'){
+  const m = new RegExp('"' + key + '"\\s*:\\s*"').exec(raw); if(!m) return '';
+  let i = m.index + m[0].length, out = '';
+  while(i < raw.length){
+    const ch = raw[i];
+    if(ch === '\\'){
+      const n = raw[i + 1]; if(n === undefined) break;
+      if(n === 'u'){ const h = raw.slice(i + 2, i + 6); if(h.length < 4) break; out += String.fromCharCode(parseInt(h, 16)); i += 6; continue; }
+      out += n === 'n' ? '\n' : n === 't' ? ' ' : n; i += 2; continue;
+    }
+    if(ch === '"') break;
+    out += ch; i++;
+  }
+  return out;
+}
+function liveDM(raw){
+  const t = partialField(raw); if(!t || t === liveText) return;
+  liveText = t; lastStreamed = true;
+  const log = $('#log'); if(!log) return;
+  let el = document.getElementById('liveDM');
+  if(!el){ el = document.createElement('div'); el.id = 'liveDM'; el.className = 'e dm live'; log.appendChild(el); }
+  el.innerHTML = dmRich(t);
+  if(el.offsetHeight < log.clientHeight * 0.6) log.scrollTop = log.scrollHeight;
+}
+async function readClaudeStream(r, usage){
+  const rd = r.body.getReader(), dec = new TextDecoder();
+  let buf = '', text = '';
+  for(;;){
+    const { done, value } = await rd.read(); if(done) break;
+    buf += dec.decode(value, { stream:true });
+    let ix;
+    while((ix = buf.indexOf('\n')) >= 0){
+      const line = buf.slice(0, ix).trim(); buf = buf.slice(ix + 1);
+      if(!line.startsWith('data:')) continue;
+      let ev; try{ ev = JSON.parse(line.slice(5)); }catch(e){ continue; }
+      if(ev.type === 'message_start') Object.assign(usage, ev.message?.usage || {});
+      else if(ev.type === 'content_block_delta' && ev.delta?.type === 'text_delta'){ text += ev.delta.text; liveDM(text); }
+      else if(ev.type === 'message_delta' && ev.usage) Object.assign(usage, ev.usage);
+      else if(ev.type === 'error') throw new Error(ev.error?.message || 'přerušené spojení');
+    }
+  }
+  return text;
+}
 
 /* Claude (Anthropic) – volání přímo z prohlížeče. Dlouhé pokyny Pána jeskyně se ukládají do mezipaměti
    (prompt caching), takže se při dalších tazích platí jen zlomek ceny. */
 const CLAUDE_MODELS = [['claude-haiku-5-5', 'Haiku 5.5', 'nejlevnější a nejrychlejší']];
 const claudeModel = () => CLAUDE_MODELS[0][0];   /* jen Haiku – levné a rychlé */
 const claudeName = id => (CLAUDE_MODELS.find(m => m[0] === id) || [id, id])[1];
+const claudeKey = () => cleanKey(ls.get('kroniky_key_claude'));
 async function fetchClaude(req){
-  const body = { model:claudeModel(), max_tokens:2500, temperature:0.9,
-    system:[{ type:'text', text:req.sys || SYSTEM, cache_control:{ type:'ephemeral' } }],
+  const stream = !req.prompt && ls.get('dz_stream') !== 'off' && typeof TextDecoder !== 'undefined';
+  const body = { model:claudeModel(), max_tokens:2500, temperature:0.9, ...(stream ? { stream:true } : {}),
+    system:req.sys ? [{ type:'text', text:req.sys, cache_control:{ type:'ephemeral' } }]
+      : [{ type:'text', text:SYSTEM }, ...(storyStatic() ? [{ type:'text', text:storyStatic() }] : [])].map((b, i, a) => i === a.length - 1 ? { ...b, cache_control:{ type:'ephemeral' } } : b),
     messages:[{ role:'user', content:req.prompt || buildPrompt(req) }] };
   const send = b => fetch('https://api.anthropic.com/v1/messages', { method:'POST',
-    headers:{ 'content-type':'application/json', 'x-api-key':getKey(), 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
+    headers:{ 'content-type':'application/json', 'x-api-key':claudeKey(), 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
     body:JSON.stringify(b) });
-  let r = await send(body), d = await r.json().catch(() => null);
-  if(r.status === 400 && /temperature/i.test(d?.error?.message || '')){ delete body.temperature; r = await send(body); d = await r.json().catch(() => null); }
-  if(!r.ok) throw claudeErr(r, d);
-  const out = parseJSON((d?.content || []).filter(c => c.type === 'text').map(c => c.text).join(''));
+  let r = await send(body);
+  if(r.status === 400){
+    const d0 = await (r.clone ? r.clone() : r).json().catch(() => null);
+    if(/temperature/i.test(d0?.error?.message || '')){ delete body.temperature; r = await send(body); }
+    else if(!r.clone) throw claudeErr(r, d0);
+  }
+  if(!r.ok){ const d = await r.json().catch(() => null); throw claudeErr(r, d); }
+  const usage = {};
+  let text;
+  if(stream && r.body && r.body.getReader) text = await readClaudeStream(r, usage);
+  else { const d = await r.json().catch(() => null); Object.assign(usage, d?.usage || {}); text = (d?.content || []).filter(c => c.type === 'text').map(c => c.text).join(''); }
+  trackClaude(usage);
+  const out = parseJSON(text);
   return req.prompt ? checkRaw(out) : checkOut(out);
 }
 function claudeErr(r, d){
-  const m = d?.error?.message || ('HTTP ' + r.status), k = getKey();
+  const m = d?.error?.message || ('HTTP ' + r.status), k = claudeKey();
   if(r.status === 401) return new Error(`Claude odmítl API klíč (${keyHint(k)}). Zkontroluj, že je celý – začíná „sk-ant-“.`);
   if(/credit balance|billing/i.test(m)) return new Error('Na účtu Claude došel kredit – dobij ho na platform.claude.com → Billing.');
   if(r.status === 404 || /model/i.test(m) && r.status === 400) return new Error('Model Claude ' + claudeName(claudeModel()) + ' není na tvém účtu dostupný. [' + m + ']');
@@ -1995,7 +2181,7 @@ async function fetchGemini(req){
     method:'POST',
     headers:{ 'Content-Type':'application/json' },
     body:JSON.stringify({
-      systemInstruction:{ parts:[{ text:req.sys || SYSTEM }] },
+      systemInstruction:{ parts:[{ text:req.sys || dmSysText() }] },
       contents:[{ role:'user', parts:[{ text:req.prompt || buildPrompt(req) }] }],
       generationConfig:gc
     })
@@ -2023,9 +2209,84 @@ async function fetchGemini(req){
     if(r.status === 429) throw new Error('vyčerpán bezplatný limit – zkus to za chvíli, nebo přepni model v Kronice');
     throw gemErr(r, d);
   }
+  trackGemini(d?.usageMetadata);
   const parts = (d?.candidates?.[0]?.content?.parts || []).filter(p => !p.thought);
   const out = parseJSON(parts.map(p => p.text || '').join(''));
   return req.prompt ? checkRaw(out) : checkOut(out);
+}
+
+/* =========================================================
+   MISTRAL – bezplatný plán Experiment (1 dotaz za sekundu)
+   Volání přímo z prohlížeče; když ho Mistral zablokuje (CORS), dá se nastavit prostředník (např. Cloudflare Worker).
+   ========================================================= */
+const MISTRAL_MODELS = [['mistral-large-latest','Large','nejlepší čeština a vyprávění'],['mistral-medium-latest','Medium','vyvážený'],['mistral-small-latest','Small','nejrychlejší']];
+const mistralModel = () => MISTRAL_MODELS.some(m => m[0] === ls.get('dz_mistral_model')) ? ls.get('dz_mistral_model') : 'mistral-large-latest';
+const mistralBase = () => (ls.get('dz_mistral_proxy') || 'https://api.mistral.ai').replace(/\/+$/, '');
+let mistralLast = 0;
+async function fetchMistral(req, model){
+  const key = cleanKey(ls.get('kroniky_key_mistral'));
+  if(!key) throw new Error('Mistral nemá klíč');
+  const wait = mistralLast + 1100 - Date.now();                /* limit 1 dotaz za sekundu */
+  if(wait > 0) await new Promise(r => setTimeout(r, wait));
+  mistralLast = Date.now();
+  let r;
+  try{
+    r = await fetch(mistralBase() + '/v1/chat/completions', { method:'POST',
+      headers:{ 'Content-Type':'application/json', Authorization:'Bearer ' + key },
+      body:JSON.stringify({ model:model || mistralModel(), temperature:0.8, max_tokens:2500, response_format:{ type:'json_object' },
+        messages:[{ role:'system', content:req.sys || dmSysText() }, { role:'user', content:req.prompt || buildPrompt(req) }] }) });
+  }catch(e){
+    throw new Error(ls.get('dz_mistral_proxy') ? 'Prostředník pro Mistral neodpovídá (' + e.message + ')' : 'Prohlížeč spojení s Mistralem zablokoval (CORS) – je potřeba prostředník, viz Kronika → 🧪 Vyzkoušet Mistral');
+  }
+  const d = await r.json().catch(() => null);
+  if(!r.ok){
+    const m = d?.message || d?.error?.message || d?.detail || ('HTTP ' + r.status);
+    if(r.status === 401) throw new Error(`Mistral odmítl klíč (${keyHint(key)})`);
+    if(r.status === 429) throw new Error('Mistral: moc dotazů najednou nebo vyčerpaný limit – chvilku počkej');
+    throw new Error('Mistral: ' + (typeof m === 'string' ? m : JSON.stringify(m)).slice(0, 160));
+  }
+  const o = spend(); o.mCalls = (o.mCalls || 0) + 1; o.mTok = (o.mTok || 0) + (d?.usage?.total_tokens || 0); o.since ||= new Date().toISOString().slice(0,10); setSpend(o);
+  const out = parseJSON(d?.choices?.[0]?.message?.content || '');
+  return req.prompt ? checkRaw(out) : checkOut(out);
+}
+async function testMistral(){
+  const key = cleanKey(ls.get('kroniky_key_mistral'));
+  if(!key) return alert('Nejdřív zadej Mistral klíč (🔑 Mistral klíč).');
+  const t0 = Date.now();
+  try{
+    const o = await fetchMistral({ sys:'Odpovídej jen platným JSON.', prompt:'Vrať JSON {"ok": true, "pozdrav": "krátký pozdrav dobrodruhovi česky"}' }, 'mistral-small-latest');
+    ls.set('dz_mistral_ok', 'yes');
+    alert(`✅ Mistral funguje! (${((Date.now() - t0) / 1000).toFixed(1)} s)\n„${String(o.pozdrav || '').slice(0, 120)}“`);
+  }catch(e){
+    ls.set('dz_mistral_ok', 'no');
+    alert('❌ ' + e.message + (/CORS|zablokoval/.test(e.message) ? '\n\nMistral nedovoluje volání přímo z webové stránky. Řešení: bezplatný prostředník (Cloudflare Worker) – jeho adresu pak zadáš v Kronice → 🌉 Prostředník pro Mistral.' : ''));
+  }
+  renderDrawer();
+}
+/* Vedlejší práce (shrnutí, kapitoly, přehled postupu, popis příjezdu) – když je zapnuto a Mistral funguje, dělá ji zdarma Mistral. */
+const bgMistral = () => hasKeyFor('mistral') && ls.get('dz_bg_mistral') !== 'off' && ls.get('dz_mistral_ok') !== 'no' && getProvider() !== 'mistral' && !isDemo();
+async function fetchBg(req){
+  if(bgMistral()){ try{ return await fetchMistral(req); }catch(e){ console.warn('Mistral (vedlejší práce) selhal:', e.message); } }
+  return fetchDM(req);
+}
+const SUMMARY_SYS = `Jsi kronikář textové hry Dungeons & Dragons. Píšeš česky. Odpovídáš POUZE platným JSON:
+{"shrnuti": "nové shrnutí CELÉHO příběhu, 200–350 slov", "kapitola": "1–2 věty (max 40 slov) o tom, co se stalo v POSLEDNÍM DĚNÍ"}
+Shrnutí: vezmi předchozí shrnutí a doplň do něj poslední dění. Starší události zhusti, ale nevynechávej; nejnovější popiš podrobněji. Zachovej jména postav a míst, sliby, dluhy, nepřátele, kdo zemřel, důležité předměty, rozhodnutí hráče a nevyřešené záhady. Nic si nevymýšlej. Piš ve 2. osobě („vydal ses…“).`;
+async function bgSummary(){
+  if(!S || S._sumBusy) return;
+  const slot = S.slot, upto = S.history.length;
+  const who = k => k === 'hrac' ? 'HRÁČ' : k === 'pj' ? 'PÁN JESKYNĚ' : 'HRA';
+  const prompt = `POSTAVA: ${S.char.name}, ${CLASSES[S.char.cls].nazev} ${S.char.level}. úrovně\nPŘEDCHOZÍ SHRNUTÍ:\n${S.summary || '(zatím nic)'}\n\nDŮLEŽITÁ FAKTA:\n${(S.fakta || []).map(f => '- ' + f.t).join('\n') || '(žádná)'}\n\nPOSLEDNÍ DĚNÍ:\n${S.history.map(h => who(h.kdo) + ': ' + h.text).join('\n\n')}`;
+  S._sumBusy = true;
+  try{
+    const o = await fetchBg({ sys:SUMMARY_SYS, prompt });
+    if(!S || S.slot !== slot || !o.shrnuti) return;
+    if(o.kapitola){ S.kapitoly ||= []; S.kapitoly.push({ t:String(o.kapitola).trim().slice(0,320), d:S.time.day }); if(S.kapitoly.length > 30) S.kapitoly = [{ t:S.kapitoly.slice(0, S.kapitoly.length - 29).map(k => k.t).join(' ').slice(0,600), d:S.kapitoly[0].d }, ...S.kapitoly.slice(-29)]; }
+    S.summary = String(o.shrnuti).slice(0, 3200);
+    S.history = S.history.slice(Math.max(0, upto - KEEP_AFTER_SUMMARY));   /* co přibylo mezitím, zůstává */
+    save();
+  }catch(e){ /* nevyšlo – shrnutí si příště vyžádá hlavní vypravěč */ }
+  finally{ if(S && S.slot === slot) S._sumBusy = false; }
 }
 
 /* Grok (xAI) – API kompatibilní s OpenAI. Model se vybere automaticky ze seznamu dostupných. */
@@ -2047,7 +2308,7 @@ async function fetchGrok(req){
     method:'POST',
     headers:{ 'Content-Type':'application/json', Authorization:'Bearer ' + getKey() },
     body:JSON.stringify({ model, temperature:0.9, max_tokens:3000, response_format:{ type:'json_object' },
-      messages:[ { role:'system', content:req.sys || SYSTEM }, { role:'user', content:req.prompt || buildPrompt(req) } ] })
+      messages:[ { role:'system', content:req.sys || dmSysText() }, { role:'user', content:req.prompt || buildPrompt(req) } ] })
   });
   const d = await r.json().catch(() => null);
   if(!r.ok){
@@ -2077,7 +2338,7 @@ ${JSON.stringify(publicState(), null, 1)}
 
 SHRNUTÍ STARŠÍHO DĚNÍ:
 ${S.summary || '(zatím nic)'}
-
+${(S.kapitoly || []).length ? '\nKAPITOLY:\n' + S.kapitoly.map((k,i) => `${i + 1}. ${k.t}`).join('\n') + '\n' : ''}${(S.fakta || []).length ? '\nDŮLEŽITÁ FAKTA:\n' + S.fakta.map(f => '- ' + f.t).join('\n') + '\n' : ''}
 POSLEDNÍ DĚNÍ:
 ${hist || '(hra právě začala)'}
 
@@ -2128,7 +2389,7 @@ async function makeRecap(){
   refresh();
   const turn = S.turn, hl = S.log.length, cas = timeStr(), slot = S.slot;
   try{
-    const out = isDemo() ? (await new Promise(r => setTimeout(r, 500)), mockRecap()) : await fetchDM({ sys:RECAP_SYS, prompt:recapPrompt() });
+    const out = isDemo() ? (await new Promise(r => setTimeout(r, 500)), mockRecap()) : await fetchBg({ sys:RECAP_SYS, prompt:recapPrompt() });
     if(!S || S.slot !== slot) return;
     S.recap = { ...sanitizeRecap(out), turn, hl, cas };
     save();
@@ -2165,6 +2426,625 @@ function addClues(raw){
   }
   if(S.clues.length > 40) S.clues = S.clues.slice(-40);
   return notes;
+}
+/* =========================================================
+   ŽIVÝ SVĚT – hrozba postupuje, i když hráč dělá něco jiného
+   ========================================================= */
+const hoursNow = () => (S.time.day - 1) * 24 + S.time.hour;
+const WORLD_EVERY = { pribeh:[48, 20], normal:[36, 15], kruta:[24, 11] };   /* [herní hodiny, tahy] */
+function worldTick(){
+  if(!S || S.storyEnd || S.turn < 4 || S.foes.length) return 0;
+  S.world ||= { stage:0, lastH:hoursNow(), lastTurn:S.turn, step:S.storyStep || 0, news:[] };
+  const W = S.world;
+  if((S.storyStep || 0) !== W.step){ W.step = S.storyStep || 0; W.lastH = hoursNow(); W.lastTurn = S.turn; return 0; }   /* hráč postoupil – hodiny se nulují */
+  const [h, t] = WORLD_EVERY[diff()];
+  if(hoursNow() - W.lastH < h && S.turn - W.lastTurn < t) return 0;
+  W.stage++; W.lastH = hoursNow(); W.lastTurn = S.turn;
+  return W.stage;
+}
+function addWorldNews(raw){
+  const list = arr(raw).map(x => String(typeof x === 'object' && x ? (x.text || '') : x).trim().slice(0, 200)).filter(x => x && x !== '[object Object]');
+  const notes = [];
+  if(!list.length) return notes;
+  S.world ||= { stage:0, lastH:hoursNow(), lastTurn:S.turn, step:S.storyStep || 0, news:[] };
+  for(const t of list.slice(0, 2)){
+    if(S.world.news.some(x => low(x.t) === low(t))) continue;
+    S.world.news.push({ t, d:S.time.day });
+    notes.push({ c:'world', t:'🌍 ' + t });
+  }
+  if(S.world.news.length > 25) S.world.news = S.world.news.slice(-25);
+  return notes;
+}
+function worldHTML(){
+  const n = S.world?.news || [];
+  return n.length ? `<div class="sec"><span>🌍 Zprávy ze světa</span><span>${n.length}</span></div><div class="imps clues">${n.slice().reverse().map(x => `<div>🌍 ${esc(x.t)}<small> · den ${x.d}</small></div>`).join('')}</div>` : '';
+}
+
+/* =========================================================
+   REŽISÉR TEMPA – hlídá, aby se hra nezasekla v povídání ani v boji za bojem
+   ========================================================= */
+function markEvent(){ S.pace ||= {}; S.pace.ev = S.turn; }
+function pacingHint(){
+  if(!S || S.foes.length) return null;
+  S.pace ||= {};
+  const P = S.pace, boje = P.boje || [], last = boje[boje.length - 1];
+  if(P.ev === undefined) P.ev = S.turn;
+  if(last !== undefined && S.turn - last <= 2 && S.turn - last >= 1) return 'Hráč právě dobojoval. Dej mu chvíli oddechu – ticho po boji, ošetření ran, kořist, rozhovor, atmosféra. Žádný nový boj hned teď.';
+  if(boje.filter(t => S.turn - t <= 12).length >= 3) return 'Bojů bylo poslední dobou hodně. Teď spíš rozhovor, záhada, průzkum nebo morální volba než další boj.';
+  const quiet = S.turn - P.ev, lim = { pribeh:9, normal:7, kruta:6 }[diff()];
+  if(quiet >= lim && (P.nudge === undefined || S.turn - P.nudge >= 3)){
+    P.nudge = S.turn;
+    return `Už ${quiet} tahů se nestalo nic zásadního. Teď přines ZVRAT, který navazuje na příběh: nečekanou novinu, nebezpečí, objev, zradu, nebo postavu s naléhavou prosbou. Nepřerušuj ale to, co hráč právě dělá – ať zvrat vyplyne ze situace.`;
+  }
+  return null;
+}
+
+/* =========================================================
+   PŘEPSAT ODPOVĚĎ / OPRAVA – stav před posledním tahem se drží v paměti
+   ========================================================= */
+let undoSnap = null;
+function takeSnap(input){ try{ undoSnap = { json:JSON.stringify(S), input, turn:S.turn, slot:S.slot }; }catch(e){ undoSnap = null; } }
+const canRegen = e => !!(undoSnap && !busy && S && !S.dead && undoSnap.slot === S.slot && e.turn === undoSnap.turn + 1 && S.log.filter(x => x.t === 'dm').pop() === e);
+function regenDM(fix){
+  if(busy || !undoSnap) return;
+  const u = undoSnap; undoSnap = null;
+  closeSheet();
+  S = JSON.parse(u.json);
+  const inp = { ...u.input }; delete inp.vyrus; delete inp.oprava;
+  if(fix){ addLog({ t:'sys', text:'✋ Oprava pro Pána jeskyně: ' + fix }); inp.oprava = fix; }
+  render(); save();
+  callDM(inp);
+}
+function fixSheet(){
+  openSheet(`<h3>✋ Tohle nesedí</h3><p class="ddesc">Napiš Pánovi jeskyně mimo příběh, co je špatně – např. „ten meč jsem přece prodal“, „Bořek je mrtvý“, „byl jsem v hostinci, ne v lese“. Poslední odpověď se zahodí a napíše ji znovu.</p>
+    <textarea id="fixTxt" class="field" rows="3" style="width:100%;margin:8px 0"></textarea>
+    <button class="btn" data-act="fixgo">✍️ Napsat znovu</button><button class="cancel" data-act="closesheet">Zrušit</button>`);
+  setTimeout(() => $('#fixTxt')?.focus(), 50);
+}
+
+/* =========================================================
+   ÚTRATA (odhad) – ceny za milion tokenů v USD; přepočet na Kč přibližný
+   ========================================================= */
+const PRICE = { claude:{ in:1, out:5, cw:1.25, cr:0.1 }, gemini:{ in:0.10, out:0.40 }, img:0.039 };
+const USD_CZK = 23;
+const spend = () => { try{ return JSON.parse(ls.get('dz_spend')) || {}; }catch(e){ return {}; } };
+const setSpend = o => ls.set('dz_spend', JSON.stringify(o));
+const budget = (k, def) => { const v = parseFloat(String(ls.get(k)).replace(',', '.')); return v > 0 ? v : def; };
+function trackClaude(u){
+  if(!u) return;
+  const P = PRICE.claude, usd = ((u.input_tokens || 0) * P.in + (u.output_tokens || 0) * P.out + (u.cache_creation_input_tokens || 0) * P.cw + (u.cache_read_input_tokens || 0) * P.cr) / 1e6;
+  const o = spend(); o.claude = (o.claude || 0) + usd; o.cCalls = (o.cCalls || 0) + 1; o.since ||= new Date().toISOString().slice(0,10);
+  const B = budget('dz_budget_claude', 20);
+  if(!o.warned && o.claude >= B * 0.8 && S){ o.warned = 1; addLog({ t:'sys', text:`💸 Na Claudovi už jsi utratil asi ${o.claude.toFixed(2)} $ z ${B} $ (odhad). Zbývá zhruba ${Math.max(0, B - o.claude).toFixed(2)} $.` }); }
+  setSpend(o);
+}
+function trackGemini(u, img){
+  const o = spend(); o.since ||= new Date().toISOString().slice(0,10);
+  if(img){ o.gemini = (o.gemini || 0) + PRICE.img; o.imgs = (o.imgs || 0) + 1; }
+  else if(u){ o.gemini = (o.gemini || 0) + ((u.promptTokenCount || 0) * PRICE.gemini.in + ((u.candidatesTokenCount || 0) + (u.thoughtsTokenCount || 0)) * PRICE.gemini.out) / 1e6; o.gCalls = (o.gCalls || 0) + 1; }
+  setSpend(o);
+}
+function mistralHTML(){
+  const has = hasKeyFor('mistral'), st = ls.get('dz_mistral_ok'), prim = getProvider() === 'mistral';
+  return `<div class="sec"><span>🌬️ Mistral (zdarma)</span><span>${!has ? 'bez klíče' : st === 'yes' ? '✅ funguje' : st === 'no' ? '❌ nefunguje' : 'nevyzkoušený'}</span></div>
+    <div class="dnote" style="text-align:left">${prim ? 'Mistral teď vypráví celou hru.' : 'Pomocník zdarma: záloha, když hlavní AI selže, a vedlejší práce (shrnutí příběhu, kapitoly, přehled postupu, popis příjezdu), aby hlavní AI dělala jen to podstatné.'}</div>
+    <div class="seg"><button data-act="mkey">🔑 ${has ? 'Změnit' : 'Zadat'} klíč</button><button data-act="mtest">🧪 Vyzkoušet</button><button data-act="mmodel">🤖 ${esc(MISTRAL_MODELS.find(m => m[0] === mistralModel())[1])}</button></div>
+    ${has && !prim ? `<button class="tog ${ls.get('dz_bg_mistral') !== 'off' ? 'on' : ''}" data-act="mbg"><span class="mid"><b>🧹 Vedlejší práce dělá Mistral</b><small>Shrnutí, kapitoly, přehled postupu a popis příjezdu po cestě – zdarma.</small></span><span class="sw"></span></button>` : ''}
+    <button class="btn ghost" data-act="mproxy">🌉 Prostředník pro Mistral${ls.get('dz_mistral_proxy') ? ' – nastaven' : ' (jen když ho prohlížeč blokuje)'}</button>`;
+}
+function proxySheet(){
+  openSheet(`<h3>🌉 Prostředník pro Mistral</h3>
+    <p class="ddesc">Mistral možná nedovolí volání přímo z webové stránky (prohlížeč to zablokuje – tzv. CORS). Pomůže bezplatný prostředník na Cloudflare, který dotaz jen přepošle. Klíč dál zůstává jen v tvém zařízení.</p>
+    <div class="flbl">Jak na to (asi 10 minut)</div>
+    <div class="ddesc" style="text-align:left">1. Založ si zdarma účet na <b>dash.cloudflare.com</b>.<br>2. Workers &amp; Pages → Create → Worker → pojmenuj ho (např. mistral-zaoo) → Deploy.<br>3. Edit code → smaž vše a vlož kód níže → Deploy.<br>4. Adresu workeru (např. https://mistral-zaoo.tvojejmeno.workers.dev) zadej sem.</div>
+    <textarea class="field" rows="9" readonly style="width:100%;font-family:monospace;font-size:11px">${esc(PROXY_CODE)}</textarea>
+    <input id="proxyUrl" class="field" placeholder="https://….workers.dev" value="${esc(ls.get('dz_mistral_proxy'))}" style="margin-top:8px">
+    <button class="btn" data-act="mproxysave">💾 Uložit a vyzkoušet</button><button class="cancel" data-act="closesheet">Zavřít</button>`);
+}
+const PROXY_CODE = `export default {
+  async fetch(req) {
+    const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Authorization, Content-Type', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
+    if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
+    const url = new URL(req.url);
+    if (!url.pathname.startsWith('/v1/')) return new Response('ok', { headers: cors });
+    const r = await fetch('https://api.mistral.ai' + url.pathname, { method: req.method, headers: { 'Authorization': req.headers.get('Authorization') || '', 'Content-Type': 'application/json' }, body: req.method === 'POST' ? await req.text() : undefined });
+    return new Response(r.body, { status: r.status, headers: { ...cors, 'Content-Type': 'application/json' } });
+  }
+};`;
+function spendHTML(){
+  const o = spend(), Bc = budget('dz_budget_claude', 20), Bg = budget('dz_budget_gem', 100);
+  const c = o.claude || 0, gk = (o.gemini || 0) * USD_CZK;
+  const bar = (v, max) => `<div class="bar"><div style="width:${Math.min(100, 100 * v / max)}%;background:${v / max >= 0.8 ? 'var(--blood)' : 'var(--gold)'}"></div></div>`;
+  return `<div class="sec"><span>💸 Útrata za AI (odhad)</span><span>${o.since ? 'od ' + o.since.split('-').reverse().join('. ') : ''}</span></div>
+    <div class="qrow"><b>🧠 Claude: ${c.toFixed(2)} $ z ${Bc} $</b><small>${o.cCalls || 0} odpovědí · ≈ ${(c * USD_CZK).toFixed(0)} Kč · zbývá asi ${Math.max(0, Bc - c).toFixed(2)} $</small>${bar(c, Bc)}</div>
+    ${o.mCalls ? `<div class="qrow"><b>🌬️ Mistral: zdarma</b><small>${o.mCalls} odpovědí · ${Math.round((o.mTok || 0) / 1000)} tis. tokenů z měsíční miliardy</small></div>` : ''}
+    <div class="qrow"><b>✨ Gemini: ${gk.toFixed(1)} Kč z ${Bg} Kč</b><small>${o.imgs || 0} obrázků · ${o.gCalls || 0} textových odpovědí</small>${bar(gk, Bg)}</div>
+    <div class="dnote" style="text-align:left">Počítá se z tokenů, které hlásí AI – skutečnou útratu uvidíš na platform.claude.com a v Google AI Studiu. Počítá jen toto zařízení.</div>
+    <div class="seg"><button data-act="budget">✏️ Rozpočet</button><button data-act="spendreset">🧹 Vynulovat</button></div>
+    <button class="tog ${ls.get('dz_fallback') !== 'off' ? 'on' : ''}" data-act="fallback"><span class="mid"><b>🛟 Záloha</b><small>Když AI selže nebo dojde kredit, odpoví jiná (nejdřív Mistral, pak Gemini, pak Claude) – musí mít zadaný klíč.</small></span><span class="sw"></span></button>
+    <button class="tog ${ls.get('dz_stream') !== 'off' ? 'on' : ''}" data-act="stream"><span class="mid"><b>⚡ Text naběhne hned</b><small>Odpověď od Clauda se vypisuje průběžně, jak ji píše.</small></span><span class="sw"></span></button>`;
+}
+
+/* =========================================================
+   FÉROVOST – riskantní akce musí jít přes kostku
+   ========================================================= */
+const RISKY = [
+  ['charisma', /přesvědč(?!\S* se([\s,.;!]|$))|přemluv|zalž|lžu |lhát|oklam|obelst|ošál|napálí|zastraš|vyhrož|výhrůž|smlouv|usmlouv|uplat|podplat|svedu|svést|okouzl|namluv|blafuj|předstír|vydávám se za|vydám se za/],
+  ['obratnost', /ukrad|šlohn|odcizí|čmajzn|kapsář|vytáhn\S* (mu|jí|jim) |plíž|proplíž|připlíž|kradm|nepozorovaně|schovám se|ukryju se|skryju se|vypáč|paklíč|zneškodn\S* past|balancuj|přeběhn\S* po|uskoč|uhnu |vyklouz|odemkn\S* (zámek|truhl|dveř)/],
+  ['sila', /(pře)?skoč(?!\S* (do|za|k|na) (hospod|krám|obchod|soused))|vyšplh|šplh|vylez|zdolá|přeplav|vyraz\S* (dveře|mříž|okno)|vylom|vyvrátí?m|přetlač|odvalí?m|zvednu (bal|kám|vůz|trám)|udrží?m (se|most|dveře)/],
+  ['moudrost', /vystopuj|stopuj|stopovat|vyčmuch|prokouk|odhal\S* (lež|past)|zkrot|ochoč|uklidn\S* (koně|zvíře|psa|vlka)/],
+  ['inteligence', /rozlušt|vylušt|rozšifr|dešifr|přelož\S* (run|nápis|text)|rozpozn\S* (kouzl|magi|jed)/]
+];
+function riskyStat(text){
+  const t = ' ' + low(String(text || '')) + ' ';
+  if(/^\s*(co |kdo |kde |proč |jak |je |jsou |mám |můžu |\?)/.test(t.trim() + ' ') && /\?\s*$/.test(t)) return null;   /* otázka, ne čin */
+  for(const [st, re] of RISKY) if(re.test(t)) return st;
+  return null;
+}
+const needForcedRoll = (input, res) => !!(input && input.riziko && !input.vynutit && input.typ === 'akce' && res && !res.zkouska && !(typeof res.bez_hodu === 'string' && res.bez_hodu.trim()) && !S.foes.length && !S.pending);
+
+/* =========================================================
+   D&D 2024: DOVEDNOSTI, ZÁCHRANNÉ HODY, ODPOČINEK, ODBORNOSTI,
+   POVAHA, INSPIRACE, JAZYKY, NÁSTROJE, KOUZLA A SOUSTŘEDĚNÍ
+   ========================================================= */
+const SKILLS = {
+  atletika:['Atletika','sila'], akrobacie:['Akrobacie','obratnost'], cachry:['Čachry','obratnost'], nenapadnost:['Nenápadnost','obratnost'],
+  mystika:['Mystika','inteligence'], historie:['Historie','inteligence'], patrani:['Pátrání','inteligence'], priroda:['Příroda','inteligence'], nabozenstvi:['Náboženství','inteligence'],
+  zvirata:['Zacházení se zvířaty','moudrost'], vhled:['Vhled','moudrost'], lekarstvi:['Lékařství','moudrost'], vnimani:['Vnímání','moudrost'], preziti:['Přežití','moudrost'],
+  klam:['Klam','charisma'], zastrasovani:['Zastrašování','charisma'], vystupovani:['Vystupování','charisma'], presvedcovani:['Přesvědčování','charisma']
+};
+const skillName = k => SKILLS[k]?.[0] || k;
+const deacc = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+const skillKey = x => { if(!x) return null; const d = deacc(x); return SKILLS[d] ? d : Object.keys(SKILLS).find(k => deacc(SKILLS[k][0]) === d || deacc(SKILLS[k][0]).startsWith(d.slice(0, 6))) || null; };
+/* dovednosti povolání: [počet, pořadí výběru] – když se kryjí se zázemím, vezme se další v pořadí */
+const CLASS_SKILLS = {
+  barbar:[2, ['atletika','vnimani','preziti','zastrasovani','priroda','zvirata']],
+  bard:[3, ['vystupovani','presvedcovani','klam','vhled','historie','akrobacie','cachry']],
+  knez:[2, ['vhled','nabozenstvi','lekarstvi','historie','presvedcovani']],
+  druid:[2, ['priroda','preziti','zvirata','lekarstvi','vnimani','mystika','vhled']],
+  valecnik:[2, ['atletika','zastrasovani','vnimani','preziti','akrobacie','historie']],
+  mnich:[2, ['akrobacie','nenapadnost','atletika','vhled','historie','nabozenstvi']],
+  paladin:[2, ['atletika','presvedcovani','zastrasovani','vhled','lekarstvi','nabozenstvi']],
+  hranicar:[3, ['preziti','nenapadnost','vnimani','zvirata','priroda','atletika','patrani']],
+  zlodej:[4, ['nenapadnost','cachry','vnimani','klam','akrobacie','patrani','presvedcovani','atletika']],
+  carodej:[2, ['mystika','presvedcovani','klam','zastrasovani','vhled','nabozenstvi']],
+  cernokneznik:[2, ['mystika','klam','zastrasovani','historie','patrani','nabozenstvi']],
+  mag:[2, ['mystika','historie','patrani','lekarstvi','vhled','nabozenstvi']]
+};
+const ZAZ_SKILLS = { vojak:['atletika','zastrasovani'], kriminalnik:['cachry','nenapadnost'], akolyta:['vhled','nabozenstvi'], mudrc:['mystika','historie'],
+  remeslnik:['patrani','presvedcovani'], slechtic:['historie','presvedcovani'], poutnik:['vhled','nenapadnost'], venkovan:['zvirata','priroda'] };
+function profSkills(){
+  const c = S.char, set = new Set(ZAZ_SKILLS[c.zazemi] || []);
+  const [n, list] = CLASS_SKILLS[c.cls] || [2, []];
+  let added = 0;
+  for(const k of list){ if(added >= n) break; if(!set.has(k)){ set.add(k); added++; } }
+  if(c.druh === 'elf') set.add('vnimani');                                   /* bystré smysly */
+  if(c.druh === 'clovek'){ const k = ['vnimani','vhled','presvedcovani','atletika','preziti'].find(x => !set.has(x)); if(k) set.add(k); }   /* všestrannost */
+  for(const k of c.skillsExtra || []) if(SKILLS[k]) set.add(k);
+  return set;
+}
+function expertSkills(){
+  const c = S.char, out = new Set((c.expertExtra || []).filter(k => SKILLS[k])), p = profSkills();
+  const top = (pref, n) => { let k = 0; for(const s of pref){ if(k >= n) break; if(p.has(s) && !out.has(s)){ out.add(s); k++; } } };
+  if(c.cls === 'zlodej') top(['nenapadnost','cachry','klam','vnimani','akrobacie','patrani','presvedcovani','atletika'], c.level >= 6 ? 4 : 2);
+  if(c.cls === 'bard' && c.level >= 2) top(['presvedcovani','vystupovani','klam','vhled','historie'], c.level >= 9 ? 4 : 2);
+  if(c.cls === 'hranicar' && c.level >= 2) top(['preziti','vnimani','nenapadnost'], c.level >= 9 ? 2 : 1);
+  if(c.cls === 'mag' && c.level >= 2) top(['mystika','historie','patrani','priroda','nabozenstvi'], 1);
+  return out;
+}
+const jackOfAll = () => S.char.cls === 'bard' && S.char.level >= 2;
+function skillBonus(k, stat){
+  const st = stat || SKILLS[k][1], pb = profBonus();
+  return mod(S.char.stats[st]) + (expertSkills().has(k) ? 2 * pb : profSkills().has(k) ? pb : jackOfAll() ? Math.floor(pb / 2) : 0);
+}
+const passivePerception = () => 10 + skillBonus('vnimani');
+/* Když AI dovednost neuvede, odhadne ji hra z důvodu zkoušky a akce hráče. */
+const SKILL_HINTS = [
+  ['nenapadnost', /plíž|skrý|skryj|schov|nepozorovan|potich|kradm|nenápad|neslyšn/],
+  ['cachry', /krad|kaps|zámek|zámk|páč|paklíč|past |pasti|šlohn|odcizi|zručn|kousek prst/],
+  ['akrobacie', /balanc|akrobat|kotoul|uhnout|uhyb|úhyb|uskoč|proklouz|rovnováh|vyklouz/],
+  ['atletika', /šplh|lez|skok|skoč|plav|vyraz|zved|tlač|táhn|odval|přetlač|zápas|udrž/],
+  ['zastrasovani', /zastraš|vyhrož|výhrůž|postraš|strach z tebe/],
+  ['klam', /lež|lži|lhan|lhát|zalh|oklam|ošál|blaf|předstír|převlek|přestroj|vydáv|nalh/],
+  ['presvedcovani', /přesvědč|přemluv|smlouv|vyjedn|prosb|uprosit|diplom|uplat|podplat|okouzl|získat důvěru/],
+  ['vystupovani', /zpěv|zpív|hraje|zahraj|hudb|tanec|tanč|vystoup|pobavit|bavit dav/],
+  ['vhled', /vhled|úmysl|prokouk|lže mu|mluví pravdu|odhadnout|upřímn|důvěryhod|co chce/],
+  ['vnimani', /všimn|zaslech|uslyš|rozhléd|vnímán|zahléd|čich|hlídk|pozorn|zpozorn/],
+  ['preziti', /stop|orient|cestu |přežit|lov|potrav|počasí|tábor|vyčmuch|bloud/],
+  ['lekarstvi', /ošetř|obvaz|ránu|rány|lékař|diagn|nemoc|krvác|stabiliz|umírající/],
+  ['zvirata', /zvíř|kůň|koně|koni|psa|pes |vlk|zkrot|ochoč|uklidn|mula|osl/],
+  ['mystika', /magi|kouzl|run|arkán|portál|artefakt|očarov|svitek/],
+  ['historie', /histori|legend|dávn|starobyl|erb|rodokm|válk|kronik|pamatuje/],
+  ['nabozenstvi', /bůh|boh|chrám|kult|svat|modlit|démon|nemrtv|božsk|obřad|rituál/],
+  ['priroda', /rostlin|bylin|houb|přírod|terén|les |bažin|jedovat/],
+  ['patrani', /prohled|pátr|zkoum|hledá|indici|mechanism|lušt|šifr|deník|dokument|stopy po|záhad|prozkoum/]
+];
+function guessSkill(stat, text){
+  const t = ' ' + low(text || '') + ' ';
+  const hit = SKILL_HINTS.find(([k, re]) => (!stat || SKILLS[k][1] === stat) && re.test(t));
+  return hit ? hit[0] : null;
+}
+
+/* ---------- Záchranné hody ---------- */
+const CLASS_SAVES = { barbar:['sila','odolnost'], bard:['obratnost','charisma'], knez:['moudrost','charisma'], druid:['inteligence','moudrost'], valecnik:['sila','odolnost'],
+  mnich:['sila','obratnost'], paladin:['moudrost','charisma'], hranicar:['sila','obratnost'], zlodej:['obratnost','inteligence'], carodej:['odolnost','charisma'],
+  cernokneznik:['moudrost','charisma'], mag:['inteligence','moudrost'] };
+const saveProf = st => (CLASS_SAVES[S.char.cls] || []).includes(st) || S.char.featData?.houzevnaty === st
+  || (S.char.cls === 'mnich' && S.char.level >= 14) || (S.char.cls === 'zlodej' && S.char.level >= 15 && st === 'moudrost');
+const saveBonus = st => mod(S.char.stats[st]) + (saveProf(st) ? profBonus() : 0);
+
+/* ---------- Jazyky a nástroje ---------- */
+const SP_LANG = { elf:'elfština', trpaslik:'trpasličtina', pulcik:'půlčičí řeč', gnom:'gnómština', ork:'orkština', golias:'obrština', drak:'dračí řeč', tiefling:'pekelná řeč', aasimar:'nebeská řeč' };
+const ZAZ_LANG = { vojak:'orkština', kriminalnik:'zlodějská hantýrka', akolyta:'nebeská řeč', mudrc:'dračí řeč', remeslnik:'trpasličtina', slechtic:'elfština', poutnik:'půlčičí řeč', venkovan:'obrština' };
+const CLS_LANG = { druid:'druidština', zlodej:'zlodějská hantýrka' };
+function languages(){
+  const c = S.char, set = new Set(['obecná řeč']);
+  [SP_LANG[c.druh], ZAZ_LANG[c.zazemi], CLS_LANG[c.cls]].forEach(x => x && set.add(x));
+  for(const x of ['elfština','trpasličtina','půlčičí řeč','gnómština']) if(set.size < 3) set.add(x);
+  return [...set];
+}
+const ZAZ_TOOL = { vojak:'herní sada', kriminalnik:'zlodějské náčiní', akolyta:'kaligrafické potřeby', mudrc:'kaligrafické potřeby', remeslnik:'řemeslnické nářadí', slechtic:'herní sada', poutnik:'zlodějské náčiní', venkovan:'tesařské nářadí' };
+const CLS_TOOL = { bard:['hudební nástroje'], druid:['bylinkářská sada'], zlodej:['zlodějské náčiní'], mnich:['hudební nástroje'], hranicar:['bylinkářská sada'], knez:['bylinkářská sada'] };
+const TOOL_RE = { 'zlodějské náčiní':/zlodějsk|paklíč|páčid|zám|past/, 'herní sada':/hra |hru|kostk|karet|karty|hazard/, 'kaligrafické potřeby':/kaligraf|písm|paděl|listin|pečeť/,
+  'řemeslnické nářadí':/řemesl|nářad|oprav|mechanism|kovář|kov/, 'tesařské nářadí':/tesař|dřev|trám|lešen|truhl/, 'hudební nástroje':/hudeb|nástroj|loutn|flétn|buben|hraj/,
+  'bylinkářská sada':/bylin|lektvar|protijed|mast|odvar/ };
+const tools = () => [...new Set([ZAZ_TOOL[S.char.zazemi], ...(CLS_TOOL[S.char.cls] || [])].filter(Boolean))];
+function toolMatch(x){ if(!x) return null; const t = ' ' + low(x) + ' '; return tools().find(k => t.includes(low(k)) || TOOL_RE[k]?.test(t)) || null; }
+
+/* ---------- Povaha a hrdinská inspirace ---------- */
+const ALIGN = { ZD:'Zákonně dobrý', ND:'Neutrálně dobrý', CD:'Chaoticky dobrý', ZN:'Zákonně neutrální', N:'Neutrální', CN:'Chaoticky neutrální', ZZ:'Zákonně zlý', NZ:'Neutrálně zlý', CZ:'Chaoticky zlý' };
+const IDEALY = ['Čest – dané slovo platí, i když to bolí.','Svoboda – nikdo nemá právo vládnout druhým.','Moc – silný si bere, co chce.','Milosrdenství – každý si zaslouží druhou šanci.',
+  'Vědění – pravda je cennější než zlato.','Rodina – pro své udělám cokoli.','Víra – bohové mají plán a já jsem jeho součástí.','Bohatství – zlato otevírá všechny dveře.',
+  'Spravedlnost – zlo musí být potrestáno.','Dobrodružství – život je moc krátký na nudu.'];
+const POUTA = ['Hledám toho, kdo vypálil mou vesnici.','Dlužím život starému mentorovi, který beze stopy zmizel.','Doma na mě čeká malá sestra, kterou musím uživit.',
+  'Nosím prsten po matce a nikdy ho nedám z ruky.','Přísahal jsem věrnost řádu, který už neexistuje.','Jednou si koupím vlastní statek a usadím se.',
+  'Můj nejlepší přítel mě zradil – a jednou se zase setkáme.','Hledám ztracenou knihu, o které mluvil můj otec.','Kdosi mi zachránil život a já mu to musím oplatit.',
+  'Moje rodné město leží v troskách a chci ho obnovit.'];
+const SLABOSTI = ['Neodolám lesklé věci, i když není moje.','Když se urazím, nedokážu odpustit.','Piju víc, než bych měl.','Nevěřím nikomu, kdo nosí erb.',
+  'Rád se chlubím, i když bych měl mlčet.','Když jde opravdu do tuhého, mám chuť utéct.','Dám se snadno nachytat na hezká slova.','Jsem tvrdohlavý, i když vím, že nemám pravdu.',
+  'Hazard je moje prokletí.','Skrývám temné tajemství z minulosti.'];
+const rnd = a => a[Math.floor(Math.random() * a.length)];
+let selPovaha = { presvedceni:'N', ideal:'', pouto:'', slabost:'' };
+function povahaFields(p, prefix){
+  return `<div class="seg wrap aligns">${Object.entries(ALIGN).map(([k,n]) => `<button class="${p.presvedceni === k ? 'on' : ''}" data-align="${k}" title="${n}">${n}</button>`).join('')}</div>
+    <input class="field pov" data-pov="ideal" maxlength="120" placeholder="Ideál – čemu věříš" value="${esc(p.ideal || '')}">
+    <input class="field pov" data-pov="pouto" maxlength="120" placeholder="Pouto – co nebo koho ti leží na srdci" value="${esc(p.pouto || '')}">
+    <input class="field pov" data-pov="slabost" maxlength="120" placeholder="Slabost – čím tě lze zlomit nebo svést" value="${esc(p.slabost || '')}">
+    <button class="btn ghost" data-act="${prefix}rollpov">🎲 Vylosovat povahu</button>`;
+}
+function povahaSheet(){
+  const p = { presvedceni:'N', ideal:'', pouto:'', slabost:'', ...(S.char.povaha || {}) };
+  openSheet(`<h3>🎭 Povaha postavy</h3><div class="dnote" style="text-align:left;margin:-4px 0 8px">Pán jeskyně podle ní hraje svět: pouto vplete do příběhu a slabost občas vyzkouší pokušením. Za dobře zahranou roli dává hrdinskou inspiraci.</div>
+    <div id="povEdit">${povahaFields(p, 'g')}</div>
+    <button class="btn" data-act="povsave">💾 Uložit</button><button class="cancel" data-act="closesheet">Zavřít</button>`);
+  S._povDraft = p;
+}
+function savePovaha(){
+  const p = S._povDraft || {};
+  document.querySelectorAll('#povEdit [data-pov]').forEach(i => p[i.dataset.pov] = i.value.trim().slice(0,120));
+  S.char.povaha = p; delete S._povDraft;
+  hist(`Hráč si upravil povahu postavy: ${ALIGN[p.presvedceni] || ''}; ideál: ${p.ideal || '–'}; pouto: ${p.pouto || '–'}; slabost: ${p.slabost || '–'}.`);
+  closeSheet(); renderDrawer(); save();
+}
+function grantInspiration(why){
+  const c = S.char;
+  if(c.insp) return null;
+  c.insp = true;
+  return { c:'gold', t:'🌟 Hrdinská inspirace' + (why ? ' · ' + String(why).slice(0,80) : '') };
+}
+function useInspiration(){
+  const c = S.char, p = S.pending;
+  if(!c.insp || !p || rolling || busy) return;
+  p.adv = Math.min(1, (p.adv || 0) + 1); p.insp = true; c.insp = false;
+  addLog({ t:'fx', notes:[{ c:'gold', t:'🌟 Inspirace použita – hod s výhodou' }] });
+  render(); save();
+}
+
+/* ---------- Odbornosti (talenty) ---------- */
+const FEATS = {
+  ostrazity:{ n:'Ostražitý', i:'👁️', d:'+zdatnost k iniciativě a nikdy tě nepřekvapí.' },
+  stastlivec:{ n:'Šťastlivec', i:'🍀', d:'Body štěstí (tolik, kolik je tvá zdatnost): každý dá hod d20 s výhodou. Obnoví je spánek.' },
+  odolny:{ n:'Odolný', i:'🫀', d:'+2 maximální životy za každou úroveň – i zpětně.' },
+  zrucny:{ n:'Zručný', i:'🧰', d:'Zdatnost ve 3 dovednostech podle tvého výběru.' },
+  houzevnaty:{ n:'Houževnatý', i:'🪨', d:'+1 k vlastnosti podle výběru a zdatnost v jejích záchranných hodech.' },
+  mistr_zbrani:{ n:'Mistr velkých zbraní', i:'🪓', d:'S těžkou zbraní (1d10 a víc, 2d6) + zdatnost ke každému zásahu.' },
+  ostrostrelec:{ n:'Ostrostřelec', i:'🏹', d:'+1 obratnost; střelbu neruší počasí ani tma (žádná nevýhoda).' },
+  zasvecenec:{ n:'Magický zasvěcenec', i:'🔮', d:'Ohnivý šíp (1d10) kdykoli a Léčivé slovo 1× za spánek. Kdo už kouzlí, dostane +1 slot.' },
+  bystry:{ n:'Bystrý', i:'🔎', d:'+1 moudrost; zdatnost ve Vnímání – a když ji máš, dvojnásobná.' },
+  valecny_mag:{ n:'Válečný kouzelník', i:'⚡', d:'+1 k inteligenci, moudrosti nebo charismatu a výhoda na udržení soustředění.' }
+};
+const featHas = k => (S?.char?.feats || []).includes(k);
+const featLevels = cls => [4, 8, 12, 16, 19].concat(cls === 'valecnik' ? [6, 14] : cls === 'zlodej' ? [10] : []);
+function featAbilities(){
+  const out = [];
+  if(featHas('stastlivec')) out.push({ id:'stastlivec', nazev:'Šťastlivec', i:'🍀', lvl:1, uses:() => profBonus(), kind:'nextRoll', stat:'*', adv:true, popis:'Bod štěstí: příští hod d20 s výhodou.' });
+  if(featHas('zasvecenec')) out.push({ id:'slovo_z', bonus:true, nazev:'Léčivé slovo (zasvěcenec)', i:'💬', lvl:1, uses:1, kind:'heal', dice:'2d4', addStat:'@', popis:'Vyléčí 2d4 + tvá kouzelná vlastnost.' });
+  return out;
+}
+function incStat(k, n = 1){
+  const c = S.char, oldCon = mod(c.stats.odolnost);
+  c.stats[k] = Math.min(20, c.stats[k] + n);
+  if(k === 'odolnost'){ const d = mod(c.stats.odolnost) - oldCon; if(d){ c.maxHp += d * c.level; c.hp += d * c.level; } }
+}
+function featSheet(){
+  const c = S.char;
+  if(!S.featPicks) return;
+  const list = Object.entries(FEATS).filter(([k]) => !featHas(k));
+  openSheet(`<h3>🏅 Odbornost (${c.level}. úroveň)</h3><div class="dnote" style="text-align:left;margin:-4px 0 10px">V D&D si na této úrovni vybereš buď +2 k vlastnostem, nebo odbornost. Volba je trvalá.</div>
+    <button class="abil" data-feat="asi"><span class="ico">⬆️</span><span class="mid"><b>+2 k vlastnostem</b><small>Dvakrát +1 (do jedné nebo dvou vlastností, nejvýš 20).</small></span></button>
+    ${list.map(([k,f]) => `<button class="abil" data-feat="${k}"><span class="ico">${f.i}</span><span class="mid"><b>${esc(f.n)}</b><small>${esc(f.d)}</small></span></button>`).join('')}
+    <button class="cancel" data-act="closesheet">Rozhodnu se později</button>`);
+}
+async function chooseFeat(k){
+  const c = S.char;
+  if(!S.featPicks || (k !== 'asi' && (!FEATS[k] || featHas(k)))) return;
+  closeSheet();
+  const mental = ['inteligence','moudrost','charisma'];
+  if(k === 'asi'){ S.featPicks--; S.statPicks = (S.statPicks || 0) + 2; S._lvlAsked = false; save(); render(); return levelUpPick(); }
+  if(k === 'houzevnaty' || k === 'valecny_mag'){
+    const opts = (k === 'houzevnaty' ? STAT_KEYS : mental).filter(x => c.stats[x] < 20 || k === 'houzevnaty').map(x => ({ label:`${statName(x)} ${c.stats[x]} → ${Math.min(20, c.stats[x] + 1)}`, value:x }));
+    const st = await pick(`${FEATS[k].i} ${FEATS[k].n}: kterou vlastnost?`, opts);
+    if(!st) return;
+    incStat(st); c.featData = { ...(c.featData || {}), [k]:st };
+  }
+  if(k === 'zrucny'){
+    c.skillsExtra ||= [];
+    for(let i = 0; i < 3; i++){
+      const opts = Object.keys(SKILLS).filter(x => !profSkills().has(x)).map(x => ({ label:`${skillName(x)} (${statName(SKILLS[x][1])})`, value:x }));
+      const sk = opts.length ? await pick(`🧰 Zručný: dovednost ${i + 1} ze 3`, opts) : null;
+      if(sk) c.skillsExtra.push(sk);
+    }
+  }
+  if(k === 'odolny'){ c.maxHp += 2 * c.level; c.hp += 2 * c.level; }
+  if(k === 'ostrostrelec') incStat('obratnost');
+  if(k === 'bystry'){ incStat('moudrost'); if(profSkills().has('vnimani')) (c.expertExtra ||= []).push('vnimani'); else (c.skillsExtra ||= []).push('vnimani'); }
+  c.feats = [...(c.feats || []), k];
+  if(k === 'stastlivec') S.res.stastlivec = profBonus();
+  if(k === 'zasvecenec'){ S.res.slovo_z = 1; if(CLASSES[c.cls].caster) S.slots = Math.min(slotMax(), (S.slots || 0) + 1); }
+  S.featPicks--;
+  addLog({ t:'lvl', level:c.level, gain:0, title:`🏅 ${FEATS[k].n}`, nove:[FEATS[k].d] });
+  hist(`Hráč získal odbornost ${FEATS[k].n}: ${FEATS[k].d}`);
+  sfx('level'); render(); save();
+  if(S.featPicks) setTimeout(featSheet, 300);
+}
+
+/* ---------- Krátký odpočinek a kostky životů ---------- */
+/* Co se obnoví krátkým odpočinkem (1 = vše, 'one' = jedno použití) */
+const SHORT_REST = { dech:1, uder:1, taktika:1, pritok:1, krok:1, odrazeni:1, manevr:1, psi:1, svata:1, prisaha:1, vilikrok:1, jiskra:'one', podoba:'one', inspirace:l => l >= 5 };
+const hdLeft = () => S.char.hdLeft ?? S.char.level;
+function shortRecharge(){
+  const out = [], c = S.char;
+  for(const a of classAbilities()){
+    if(a.slot || a.lvl > c.level) continue;
+    const sr = SHORT_REST[a.id], on = typeof sr === 'function' ? sr(c.level) : sr;
+    if(!on) continue;
+    const max = abilityMax(a), cur = abilityLeft(a);
+    if(cur >= max) continue;
+    S.res[a.id] = on === 'one' ? Math.min(max, cur + 1) : max; out.push(a.nazev);
+  }
+  if(CLASSES[c.cls].caster === 'pact' && S.slots < slotMax()){ S.slots = slotMax(); out.push('sloty paktu'); }
+  if(c.cls === 'mag' && !S.arcRec && S.slots < slotMax()){ S.arcRec = true; const g = Math.max(1, Math.ceil(c.level / 4)); S.slots = Math.min(slotMax(), S.slots + g); out.push(`Arkánní zotavení (+${g} ${g === 1 ? 'slot' : 'sloty'})`); }
+  return out;
+}
+function shortRestPreview(){
+  const c = S.char, names = [];
+  for(const a of classAbilities()){ if(a.slot || a.lvl > c.level) continue; const sr = SHORT_REST[a.id]; if((typeof sr === 'function' ? sr(c.level) : sr) && abilityLeft(a) < abilityMax(a)) names.push(a.nazev); }
+  if(CLASSES[c.cls].caster === 'pact' && S.slots < slotMax()) names.push('sloty paktu');
+  if(c.cls === 'mag' && !S.arcRec && S.slots < slotMax()) names.push('Arkánní zotavení');
+  return names;
+}
+function shortRestSheet(){
+  if(!canAct() || S.foes.length) return alert('Odpočívat teď nejde.');
+  const c = S.char, left = hdLeft(), hd = hitDie(), pv = shortRestPreview();
+  openSheet(`<h3>☕ Krátký odpočinek (1 hodina)</h3>
+    <p class="ddesc">Kostky životů: <b>${left}/${c.level} × d${hd}</b> – každá vyléčí d${hd} ${fmtMod(mod(c.stats.odolnost))} (odolnost). Životy teď ${c.hp}/${c.maxHp}.</p>
+    <div class="dnote" style="text-align:left">${pv.length ? 'Obnoví se: ' + esc(pv.join(', ')) + '.' : 'Žádná schopnost se tím neobnoví.'} Kostky životů vrátí až spánek.</div>
+    <div class="flbl">Kolik kostek použít?</div>
+    <div class="seg wrap">${Array.from({ length:Math.min(left, 8) + 1 }, (_, i) => `<button data-act="srest" data-k="${i}">${i ? i + '× d' + hd : 'žádnou'}</button>`).join('')}</div>
+    <button class="cancel" data-act="closesheet">Zrušit</button>`);
+}
+function shortRest(n){
+  if(!canAct() || S.foes.length) return;
+  closeSheet();
+  const c = S.char;
+  n = clamp(int(n), 0, hdLeft());
+  const rolls = [];
+  for(let i = 0; i < n; i++) rolls.push(Math.max(1, 1 + Math.floor(Math.random() * hitDie()) + mod(c.stats.odolnost)));
+  const heal = rolls.reduce((a, b) => a + b, 0), before = c.hp;
+  c.hdLeft = hdLeft() - n; c.hp = Math.min(c.maxHp, c.hp + heal);
+  const rec = shortRecharge();
+  advanceTime(1, false);
+  addLog({ t:'fx', notes:[{ c:'good', t:`☕ Krátký odpočinek · +${c.hp - before} HP${n ? ' (' + rolls.join(' + ') + ')' : ''}` }, ...rec.map(x => ({ c:'good', t:'✨ ' + x }))] });
+  hist(`Hráč si dal hodinový krátký odpočinek: ${n} kostek životů, +${c.hp - before} HP (má ${c.hp}/${c.maxHp}).${rec.length ? ' Obnovilo se: ' + rec.join(', ') + '.' : ''}`);
+  sfx('heal'); render(); save();
+}
+
+/* ---------- Kouzla: výběr, sesílání ze slotů, soustředění ---------- */
+const SPELL_LIST = { mag:'a', carodej:'a', cernokneznik:'a', bard:'a', knez:'d', paladin:'d', druid:'n', hranicar:'n' };
+const CAST_STAT = { bard:'charisma', knez:'moudrost', druid:'moudrost', paladin:'charisma', hranicar:'moudrost', carodej:'charisma', cernokneznik:'charisma', mag:'inteligence' };
+const castStat = () => CAST_STAT[S.char.cls] || ['inteligence','moudrost','charisma'].sort((a,b) => S.char.stats[b] - S.char.stats[a])[0];
+/* t = seznamy: a = arkánní (mág, čaroděj, černokněžník, bard), d = božská (klerik, paladin), n = přírodní (druid, hraničář) */
+const SPELLS = [
+  { id:'k_detekce', t:'adn', kruh:1, nazev:'Odhalení magie', i:'🔍', kind:'story', conc:true, popis:'Vycítíš magii kolem sebe – Pán jeskyně ti řekne, co září.' },
+  { id:'k_hrom', t:'an', kruh:1, nazev:'Hromová vlna', i:'🌩️', kind:'dmgAll', dice:'2d8', spellStat:'@', popis:'Rána hromu zasáhne všechny nepřátele kolem za 2d8.' },
+  { id:'k_mlha', t:'an', kruh:1, nazev:'Mlžný oblak', i:'🌫️', kind:'story', conc:true, popis:'Hustá mlha zahalí okolí – nikdo nevidí dál než na krok.' },
+  { id:'k_zbroj', t:'a', kruh:1, nazev:'Mágova zbroj', i:'🧥', kind:'buff', eff:() => ({ nazev:'Mágova zbroj', obrana:3, trvani:8 }), popis:'Na 8 hodin +3 k obraně.' },
+  { id:'k_uspani', t:'a', kruh:1, nazev:'Uspání', i:'💤', kind:'sleepFoe', dice:'5d8', verb:'tvrdě usnul', popis:'Uspí nepřítele s nejvýš 5d8 HP.' },
+  { id:'k_stit_viry', t:'d', kruh:1, bonus:true, nazev:'Štít víry', i:'🛡️', kind:'buff', conc:true, eff:() => ({ nazev:'Štít víry', obrana:2, trvani:0.2 }), popis:'Třpytivé pole: +2 k obraně na 10 minut.' },
+  { id:'k_vedeny', t:'d', kruh:1, nazev:'Vedený blesk', i:'🌟', kind:'dmg1', dice:'4d6', spellStat:'@', popis:'Paprsek světla zasáhne jeden cíl za 4d6.' },
+  { id:'k_slovo', t:'dn', kruh:1, bonus:true, nazev:'Léčivé slovo', i:'💬', kind:'heal', dice:'2d4', addStat:'@', popis:'Vyléčí 2d4 + tvá kouzelná vlastnost.' },
+  { id:'k_dobroplod', t:'n', kruh:1, nazev:'Dobroplod', i:'🫐', kind:'heal', flat:() => 10, popis:'Hrst kouzelných bobulí vyléčí 10 HP.' },
+  { id:'k_zapleteni', t:'n', kruh:1, nazev:'Zapletení', i:'🌱', kind:'sleepFoe', dice:'4d8', verb:'spoután kořeny', conc:true, popis:'Kořeny spoutají nepřítele s nejvýš 4d8 HP.' },
+  { id:'k_mlzny', t:'a', kruh:2, bonus:true, nazev:'Mlžný krok', i:'🌀', kind:'buff', eff:() => ({ nazev:'Mlžný krok', obrana:3, trvani:0.2 }), popis:'Přeneseš se o kus dál: na chvíli +3 k obraně.' },
+  { id:'k_neviditelnost', t:'a', kruh:2, nazev:'Neviditelnost', i:'👻', kind:'buff', conc:true, eff:() => ({ nazev:'Neviditelnost', postih:{ obratnost:5 }, checkOnly:true, obrana:2, trvani:1 }), popis:'Na hodinu neviditelný: +5 k plížení, +2 k obraně.' },
+  { id:'k_pavucina', t:'a', kruh:2, nazev:'Pavučina', i:'🕸️', kind:'sleepFoe', dice:'5d8', verb:'uvízl v pavučině', conc:true, popis:'Lepkavá síť chytí nepřítele s nejvýš 5d8 HP.' },
+  { id:'k_drzeni', t:'ad', kruh:2, nazev:'Znehybnění osoby', i:'🫥', kind:'sleepFoe', dice:'6d8', verb:'ztuhl na místě', conc:true, popis:'Humanoid s nejvýš 6d8 HP ztuhne a je mimo boj.' },
+  { id:'k_rozbiti', t:'a', kruh:2, nazev:'Roztříštění', i:'💥', kind:'dmg1', dice:'3d8', spellStat:'@', popis:'Ohlušující zvuk roztříští cíl za 3d8.' },
+  { id:'k_zbran', t:'d', kruh:2, bonus:true, nazev:'Duchovní zbraň', i:'🗡️', kind:'buff', conc:true, eff:() => ({ nazev:'Duchovní zbraň', extraDmg:'1d8', trvani:0.2 }), popis:'Přízračná zbraň bojuje s tebou: +1d8 ke každému zásahu.' },
+  { id:'k_pomoc', t:'d', kruh:2, nazev:'Pomoc', i:'💪', kind:'temp', flat:() => 5 + Math.floor(S.char.level / 2), popis:'Posílí tě: dočasné životy 5 + polovina úrovně.' },
+  { id:'k_kura', t:'n', kruh:2, nazev:'Kůže z kůry', i:'🌳', kind:'buff', eff:() => ({ nazev:'Kůže z kůry', obrana:3, trvani:1 }), popis:'Kůže ztvrdne jako kůra: +3 k obraně na hodinu.' },
+  { id:'k_beze_stopy', t:'n', kruh:2, nazev:'Beze stopy', i:'👣', kind:'buff', conc:true, eff:() => ({ nazev:'Beze stopy', postih:{ obratnost:5 }, checkOnly:true, trvani:1 }), popis:'Na hodinu +5 k plížení.' },
+  { id:'k_trny', t:'n', kruh:2, nazev:'Trnitý porost', i:'🌵', kind:'dmgAll', dice:'2d6', spellStat:'@', popis:'Ze země vyrazí trny: všichni nepřátelé utrží 2d6.' },
+  { id:'k_blesk', t:'a', kruh:3, nazev:'Blesk', i:'⚡', kind:'dmgAll', dice:'8d6', spellStat:'@', popis:'Blesk projede řadou nepřátel: všichni utrží 8d6.' },
+  { id:'k_strach', t:'a', kruh:3, nazev:'Strach', i:'😱', kind:'sleepAll', dice:'8d6', conc:true, popis:'Hrůza: všichni nepřátelé s nejvýš 8d6 HP prchají z boje.' },
+  { id:'k_zrychleni', t:'a', kruh:3, nazev:'Zrychlení', i:'⏩', kind:'buff', conc:true, eff:() => ({ nazev:'Zrychlení', obrana:2, postih:{ obratnost:2 }, trvani:0.2 }), popis:'Pohybuješ se dvakrát rychleji: +2 obrana a obratnost.' },
+  { id:'k_let', t:'a', kruh:3, nazev:'Let', i:'🕊️', kind:'story', conc:true, popis:'Na 10 minut můžeš létat.' },
+  { id:'k_protikouzlo', t:'a', kruh:3, nazev:'Protikouzlo', i:'🚫', kind:'story', popis:'Přerušíš cizí kouzlo, které se právě sesílá.' },
+  { id:'k_oziveni', t:'d', kruh:3, nazev:'Oživení', i:'💖', kind:'story', popis:'Vrátíš život tomu, kdo zemřel před nejvýš minutou.' },
+  { id:'k_hromadne', t:'d', kruh:3, bonus:true, nazev:'Hromadné léčivé slovo', i:'🙌', kind:'heal', dice:'2d4', addStat:'@', popis:'Vyléčí tebe i spojence 2d4 + kouzelná vlastnost.' },
+  { id:'k_kletba_pryc', t:'dn', kruh:3, nazev:'Zrušení kletby', i:'🕊️', kind:'cure', popis:'Zbaví tě nemoci, jedu nebo kletby.' },
+  { id:'k_ochrana', t:'adn', kruh:3, nazev:'Ochrana před energií', i:'🔆', kind:'buff', conc:true, eff:() => ({ nazev:'Ochrana před energií', odolnost:true, trvani:1 }), popis:'Na hodinu poloviční zranění.' },
+  { id:'k_rust', t:'n', kruh:3, nazev:'Růst rostlin', i:'🌿', kind:'story', popis:'Rostliny kolem zbujní – neprostupná houština nebo hojná úroda.' },
+  { id:'k_ledova', t:'a', kruh:4, nazev:'Ledová bouře', i:'🌨️', kind:'dmgAll', dice:'4d10', spellStat:'@', popis:'Kroupy a mráz: všichni nepřátelé utrží 4d10.' },
+  { id:'k_promena', t:'a', kruh:4, nazev:'Proměna', i:'🐸', kind:'sleepFoe', dice:'10d8', verb:'proměněn v žábu', conc:true, popis:'Promění nepřítele s nejvýš 10d8 HP v neškodné zvíře.' },
+  { id:'k_vetsi_nevid', t:'a', kruh:4, nazev:'Větší neviditelnost', i:'👤', kind:'buff', conc:true, eff:() => ({ nazev:'Větší neviditelnost', obrana:4, postih:{ obratnost:5 }, trvani:0.2 }), popis:'Neviditelný i v boji: +4 k obraně a +5 obratnost.' },
+  { id:'k_strazce', t:'d', kruh:4, nazev:'Strážce víry', i:'👼', kind:'dmgAll', dice:'4d10', popis:'Nebeský strážce zasáhne všechny nepřátele za 4d10.' },
+  { id:'k_kamen', t:'n', kruh:4, nazev:'Kamenná kůže', i:'🪨', kind:'buff', conc:true, eff:() => ({ nazev:'Kamenná kůže', odolnost:true, trvani:1 }), popis:'Na hodinu poloviční zranění od zbraní.' },
+  { id:'k_zmateni', t:'an', kruh:4, nazev:'Zmatení', i:'😵‍💫', kind:'sleepAll', dice:'10d8', conc:true, popis:'Nepřátelé s nejvýš 10d8 HP bloudí zmateně a nebojují.' },
+  { id:'k_kuzel', t:'a', kruh:5, nazev:'Kužel chladu', i:'❄️', kind:'dmgAll', dice:'8d8', spellStat:'@', popis:'Mrazivý vír: všichni nepřátelé utrží 8d8.' },
+  { id:'k_drzeni_n', t:'ad', kruh:5, nazev:'Znehybnění netvora', i:'⛓️', kind:'sleepFoe', dice:'12d8', verb:'ztuhl na místě', conc:true, popis:'Jakýkoli tvor s nejvýš 12d8 HP ztuhne.' },
+  { id:'k_plamen', t:'d', kruh:5, nazev:'Plamenný úder', i:'🔥', kind:'dmgAll', dice:'8d6', spellStat:'@', popis:'Sloup božského ohně: všichni nepřátelé utrží 8d6.' },
+  { id:'k_hrom_leceni', t:'dn', kruh:5, nazev:'Hromadné léčení ran', i:'💞', kind:'heal', dice:'5d8', addStat:'@', popis:'Vyléčí 5d8 + kouzelná vlastnost.' },
+  { id:'k_hmyz', t:'n', kruh:5, nazev:'Roj hmyzu', i:'🦟', kind:'dmgAll', dice:'4d10', spellStat:'@', popis:'Roj kousavého hmyzu: všichni nepřátelé utrží 4d10.' },
+  { id:'k_retez', t:'a', kruh:6, nazev:'Řetězový blesk', i:'🌩️', kind:'dmgAll', dice:'10d8', spellStat:'@', popis:'Blesk skáče z nepřítele na nepřítele: všichni 10d8.' },
+  { id:'k_rozlozeni', t:'a', kruh:6, nazev:'Rozložení', i:'🟢', kind:'dmg1', dice:'10d6+40', popis:'Zelený paprsek rozloží cíl: 10d6 + 40.' },
+  { id:'k_uzdraveni', t:'dn', kruh:6, nazev:'Uzdravení', i:'💚', kind:'heal', flat:() => 70, cureToo:true, popis:'Vyléčí 70 HP a zbaví tě nemoci či jedu.' },
+  { id:'k_slunce', t:'dn', kruh:6, nazev:'Sluneční paprsek', i:'☀️', kind:'dmg1', dice:'6d8', spellStat:'@', popis:'Oslepující paprsek slunce za 6d8.' },
+  { id:'k_prst', t:'a', kruh:7, nazev:'Prst smrti', i:'☠️', kind:'dmg1', dice:'7d8+30', popis:'Nekrotická energie: 7d8 + 30.' },
+  { id:'k_teleport', t:'a', kruh:7, nazev:'Teleport', i:'🌌', kind:'story', popis:'Přeneseš sebe a společníky na místo, které znáš.' },
+  { id:'k_vzkriseni', t:'d', kruh:7, nazev:'Vzkříšení', i:'✝️', kind:'story', popis:'Vrátíš život tomu, kdo zemřel před nejvýš sto lety.' },
+  { id:'k_ohniva_boure', t:'dn', kruh:7, nazev:'Ohnivá bouře', i:'🔥', kind:'dmgAll', dice:'7d10', spellStat:'@', popis:'Ohnivá smršť: všichni nepřátelé utrží 7d10.' },
+  { id:'k_omraceni', t:'a', kruh:8, nazev:'Mocné slovo: omráčení', i:'💫', kind:'sleepFoe', dice:'15d20', verb:'omráčen', popis:'Jedno slovo omráčí tvora s nejvýš 150 HP.' },
+  { id:'k_aura', t:'d', kruh:8, nazev:'Svatá aura', i:'😇', kind:'buff', conc:true, eff:() => ({ nazev:'Svatá aura', obrana:2, postih:{ vse:1 }, trvani:0.2 }), popis:'Svatá záře: +2 obrana a +1 ke všem hodům.' },
+  { id:'k_zemetreseni', t:'n', kruh:8, nazev:'Zemětřesení', i:'🌋', kind:'dmgAll', dice:'5d10', popis:'Země se otřese: všichni nepřátelé utrží 5d10.' },
+  { id:'k_meteor', t:'a', kruh:9, nazev:'Déšť meteoritů', i:'☄️', kind:'dmgAll', dice:'20d6', spellStat:'@', popis:'Čtyři ohnivé meteory: všichni nepřátelé utrží 20d6.' },
+  { id:'k_prani', t:'a', kruh:9, nazev:'Přání', i:'✨', kind:'story', popis:'Nejmocnější kouzlo – vyslovíš přání a realita se ohne (Pán jeskyně rozhodne jak).' },
+  { id:'k_hrom_uzdr', t:'d', kruh:9, nazev:'Hromadné uzdravení', i:'🌈', kind:'heal', flat:() => 999, cureToo:true, popis:'Úplné uzdravení tebe i spojenců.' },
+  { id:'k_boure_pomsty', t:'n', kruh:9, nazev:'Bouře pomsty', i:'⛈️', kind:'dmgAll', dice:'10d10', popis:'Obří bouře: všichni nepřátelé utrží 10d10.' }
+];
+const spellMinLvl = s => (CLASSES[S.char.cls].caster === 'half' ? [0,1,5,9,13,17,99,99,99,99] : [0,1,3,5,7,9,11,13,15,17])[s.kruh] ?? 99;
+const spellCost = s => s.kruh <= 3 ? 1 : s.kruh <= 6 ? 2 : 3;
+function learnedSpells(){
+  return (S.char.kouzla || []).map(id => SPELLS.find(s => s.id === id)).filter(Boolean)
+    .map(s => ({ ...s, slot:true, cost:spellCost(s), lvl:spellMinLvl(s), learned:true }));
+}
+function learnableSpells(){
+  const c = S.char, L = SPELL_LIST[c.cls];
+  if(!L) return [];
+  const have = new Set(classAbilities().map(a => low(a.nazev)));
+  return SPELLS.filter(s => s.t.includes(L) && spellMinLvl(s) <= c.level && !(c.kouzla || []).includes(s.id) && !have.has(low(s.nazev)));
+}
+const spellsPerLevel = cls => cls === 'mag' ? 2 : SPELL_LIST[cls] ? 1 : 0;
+function spellLearnSheet(){
+  const c = S.char, list = learnableSpells();
+  if(!S.spellPicks) return;
+  if(!list.length){ S.spellPicks = 0; save(); return alert('Teď už se nemáš co nového naučit – další kouzla se odemknou na vyšších úrovních.'); }
+  const groups = [...new Set(list.map(s => s.kruh))].sort((a,b) => a - b);
+  openSheet(`<h3>📖 Naučit se kouzlo (${S.spellPicks}×)</h3>
+    <div class="dnote" style="text-align:left;margin:-4px 0 10px">Kouzla se sesílají ze slotů (1.–3. kruh = 1 slot, 4.–6. = 2, 7.–9. = 3). 🌀 = soustředění: můžeš udržet jen jedno a při zranění hážeš na odolnost, jestli ho neztratíš.</div>
+    ${groups.map(g => `<div class="flbl">${g}. kruh</div>` + list.filter(s => s.kruh === g).map(s => `<button class="abil" data-learn="${s.id}"><span class="ico">${s.i}</span><span class="mid"><b>${esc(s.nazev)}${s.conc ? ' 🌀' : ''}</b><small>${esc(s.popis)}</small></span><span class="val">${spellCost(s)} ${spellCost(s) === 1 ? 'slot' : 'sloty'}</span></button>`).join('')).join('')}
+    <button class="cancel" data-act="closesheet">Později</button>`);
+}
+function learnSpell(id){
+  const s = SPELLS.find(x => x.id === id);
+  if(!s || !S.spellPicks || !learnableSpells().some(x => x.id === id)) return;
+  S.char.kouzla = [...(S.char.kouzla || []), id]; S.spellPicks--;
+  addLog({ t:'fx', notes:[{ c:'good', t:`📖 Nové kouzlo: ${s.i} ${s.nazev}` }] });
+  hist(`Hráč se naučil kouzlo ${s.nazev} (${s.kruh}. kruh): ${s.popis}`);
+  sfx('page'); save(); render();
+  if(S.spellPicks) spellLearnSheet(); else closeSheet();
+}
+/* Soustředění: aktivní může být jen jedno kouzlo; zranění ho může přerušit. */
+const concEffect = () => S.effects.find(e => e.conc);
+function endConcentration(why){
+  const e = concEffect(); if(!e) return;
+  S.effects = S.effects.filter(x => !x.conc);
+  addLog({ t:'fx', notes:[{ c:'bad', t:`🌀 Soustředění ztraceno: ${e.nazev}${why ? ' (' + why + ')' : ''}` }] });
+  hist(`Hráč ztratil soustředění – kouzlo ${e.nazev} skončilo${why ? ' (' + why + ')' : ''}.`);
+}
+function concCheck(dmg){
+  const e = concEffect(); if(!e || dmg <= 0) return;
+  if(S.char.hp <= 0) return endConcentration('bezvědomí');
+  const dc = Math.max(10, Math.floor(dmg / 2)), adv = featHas('valecny_mag');
+  const d1 = d20(), d2 = adv ? d20() : null, d = adv ? Math.max(d1, d2) : d1;
+  const parts = [{ n:'Odolnost', v:mod(S.char.stats.odolnost) }];
+  if(saveProf('odolnost')) parts.push({ n:'Zdatnost (záchrana)', v:profBonus() });
+  const total = d + parts.reduce((a, x) => a + x.v, 0), ok = d === 20 || (d !== 1 && total >= dc);
+  addLog({ t:'roll', title:`Soustředění: ${e.nazev}${adv ? ' · výhoda' : ''}`, d, d2:adv ? (d === d1 ? d2 : d1) : null, parts, total, dc, dcl:'obtížnost', ok, res:ok ? 'Soustředění udrženo' : 'Soustředění ztraceno' });
+  if(!ok) endConcentration('zranění');
+}
+
+/* ---------- Deník: dovednosti, záchrany, povaha, jazyky, odbornosti, kouzla ---------- */
+function dndSheetHTML(){
+  const c = S.char, ps = profSkills(), ex = expertSkills(), pb = profBonus();
+  const rib = (ic, t, extra = '') => `<div class="rib"><span class="rbi">${ic}</span><b>${t}</b>${extra ? `<small>${extra}</small>` : ''}</div>`;
+  const sk = Object.entries(SKILLS).sort((a,b) => STAT_KEYS.indexOf(a[1][1]) - STAT_KEYS.indexOf(b[1][1])).map(([k,[n,st]]) =>
+    `<div class="skl ${ex.has(k) ? 'ex' : ps.has(k) ? 'pr' : ''}"><i>${ex.has(k) ? '◆' : ps.has(k) ? '●' : '○'}</i><span>${n} <small>${statName(st).slice(0,3)}</small></span><b>${fmtMod(skillBonus(k))}</b></div>`).join('');
+  const sv = STAT_KEYS.map(st => `<div class="skl ${saveProf(st) ? 'pr' : ''}"><i>${saveProf(st) ? '●' : '○'}</i><span>${statName(st)}</span><b>${fmtMod(saveBonus(st))}</b></div>`).join('');
+  const p = c.povaha || {}, ce = concEffect();
+  return `${rib('🎯', 'Dovednosti', `● +${pb} · ◆ +${2 * pb}${jackOfAll() ? ' · ○ +' + Math.floor(pb / 2) : ''}`)}
+  <div class="skills">${sk}</div>
+  <div class="dtext">👁️ Pasivní vnímání <b>${passivePerception()}</b> – co je ukryté hůř, si všimneš jen hodem.</div>
+  ${rib('🛡', 'Záchranné hody')}<div class="skills">${sv}</div>
+  ${rib('☕', 'Odpočinek')}
+  <div class="dtext">🎲 Kostky životů <b>${hdLeft()}/${c.level} × d${hitDie()}</b> – utratíš je při krátkém odpočinku, vrátí je spánek.</div>
+  ${ce ? `<div class="dtext">🌀 Soustředění: <b>${esc(ce.nazev)}</b></div>` : ''}
+  ${!S.foes.length && !S.dead ? `<button class="btn ghost" data-act="srestsheet">☕ Krátký odpočinek (1 h)</button>` : ''}
+  ${rib('🎭', 'Povaha', c.insp ? '🌟 inspirace' : '')}
+  <button class="povbox" data-act="povaha">
+    <div><i>Přesvědčení</i><b>${esc(ALIGN[p.presvedceni] || '—')}</b></div>
+    <div><i>Ideál</i><b>${esc(p.ideal || '—')}</b></div><div><i>Pouto</i><b>${esc(p.pouto || '—')}</b></div><div><i>Slabost</i><b>${esc(p.slabost || '—')}</b></div>
+    <small>${p.ideal || p.pouto || p.slabost ? '✏️ upravit' : '✏️ doplnit – Pán jeskyně podle ní hraje svět'}</small></button>
+  <div class="dtext">🌟 Hrdinská inspirace: <b>${c.insp ? 'máš' : 'nemáš'}</b> – ${c.insp ? 'při hodu ji můžeš použít na výhodu.' : 'Pán jeskyně ji dává za dobře zahranou roli.'}</div>
+  ${rib('🗣', 'Jazyky a nástroje')}
+  <div class="dtext">🗣️ ${esc(languages().join(', '))}</div>
+  <div class="dtext">🧰 ${esc(tools().join(', ') || '—')}</div>
+  ${(c.feats || []).length || S.featPicks ? `${rib('🏅', 'Odbornosti')}${(c.feats || []).map(k => `<div class="dtext">${FEATS[k].i} <b>${esc(FEATS[k].n)}</b>${c.featData?.[k] ? ' (' + statName(c.featData[k]) + ')' : ''} – ${esc(FEATS[k].d)}</div>`).join('')}${S.featPicks ? `<button class="btn" data-act="featsheet">🏅 Zvolit odbornost (${S.featPicks}×)</button>` : ''}` : ''}
+  ${SPELL_LIST[c.cls] ? `${rib('📖', 'Kniha kouzel', `${(c.kouzla || []).length} naučených`)}${learnedSpells().map(sp => `<div class="dtext">${sp.i} <b>${esc(sp.nazev)}</b>${sp.conc ? ' 🌀' : ''} · ${sp.kruh}. kruh, ${sp.cost} ${sp.cost === 1 ? 'slot' : 'sloty'}</div>`).join('') || '<div class="dtext"><i>Zatím jen základní kouzla povolání.</i></div>'}${S.spellPicks && learnableSpells().length ? `<button class="btn" data-act="learnsheet">📖 Naučit se kouzlo (${S.spellPicks}×)</button>` : ''}` : ''}`;
+}
+function previewSkills(cls, zaz){
+  const set = new Set(ZAZ_SKILLS[zaz] || []), [n, list] = CLASS_SKILLS[cls] || [2, []];
+  let a = 0; for(const k of list){ if(a >= n) break; if(!set.has(k)){ set.add(k); a++; } }
+  return [...set].map(skillName);
+}
+
+/* =========================================================
+   ÚSPORA TOKENŮ – plná karta jen u postav, které jsou ve hře
+   ========================================================= */
+let npcCtx = null;
+/* kořen jména bez koncovky, aby seděly i pády (Bořek → Bořka, Bořkovi; Ignác → Ignáce) */
+const nameStems = k => low(k).replace(/[()„“"]/g, ' ').split(/[\s,]+/).filter(w => w.length >= 3 && !GENERIC_NPC.some(g => w.startsWith(g))).map(w => w.length > 4 ? w.slice(0, w.length - 2) : w.slice(0, 3));
+function npcContext(){
+  const txt = low([...(S.history || []).slice(-8).map(h => h.text), S.curText || '', S.location || ''].join(' \n '));
+  const keys = Object.keys(S.npcs || {});
+  const set = new Set(keys.slice(-3));                    /* naposledy potkané */
+  if(S.comp) set.add(S.comp.jmeno);
+  for(const k of keys){
+    if(txt.includes(low(k))) { set.add(k); continue; }
+    if(nameStems(k).some(st => new RegExp('(^|[^\\p{L}])' + st.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'u').test(txt))) set.add(k);
+  }
+  return set;
+}
+const npcRelevant = k => (npcCtx || (npcCtx = npcContext())).has(k);
+
+/* KRONIKA FAKTŮ – trvalá paměť příběhu, nikdy se nemaže */
+function addFacts(raw){
+  const list = arr(raw).map(x => String(typeof x === 'object' && x ? (x.text || x.fakt || '') : x).trim().slice(0, 200)).filter(x => x && x !== '[object Object]');
+  const notes = [];
+  S.fakta ||= [];
+  for(const t of list.slice(0, 3)){
+    if(S.fakta.some(f => low(f.t) === low(t))) continue;
+    S.fakta.push({ t, d:S.time.day });
+    notes.push({ c:'fact', t:'📌 ' + t });
+  }
+  if(S.fakta.length > 80) S.fakta = S.fakta.slice(-80);
+  return notes;
+}
+function memoryHTML(){
+  const f = S.fakta || [], k = S.kapitoly || [];
+  return `<div class="sec"><span>📌 Co si svět pamatuje</span><span>${f.length}</span></div>
+    ${f.length ? `<div class="imps clues">${f.slice().reverse().map(x => `<div>📌 ${esc(x.t)}<small> · den ${x.d}</small></div>`).join('')}</div>` : '<div class="empty">Sliby, dluhy, zrady a další důležité věci se sem zapíšou, jak se stanou.</div>'}
+    ${k.length ? `<div class="sec"><span>🕰️ Kapitoly</span><span>${k.length}</span></div><div class="imps chap">${k.map((x,i) => `<div><b>${i + 1}.</b> ${esc(x.t)}<small> · den ${x.d}</small></div>`).join('')}</div>` : ''}`;
 }
 function cluesHTML(){
   const c = S.clues || [];
@@ -2253,11 +3133,11 @@ async function haggle(){
   closeSheet();
   rolling = true;
   const d = d20(); await diceAnim(d); rolling = false;
-  const bonus = mod(S.char.stats.charisma) + (CLASSES[S.char.cls].odbornost?.charisma || 0);
+  const bonus = skillBonus('presvedcovani');
   const dc = 15 + (diff() === 'kruta' ? 2 : diff() === 'pribeh' ? -3 : 0);
   const total = d + bonus, ok = d === 20 || (d !== 1 && total >= dc);
   sh.haggle = ok ? 'ok' : 'bad';
-  addLog({ t:'roll', title:`Smlouvání s obchodníkem ${sh.obchodnik}`, d, parts:[{ n:'Charisma', v:bonus }], total, dc, dcl:'obtížnost', ok, res:ok ? 'Usmlouváno! Ceny −15 %' : 'Nevyšlo – naštval se, ceny +10 %' });
+  addLog({ t:'roll', title:`Smlouvání s obchodníkem ${sh.obchodnik}`, d, parts:[{ n:'Přesvědčování', v:bonus }], total, dc, dcl:'obtížnost', ok, res:ok ? 'Usmlouváno! Ceny −15 %' : 'Nevyšlo – naštval se, ceny +10 %' });
   hist(`Hráč smlouval s obchodníkem ${sh.obchodnik}: ${ok ? 'ÚSPĚCH, dá slevu 15 %' : 'NEÚSPĚCH, obchodník je dotčený a zvedl ceny o 10 %'}.`);
   save(); render(); setTimeout(shopSheet, 300);
 }
@@ -2341,17 +3221,35 @@ function rollIntruder(){
 async function callDM(input){
   if(busy) return;
   busy = true; S.lastFailed = null; render();
-  if(input && input.typ === 'akce' && !input.vyrus){ const v = rollIntruder(); if(v) input = { ...input, vyrus:v }; }
-  const needSummary = S.history.length >= SUMMARY_AT;
+  takeSnap(input);
+  lastStreamed = false; liveText = '';
+  if(input && input.typ === 'akce' && !input.vyrus && !input.oprava){ const v = rollIntruder(); if(v) input = { ...input, vyrus:v }; }
+  if(input && ['akce','prichod'].includes(input.typ) && !input.oprava){
+    const w = worldTick(); if(w) input = { ...input, svet:w };
+    if(input.typ === 'akce'){ const h = pacingHint(); if(h) input = { ...input, rezie:h }; }
+  }
+  if(input && input.typ === 'akce' && !S.foes.length && !input.riziko){ const r = riskyStat(input.text); if(r) input = { ...input, riziko:r }; }
+  S.curText = input && input.text ? String(input.text) : '';
+  const bgSum = S.history.length >= SUMMARY_AT && bgMistral() && !S._sumFail;
+  const needSummary = S.history.length >= SUMMARY_AT && !bgSum;
   const req = { stav:publicState(), shrnuti:S.summary, historie:S.history.slice(-HIST_SEND), vstup:input, potrebaShrnuti:needSummary };
   try{
-    const res = isDemo() ? await mockDM(req) : await fetchDM(req);
+    let res = isDemo() ? await mockDM(req) : input && input.typ === 'prichod' ? await fetchBg(req) : await fetchDM(req);
+    if(needForcedRoll(input, res)){
+      /* AI riskantní akci vyhodnotila bez hodu → odpověď zahodíme a necháme ji napsat znovu, tentokrát s hodem */
+      liveText = ''; lastStreamed = false; document.getElementById('liveDM')?.remove();
+      input = { ...input, vynutit:input.riziko };
+      const req2 = { ...req, vstup:input };
+      const res2 = isDemo() ? await mockDM(req2) : await fetchDM(req2);
+      if(res2 && res2.vypraveni) res = res2;
+    }
     applyResponse(res, needSummary, input);
+    if(bgSum && !S._sumBusy) bgSummary();
   }catch(e){
     S.lastFailed = input;
     addLog({ t:'err', text:'Pán jeskyně se odmlčel (' + e.message + ').' });
   }finally{
-    busy = false; render(); save();
+    busy = false; liveText = ''; render(); save();
     runQueue();
   }
 }
@@ -2373,7 +3271,7 @@ function applyResponse(res, needSummary, input = {}){
   const text = String(res.vypraveni || '').trim() || '…';
   S.turn++;
   S.history.push({ kdo:'pj', text });
-  addLog({ t:'dm', text, anim:twOn() || undefined });
+  addLog({ t:'dm', text, anim:twOn() && !lastStreamed || undefined, turn:S.turn });
   book('pj', text);
   if(ttsOn()) speak(text);
   scrollNew = true;
@@ -2394,8 +3292,13 @@ function applyResponse(res, needSummary, input = {}){
   S.suggestions = arr(res.navrhy).slice(0,4).map(x => String(x).slice(0,70)).filter(x => x.trim());
   setPending(res.zkouska);
   if(S.cb){ if(!S.foes.length) endCombat(); else if(!S.pending) newPlayerTurn(); }
+  if(needSummary && res.kapitola){
+    S.kapitoly ||= [];
+    S.kapitoly.push({ t:String(res.kapitola).trim().slice(0,320), d:S.time.day });
+    if(S.kapitoly.length > 30) S.kapitoly = [{ t:S.kapitoly.slice(0, S.kapitoly.length - 29).map(k => k.t).join(' ').slice(0,600), d:S.kapitoly[0].d }, ...S.kapitoly.slice(-29)];
+  }
   if(needSummary && res.shrnuti){
-    S.summary = String(res.shrnuti).slice(0,1500);
+    S.summary = String(res.shrnuti).slice(0,3200);
     S.history = S.history.slice(-KEEP_AFTER_SUMMARY);
   }
   checkDeath();
@@ -2506,7 +3409,7 @@ function applyEffects(ef){
 
   let hp = clamp(int(ef.hp), -30, 30);
   if(hp < 0 && c.temp){ const ab = Math.min(c.temp, -hp); c.temp -= ab; hp += ab; if(ab) notes.push({ c:'good', t:`🛡️ ${ab} pohltily dočasné životy` }); }
-  if(hp){ const b = c.hp; c.hp = clamp(b + hp, 0, c.maxHp); const d = c.hp - b; if(d) notes.push({ c:d>0?'good':'bad', t:(d>0?'+':'') + d + ' HP' }); }
+  if(hp){ const b = c.hp; c.hp = clamp(b + hp, 0, c.maxHp); const d = c.hp - b; if(d) notes.push({ c:d>0?'good':'bad', t:(d>0?'+':'') + d + ' HP' }); if(hp < 0) concCheck(-hp); }
 
   /* Peníze a přidané věci – nákup bez dostatku zlata neproběhne vůbec. */
   const g = clamp(int(ef.zlato), -5000, 5000);
@@ -2589,6 +3492,14 @@ function applyEffects(ef){
     const z = clamp(int(n.zmena), -30, 30);
     const base = prev ? (prev.skore ?? 0) : (/přát|vděč|věrn|milý/i.test(n.vztah || '') ? 25 : /nepřát|zl|nenávid|podezí/i.test(n.vztah || '') ? -25 : 0);
     S.npcs[k] = { ...(prev || {}), popis:String(n.popis || prev?.popis || '').slice(0,160), vztah:String(n.vztah || prev?.vztah || 'neutrální').slice(0,30), skore:clamp(base + z, -100, 100) };
+    const pm = typeof n.pamet === 'string' ? n.pamet.trim().slice(0,160) : '';
+    if(pm && !(S.npcs[k].pamet || []).some(x => low(x) === low(pm))){ S.npcs[k].pamet = [...(S.npcs[k].pamet || []), pm].slice(-8); if(!isNew) notes.push({ c:'npc', t:`🧠 ${k}: ${pm}` }); }
+    if(n.mrtvy === true || /mrtv|zemřel|zabit/i.test(n.vztah || '')) S.npcs[k].mrtvy = true;
+    if(n.karta && typeof n.karta === 'object'){
+      const kk = { ...(S.npcs[k].karta || {}) };
+      for(const f of ['hlas','chce','boji_se','tajemstvi']) if(!kk[f] && typeof n.karta[f] === 'string' && n.karta[f].trim()) kk[f] = n.karta[f].trim().slice(0,140);
+      if(Object.keys(kk).length) S.npcs[k].karta = kk;
+    }
     if(isNew) notes.push({ c:'npc', t:'👤 ' + k });
     if(isNew && portraitMode() !== 'off' && libGet(k)) S.npcs[k].img = libGet(k);   /* známá tvář z dřívější hry */
     else if(isNew && portraitMode() === 'auto' && portraitReady() && namedNpc(k)) setTimeout(() => queuePortrait(k), 50);
@@ -2604,6 +3515,10 @@ function applyEffects(ef){
     notes.push({ c:z > 0 ? 'good' : 'bad', t:`🏛️ Pověst (${S.places?.[key]?.nazev || placeBase(pv.misto || S.location)}) ${z > 0 ? '+' : ''}${z}` });
   }
   notes.push(...addClues(ef.stopa || ef.stopy));
+  notes.push(...addFacts(ef.fakt || ef.fakta));
+  notes.push(...addWorldNews(ef.zpravy_ze_sveta));
+  if(ef.inspirace){ const n = grantInspiration(typeof ef.inspirace === 'string' ? ef.inspirace : ''); if(n){ notes.push(n); hist('Hráč získal hrdinskou inspiraci.'); } }
+  if(notes.some(n => ['clue','fact','quest','world','loc'].includes(n.c) || n.c === 'npc' && /^👤 /.test(n.t) && !/[💚💔]/.test(n.t))) markEvent();
   if(ef.obchod){ const n = openShopFrom(ef.obchod); if(n) notes.push(n); }
   if(ef.druzinik && !S.comp){ const n = setCompanion(ef.druzinik); if(n) notes.push(n); }
   if(ef.druzinik_odchazi && S.comp){ const n = compLeaves(typeof ef.druzinik_odchazi === 'string' ? ef.druzinik_odchazi : 'rozhodl se jít vlastní cestou'); if(n) notes.push(n); }
@@ -2657,6 +3572,17 @@ function setPending(z){
     foe = findFoe(z.cil) || S.foes[0] || null;
     if(foe) dc = foe.obrana;
   }
+  /* dovednost, záchranný hod, nástroj */
+  let dov = null, zach = false, nas = null;
+  if(!utok){
+    zach = z.zachrana === true || z.zachrana === 'true' || ['jed','strach','kouzlo','spanek','nemoc','kletba'].includes(z.proti);
+    if(!zach){
+      dov = skillKey(z.dovednost);
+      if(!STAT_KEYS.includes(vl) && dov) vl = SKILLS[dov][1];
+      if(!dov && STAT_KEYS.includes(vl)) dov = guessSkill(vl, (z.duvod || '') + ' ' + (S.curText || ''));
+      nas = toolMatch(z.nastroj);
+    }
+  }
   if(!STAT_KEYS.includes(vl)) return;
   /* výhoda / nevýhoda: od AI, podle druhu, připravené schopnosti */
   const proti = ['jed','strach','kouzlo','spanek','nemoc','kletba'].includes(z.proti) ? z.proti : null;
@@ -2668,9 +3594,11 @@ function setPending(z){
     if(pc().skryty) adv++;
     if(foe){ const rg = utok === 'kouzlo' || isRanged(usableWeapon()); if(foe.st?.srazen) adv += rg ? -1 : 1; if(foe.vex) adv++; }
   }
-  const [wa, ww] = weatherAdv(vl, utok, utok === 'zbran' && isRanged(usableWeapon()));
+  let [wa, ww] = weatherAdv(vl, utok, utok === 'zbran' && isRanged(usableWeapon()));
+  if(wa < 0 && utok === 'zbran' && isRanged(usableWeapon()) && featHas('ostrostrelec')) wa = 0;
   adv += wa;
-  S.pending = { vlastnost:vl, obtiznost:dc, duvod:String(z.duvod || '').slice(0,100), utok, cilId:foe ? foe.id : null, proti, adv:clamp(adv, -1, 1), wxWhy:wa ? ww : '' };
+  if(nas && dov && profSkills().has(dov)) adv++;          /* zdatnost v dovednosti i nástroji = výhoda */
+  S.pending = { vlastnost:vl, obtiznost:dc, duvod:String(z.duvod || '').slice(0,100), utok, cilId:foe ? foe.id : null, proti, adv:clamp(adv, -1, 1), wxWhy:wa ? ww : '', dovednost:dov, zachrana:zach, nastroj:nas };
 }
 
 function rollParts(p){
@@ -2684,12 +3612,17 @@ function rollParts(p){
   if(p.utok && S.nextAttack?.spell && p.utok === 'kouzlo' && S.nextAttack.hit) parts.push({ n:S.nextAttack.nazev, v:S.nextAttack.hit });
   if(p.utok && S.char.level >= 3 && perk('attackBonus')) parts.push({ n:obor().nazev, v:perk('attackBonus') });
   if(!p.utok){
-    const ob = CLASSES[S.char.cls].odbornost?.[p.vlastnost];
-    if(profStats().includes(p.vlastnost)) parts.push({ n:'Zdatnost', v:profBonus() });   /* zběhlost jako v D&D (dovednosti zázemí a povolání) */
-    if(ob) parts.push({ n:'Odbornost', v:ob });
+    const pb = profBonus();
+    if(p.zachrana){ if(saveProf(p.vlastnost)) parts.push({ n:'Zdatnost (záchrana)', v:pb }); }
+    else if(p.dovednost){
+      if(expertSkills().has(p.dovednost)) parts.push({ n:'Odbornost · ' + skillName(p.dovednost), v:2 * pb });
+      else if(profSkills().has(p.dovednost)) parts.push({ n:'Zdatnost · ' + skillName(p.dovednost), v:pb });
+      else if(jackOfAll()) parts.push({ n:'Všeuměl', v:Math.floor(pb / 2) });
+    }
+    if(p.nastroj && !(p.dovednost && profSkills().has(p.dovednost))) parts.push({ n:'Zdatnost · ' + p.nastroj, v:pb });
     const sb = S.char.level >= 3 ? perk('statBonus') : null;
     if(sb && (sb[p.vlastnost] || sb.vse)) parts.push({ n:obor().nazev, v:(sb[p.vlastnost] || 0) + (sb.vse || 0) });
-    if(p.proti && S.char.cls === 'paladin' && S.char.level >= 6) parts.push({ n:'Aura ochrany', v:Math.max(1, mod(S.char.stats.charisma)) });
+    if((p.zachrana || p.proti) && S.char.cls === 'paladin' && S.char.level >= 6) parts.push({ n:'Aura ochrany', v:Math.max(1, mod(S.char.stats.charisma)) });
   }
   const g = gearBonus(p.vlastnost);
   if(g) parts.push(g);
@@ -2734,7 +3667,7 @@ async function roll(){
   const ok = d >= critMin || (d !== 1 && total >= p.obtiznost);
   const foe = p.cilId ? S.foes.find(f => f.id === p.cilId) : null;
   const a = p.utok ? attackInfo(p) : null;
-  const title = p.utok ? `Útok – ${a.nazev}${foe ? ' na ' + foe.jmeno : ''}` : `Zkouška: ${statName(p.vlastnost)}`;
+  const title = p.utok ? `Útok – ${a.nazev}${foe ? ' na ' + foe.jmeno : ''}` : `${p.zachrana ? 'Záchranný hod' : 'Zkouška'}: ${p.dovednost ? skillName(p.dovednost) + ' (' + statName(p.vlastnost) + ')' : statName(p.vlastnost)}${p.insp ? ' · 🌟 inspirace' : ''}`;
   S.pending = null;
   if(S.nextRoll && (parts.some(x => x.n === S.nextRoll.nazev) || (S.nextRoll.adv && (S.nextRoll.stat === '*' || S.nextRoll.stat === p.vlastnost)))) S.nextRoll = null;
   const na = (p.utok === 'zbran' || (p.utok && S.nextAttack?.spell)) ? S.nextAttack : null;
@@ -2756,6 +3689,7 @@ async function roll(){
       if(e.dmgBonus && (p.utok === 'zbran')){ fxd += e.dmgBonus; fxn.push(`+${e.dmgBonus} ${e.nazev}`); }
     }
     if(S.char.level >= 3 && perk('extraHit')){ const v = rollDice(perk('extraHit'), crit).total; fxd += v; fxn.push(`+${v} ${obor().nazev}`); }
+    if(p.utok === 'zbran' && featHas('mistr_zbrani') && heavyW(usableWeapon())){ fxd += profBonus(); fxn.push(`+${profBonus()} Mistr velkých zbraní`); }
     const dmg = Math.max(1, rollDiceMult(a.dice, mult) + sm + a.bonus + extra) + fxd;
     rollEntry.res += ` · zranění ${dmg}`;
     popis += ` Zranění ${dmg} (${a.dice}${mult > 1 ? ' ×' + mult + ' kostky' : ''} ${fmtMod(sm)}${a.bonus ? ' ' + fmtMod(a.bonus) : ''}${extra ? ' +' + extra + ' ' + na.nazev : ''}${fxn.length ? ' ' + fxn.join(' ') : ''}).`;
@@ -2767,6 +3701,8 @@ async function roll(){
     const mt = applyMastery(weaponMastery(usableWeapon()), ok, foe, a.dice, mod(S.char.stats[p.vlastnost]), d);
     if(mt) popis += ' ' + mt;
     if(CLASSES[S.char.cls].martial && S.char.level >= 5 && S.foes.length) popis += ' ' + extraAttack(foe);
+    if(S.char.cls === 'valecnik' && S.char.level >= 11 && S.foes.length) popis += ' ' + extraAttack(foe);
+    if(S.char.cls === 'valecnik' && S.char.level >= 20 && S.foes.length) popis += ' ' + extraAttack(foe);
   }
   if(p.hide){ if(ok){ pc().skryty = true; addLog({ t:'fx', notes:[{ c:'good', t:'🫥 Jsi skrytý' }] }); popis += ' Hráč je teď SKRYTÝ (příští útok s výhodou, útoky na něj s nevýhodou).'; } else popis += ' Nepřátelé ho dál vidí.'; }
   if(p.escape && ok){ delete pc().uchopen; addLog({ t:'fx', notes:[{ c:'good', t:'🔓 Vyprostil ses' }] }); popis += ' Hráč se vyprostil ze sevření.'; }
@@ -2928,6 +3864,10 @@ $('#sheet').onclick = e => {
   if(ab && !ab.disabled) return useAbility(ab.dataset.abil);
   const ob = e.target.closest('[data-obor]');
   if(ob) return chooseSubclass(ob.dataset.obor);
+  const ft = e.target.closest('[data-feat]'); if(ft) return chooseFeat(ft.dataset.feat);
+  const ln = e.target.closest('[data-learn]'); if(ln) return learnSpell(ln.dataset.learn);
+  const al = e.target.closest('[data-align]');
+  if(al && S._povDraft){ S._povDraft.presvedceni = al.dataset.align; al.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === al)); return; }
   const b = e.target.closest('[data-act]');
   if(b && !b.disabled) journalAction(b);
 };
@@ -3032,9 +3972,12 @@ function lootHTML(e){
 }
 
 /* Zápisky pod vyprávěním (úkol, postava, místo, zlato…) – jednotný úhledný seznam; na co jde klepnout, má šipku. */
-const FX_KIND = { quest:['Úkol','quests'], npc:['Postava','npcs'], loc:['Místo','map'], wx:['Počasí',''], clue:['Stopa','quests'], shop:['Obchod','shop'] };
+const FX_KIND = { quest:['Úkol','quests'], npc:['Postava','npcs'], loc:['Místo','map'], wx:['Počasí',''], clue:['Stopa','quests'], fact:['Paměť','chron'], shop:['Obchod','shop'] };
 function fxHTML(notes){
-  const list = notes.map(n => ({ ...n }));
+  let list = notes.map(n => ({ ...n }));
+  /* noví nepřátelé do jednoho řádku (podrobnosti jsou v liště boje nahoře) */
+  const nf = list.filter(n => n.c === 'foe' && /^👹 /.test(n.t));
+  if(nf.length > 1){ const first = list.indexOf(nf[0]); list = list.filter(n => !nf.includes(n)); list.splice(first, 0, { c:'foe', t:'👹 ' + nf.map(n => n.t.slice(3)).join(', ') }); }
   /* „Nové místo na mapě: X“ + „📍 X…“ → jeden řádek */
   const mapN = list.find(n => n.c === 'loc' && n.t.startsWith('🗺️'));
   if(mapN){
@@ -3049,10 +3992,13 @@ function fxHTML(notes){
     const k = FX_KIND[n.c];
     let lbl = '';
     if(k && n.c === 'quest') lbl = ic === '✅' ? 'Splněno' : ic === '📖' ? 'Příběh' : 'Nový úkol';
-    else if(k && n.c === 'npc') lbl = ic === '🤝' ? 'Družiník' : 'Nová postava';
+    else if(k && n.c === 'npc') lbl = ic === '🤝' ? 'Družiník' : ic === '🧠' ? 'Postava si to zapamatuje' : 'Nová postava';
     else if(k && n.c === 'loc' && (ic === '📍' || ic === '🗺️')) lbl = n.nove ? 'Nové místo' : 'Jsi v';
     else if(n.c === 'wx') lbl = 'Počasí';
     else if(n.c === 'clue') lbl = 'Nová stopa';
+    else if(n.c === 'foe' && ic === '👹') lbl = 'Nepřátelé';
+    else if(n.c === 'fact') lbl = 'Svět si to zapamatuje';
+    else if(n.c === 'npc' && ic === '🧠') lbl = 'Postava si to zapamatuje';
     else if(n.c === 'shop') lbl = 'Obchod – klepni a nakupuj';
     else if(n.c === 'npc' && ic === '🤝') lbl = 'Družiník';
     const go = k && lbl && k[1] ? k[1] : '';
@@ -3065,7 +4011,7 @@ function logHTML(e, i){
   switch(e.t){
     case 'dm': return `<div class="e dm${e.anim ? ' tw' : ''}" data-li="${i}">${dmRich(e.text)}
       ${e.img ? `<img class="illu" data-src="${esc(e.img)}" alt="Ilustrace scény">` : ''}
-      <div class="dmtools">${e.imgBusy ? '<span class="busyimg">🖌️ Kreslím ilustraci…</span>' : imgMode() !== 'off' && !e.img ? `<button data-illu="${i}">🖼️ Ilustrace</button>` : ''}${window.speechSynthesis ? `<button data-say="${i}">🔊 Přečíst</button>` : ''}</div></div>`;
+      <div class="dmtools">${e.imgBusy ? '<span class="busyimg">🖌️ Kreslím ilustraci…</span>' : imgMode() !== 'off' && !e.img ? `<button data-illu="${i}">🖼️ Ilustrace</button>` : ''}${window.speechSynthesis ? `<button data-say="${i}">🔊 Přečíst</button>` : ''}${canRegen(e) ? `<button data-regen="1" title="Napsat odpověď znovu">🔄 Jinak</button><button data-fix="1" title="Opravit Pána jeskyně">✋ Nesedí</button>` : ''}</div></div>`;
     case 'lvl': return `<div class="e lvl"><b>${esc(e.title || '⭐ ' + e.level + '. úroveň!')}</b><small>${e.gain ? '+' + e.gain + ' max. HP' : ''}${e.nove.length ? (e.gain ? ' · nové: ' : '') + esc(e.nove.join(', ')) : ''}${e.title ? '' : ' · zvyš si vlastnost'}</small></div>`;
     case 'player': return `<div class="e player"><span>${esc(e.text)}</span></div>`;
     case 'fx': return fxHTML(e.notes);
@@ -3081,7 +4027,7 @@ function logHTML(e, i){
 function render(){
   if(!S) return;
   const c = S.char;
-  $('#hName').innerHTML = `${CLASSES[c.cls].ikona} ${esc(c.name)} <span class="lvlb" title="úroveň">${c.level}</span>`;
+  $('#hName').innerHTML = `${c.img ? `<img class="heroimg hav" data-src="${esc(c.img)}" alt="">` : CLASSES[c.cls].ikona} ${esc(c.name)} <span class="lvlb" title="úroveň">${c.level}</span>`;
   $('#hGold').textContent = '💰 ' + c.zlato;
   $('#mHp').textContent = `${c.hp}/${c.maxHp}${c.temp ? ' +' + c.temp : ''}`;
   $('#hpFill').style.width = (100 * c.hp / c.maxHp) + '%';
@@ -3120,13 +4066,14 @@ function render(){
   $('#lootPanel').classList.toggle('on', mode === 'loot');
   $('#actPanel').style.display = mode === 'act' ? 'block' : 'none';
   $('#rollBtn').textContent = S.dying ? '🎲 Hoď o život' : '🎲 Hoď d20';
-  $('#rollAlt').style.display = mode === 'roll' && S.pending && !S.dying && !S.pending.proti ? 'block' : 'none';
+  $('#rollAlt').style.display = mode === 'roll' && S.pending && !S.dying && !S.pending.proti && !S.pending.zachrana ? 'block' : 'none';
+  $('#inspBtn').style.display = mode === 'roll' && S.pending && !S.dying && S.char.insp && (S.pending.adv || 0) < 1 ? 'block' : 'none';
   if(S.dying) $('#rollWhy').innerHTML = `💀 <b>Na pokraji smrti</b> · 10+ = úspěch · 3 úspěchy = přežiješ, 3 selhání = smrt<br><b style="color:var(--green)">${'✔ '.repeat(S.dying.ok) || '–'}</b> &nbsp; <b style="color:var(--blood)">${'✘ '.repeat(Math.min(3, S.dying.ko)) || '–'}</b>`;
   else if(S.pending){
     const p = S.pending, parts = rollParts(p), foe = p.cilId ? S.foes.find(f => f.id === p.cilId) : null;
     $('#rollWhy').innerHTML = p.utok
       ? `⚔️ <b>${esc(attackInfo(p).nazev)}</b>${foe ? ' → <b>' + esc(foe.jmeno) + '</b>' : ''} · d20 ${esc(partsText(parts))} · obrana <b>${p.obtiznost}</b><br>zranění ${esc(attackInfo(p).dice)} ${fmtMod(mod(c.stats[p.vlastnost]) + attackInfo(p).bonus)}`
-      : `Zkouška: <b>${esc(statName(p.vlastnost))}</b> (d20 ${esc(partsText(parts))}) · obtížnost <b>${p.obtiznost}</b> <i class="dcl">${dcLabel(p.obtiznost)}</i>${p.duvod ? '<br>' + esc(p.duvod) : ''}`;
+      : `${p.zachrana ? 'Záchranný hod' : 'Zkouška'}: <b>${esc(p.dovednost ? skillName(p.dovednost) : statName(p.vlastnost))}</b>${p.dovednost ? ' <i>(' + esc(statName(p.vlastnost)) + ')</i>' : ''}${p.adv > 0 ? ' · výhoda' : p.adv < 0 ? ' · nevýhoda' : ''} (d20 ${esc(partsText(parts))}) · obtížnost <b>${p.obtiznost}</b> <i class="dcl">${dcLabel(p.obtiznost)}</i>${p.duvod ? '<br>' + esc(p.duvod) : ''}`;
   }
 
   const locked = !canAct();
@@ -3165,11 +4112,14 @@ function quickActions(){
     return qa;
   }
   if(S.statPicks) q.push(['lvl', '⭐ Zvýšit vlastnost']);
+  else if(S.featPicks) q.push(['feat', '🏅 Zvolit odbornost']);
   else if(S.char.level >= 3 && !S.char.obor && OBORY[S.char.cls]) q.push(['obor', '🎓 Zvolit specializaci']);
   if(knownAbilities().length) q.push(['abil', `✨ Schopnosti${slotMax() ? ' ' + S.slots + '/' + slotMax() : ''}`]);
   if(c.hp < c.maxHp && healPotion()) q.push(['heal', `🧪 Lektvar (${healPotion().pocet})`]);
   if(shopHere()) q.unshift(['shop', `🛒 ${S.shop.obchodnik}`]);
   if(S.needs.hlad >= 40 && food() && !S.foes.length) q.push(['eat', `🍖 Najíst se (${food().pocet})`]);
+  if(S.spellPicks && learnableSpells().length) q.push(['spells', '📖 Nové kouzlo']);
+  if(!S.foes.length && (c.hp < c.maxHp && hdLeft() > 0 || shortRestPreview().length)) q.push(['rest', '☕ Krátký odpočinek']);
   if((S.needs.unava >= 50 || isNight()) && !S.foes.length) q.push(['sleep', '🏕️ Vyspat se']);
   return q;
 }
@@ -3273,7 +4223,7 @@ function tabSheet(){
     : `<button class="arow none" data-cat="${cat}"><span>${ic}</span><span class="wn">${empty}</span>${box('–', 'kvalita')}</button>`;
   const ds = S.dying || { ok:0, ko:0 }, dots = (n, ch) => [0,1,2].map(i => `<i class="${i < n ? 'on' : ''}">${i < n ? ch : '○'}</i>`).join('');
   const kn = knownAbilities(), lr = loadRatio();
-  const lvls = Array.from({ length:10 }, (_, i) => i + 1);
+  const lvls = Array.from({ length:20 }, (_, i) => i + 1);
   const groups = (bagCat === 'vse' ? CATS.slice(1) : CATS.filter(([k]) => k === bagCat)).map(([k,n,i,t]) => {
     const list = sortItems(S.inv.filter(it => t.includes(it.typ)));
     return list.length ? `<div class="vcat">${i} ${n}</div>${list.map(it => `<button class="vline ${RAR[it.vzacnost].c}" data-detail="${it.id}"><span class="vn">${isEquipped(it) ? '✋ ' : ''}${esc(it.nazev)}${it.pocet > 1 ? ' <em>×' + it.pocet + '</em>' : ''}${wearOn() && ['zbran','zbroj','stit'].includes(it.typ) && wearOf(it) <= 25 ? (wearOf(it) <= 0 ? ' 💔' : ' ⚠️') : ''}</span><span class="vs">${esc(shortStat(it))}</span></button>`).join('')}` : '';
@@ -3283,7 +4233,7 @@ function tabSheet(){
 
   return `<div class="dsheet">
   <button class="idn" data-act="heroinfo">
-    <span class="scroll"><i>JMÉNO</i><b>${esc(c.name)}</b></span>
+    <span class="scroll"><span class="heropic${c.img ? '' : ' none'}" data-act="heropic">${c.img ? `<img class="heroimg" data-src="${esc(c.img)}" alt="">` : c.imgBusy ? '🖌️' : '🎨<small>portrét</small>'}</span><i>JMÉNO</i><b>${esc(c.name)}</b></span>
     <span class="ids">
       <span class="tagr"><i>POVOLÁNÍ</i><b>${C.ikona} ${esc(C.nazev)}${O ? ' · ' + esc(O.nazev) : ''}</b></span>
       <span class="tagr"><i>RASA</i><b>${Sp.i} ${esc(Sp.nazev)}${c.linie && Sp.volba ? ' (' + esc(Sp.volba.moznosti[c.linie]) + ')' : ''}</b></span>
@@ -3313,7 +4263,7 @@ function tabSheet(){
       ${rib('🛡', 'Obrana')}
       <div class="acrow"><div class="acshield"><b>${armorClass()}</b><i>OBRANA</i></div><div class="acinfo">10 + obratnost ${fmtMod(mod(c.stats.obratnost))}<br>+ zbroj a štít</div></div>
       ${slotMax() || kn.length ? `${rib('⚡', slotMax() ? 'Magie' : 'Schopnosti')}
-      <button class="manabox" data-openabil="1">${slotMax() ? box(slotMax(), 'max slotů') + box(S.slots, 'zbývá') : ''}<span class="abl">${kn.map(a => `<span title="${esc(a.nazev)}">${a.i}${a.slot ? '' : `<sub>${abilityLeft(a)}</sub>`}</span>`).join('')}</span></button>` : ''}
+      <button class="manabox" data-openabil="1">${slotMax() ? box(slotMax(), 'max slotů') + box(S.slots, 'zbývá') : ''}<span class="abl">${kn.filter(a => !a.learned).slice(0, 6).map(a => `<span class="ab1">${a.i} ${esc(a.nazev)}<b>${a.slot ? '◆' : abilityLeft(a) + '/' + abilityMax(a)}</b></span>`).join('')}${kn.filter(a => a.learned).length ? `<span class="ab1">📖 naučená kouzla<b>${kn.filter(a => a.learned).length}</b></span>` : ''}${kn.filter(a => !a.learned).length > 6 ? `<span class="ab1 more">… a další (klepni)</span>` : ''}</span></button>` : ''}
       ${rib('🍖', 'Suroviny')}
       <div class="needs">
         <div><i>Únava</i><b>${Math.round(S.needs.unava)}</b><div class="bar"><div style="width:${S.needs.unava}%;background:var(--gold)"></div></div></div>
@@ -3331,6 +4281,8 @@ function tabSheet(){
   ${S.mount ? `<div class="mountl">${MOUNTS[S.mount.typ].i} Jezdecké zvíře: <b>${esc(S.mount.nazev)}</b></div>` : ''}
 
   ${allConds().length ? `${rib('☠', 'Stavy a neduhy')}<div class="conds2">${allConds().map((x,i) => `<button class="vline ${x.typ === 'pozehnani' ? 'r1' : x.derived ? 'r3' : 'rb'}" data-cond="${i}"><span class="vn">${x.i} ${esc(x.nazev)}</span><span class="vs">${x.derived ? '' : x.trvani === null ? '∞' : fmtHours(x.trvani)}</span></button>`).join('')}</div>` : ''}
+
+  ${dndSheetHTML()}
 
   ${rib('🎒', 'Vybavení', `${S.inv.length}/${INV_MAX} věcí`)}
   ${filters}
@@ -3367,8 +4319,8 @@ function storyHTML(){
 function tabQuests(){
   const open = S.quests.filter(q => !q.done), done = S.quests.filter(q => q.done);
   const row = q => `<div class="qrow ${q.done?'done':''}"><b>${q.done ? '✅' : '📜'} ${esc(q.title)}</b>${q.popis ? `<small>${esc(q.popis)}</small>` : ''}</div>`;
-  if(!S.quests.length) return storyHTML() + '<div class="empty">Zatím žádné úkoly.</div>' + cluesHTML();
-  return storyHTML() + cluesHTML() + `<div class="sec"><span>Aktivní</span><span>${open.length}</span></div>${open.length ? open.map(row).join('') : '<div class="empty">Nic rozpracovaného.</div>'}
+  if(!S.quests.length) return storyHTML() + worldHTML() + '<div class="empty">Zatím žádné úkoly.</div>' + cluesHTML();
+  return storyHTML() + worldHTML() + cluesHTML() + `<div class="sec"><span>Aktivní</span><span>${open.length}</span></div>${open.length ? open.map(row).join('') : '<div class="empty">Nic rozpracovaného.</div>'}
     ${done.length ? `<div class="sec"><span>Splněné</span><span>${done.length}</span></div>${done.map(row).join('')}` : ''}`;
 }
 
@@ -3391,6 +4343,7 @@ function tabChron(){
   return `<button class="btn" data-act="recap">📜 Shrnutí postupu od AI</button>
     <div class="sec">Dosavadní příběh</div>
     <div class="chron ${S.summary ? '' : 'muted'}">${S.summary ? esc(S.summary) : 'Kronika se začne psát po pár tazích.'}</div>
+    ${memoryHTML()}
     ${S.location ? `<div class="sec">Kde jsi</div><div class="qrow"><b>📍 ${esc(S.location)}</b><small>${esc(SETTINGS[S.setting].nazev)} · tah ${S.turn}</small></div>` : ''}
     <div class="sec">Kniha a hry</div>
     <button class="btn ghost" data-act="book">📜 Kronika jako kniha (tisk / PDF)</button>
@@ -3401,6 +4354,8 @@ function tabChron(){
     <button class="btn ghost" data-act="switchAI">🔄 AI: ${PROVIDERS[getProvider()].nazev}${isDemo() ? ' (demo)' : ''} – přepnout</button>
     ${getProvider() === 'gemini' ? `<button class="btn ghost" data-act="model">🤖 Model: ${esc(ls.get('kroniky_gemini_model') || 'vybere se automaticky')}</button>` : getProvider() === 'claude' ? `<div class="dnote">🤖 Model: Claude ${esc(claudeName(claudeModel()))} (nejlevnější)</div>` : ''}
     <button class="btn ghost" data-act="key">🔑 Změnit API klíč</button>
+    ${mistralHTML()}
+    ${spendHTML()}
     <p class="muted" style="text-align:center;font-size:12px;margin-top:12px">DnD Zaoo · verze ${APP_VERSION}</p>
 `;
 }
@@ -3408,7 +4363,7 @@ function tabChron(){
 function renderDrawer(){
   if(!S) return;
   const c = S.char, openQ = S.quests.filter(q => !q.done).length;
-  const tabs = [['hero','📜 Deník'],['map','🗺️ Mapa'],['quests',`📜 Úkoly${openQ ? `<i>${openQ}</i>` : ''}`],['npcs','👤 Postavy'],['chron','📖 Kronika']];
+  const tabs = [['hero','<em>📓</em>Deník'],['map','<em>🗺️</em>Mapa'],['quests',`<em>📜${openQ ? `<i>${openQ}</i>` : ''}</em>Úkoly`],['npcs','<em>👤</em>Postavy'],['chron','<em>📖</em>Kronika']];
   if(jTab === 'bag') jTab = 'hero';
   const body = ({ hero:tabSheet, bag:tabSheet, map:tabMap, quests:tabQuests, npcs:tabNpcs, chron:tabChron }[jTab] || tabHero)();
   const sc = $('#drawer .jbody')?.scrollTop || 0;
@@ -3449,14 +4404,19 @@ $('#chips').onclick = e => {
   if(q === 'abil') return abilitiesSheet();
   if(q === 'shop') return shopSheet();
   if(q === 'obor') return subclassPick();
+  if(q === 'feat') return featSheet();
+  if(q === 'spells') return spellLearnSheet();
+  if(q === 'rest') return shortRestSheet();
   if(q === 'sleep') return act(S.location && /hostin|krčm|hospod|pokoj|dům|chalup|domov/i.test(S.location) ? 'Pronajmu si pokoj / uložím se a vyspím se do rána.' : 'Rozdělám oheň, utábořím se a vyspím se.', '🏕️ Vyspat se');
   act(b.textContent);
 };
 $('#conds').onclick = e => { const cp = e.target.closest('[data-npcpic]'); if(cp) return npcSheet(cp.dataset.npcpic); const b = e.target.closest('[data-cond]'); if(!b) return; const x = allConds()[int(b.dataset.cond)]; if(x) openSheet(condDetail(x), x.derived || x.typ === 'pozehnani' ? 'r0' : ''); };
+$('#hName').onclick = () => { if(S && !S.dead) heroPicSheet(); };
 $('#rollBtn').onclick = roll;
+$('#inspBtn').onclick = useInspiration;
 /* Hráč nemusí hodit – může si to rozmyslet (kromě záchranných hodů, které na něj hra uvalila). */
 $('#rollAlt').onclick = () => {
-  if(!S.pending || rolling || busy || S.dying || S.pending.proti) return;
+  if(!S.pending || rolling || busy || S.dying || S.pending.proti || S.pending.zachrana) return;
   const p = S.pending; S.pending = null;
   hist(`Hráč si to rozmyslel a ${p.utok ? 'neútočí' : 'zkoušku (' + statName(p.vlastnost) + ') nehází'} – udělá něco jiného.`);
   addLog({ t:'sys', text:'↩️ Rozmyslel sis to.' });
@@ -3465,6 +4425,8 @@ $('#rollAlt').onclick = () => {
 $('#log').onclick = e => {
   if(e.target.closest('#retry')){ const inp = S.lastFailed; S.log.pop(); return callDM(inp); }
   const il = e.target.closest('[data-illu]'); if(il) return illustrate(int(il.dataset.illu));
+  if(e.target.closest('[data-regen]')) return regenDM();
+  if(e.target.closest('[data-fix]')) return fixSheet();
   const pp = e.target.closest('img[data-npcpic]'); if(pp) return npcSheet(pp.dataset.npcpic);
   if(e.target.closest('[data-older]')){ const lg = $('#log'), h0 = lg.scrollHeight; logWindow += 120; render(); requestAnimationFrame(() => { lg.scrollTop = lg.scrollHeight - h0; }); return; }
   const ch = e.target.closest('[data-choice]');
@@ -3506,6 +4468,10 @@ function journalAction(b){
   else if(a === 'lvlpick') levelUpPick();
   else if(a === 'subclass') subclassPick();
   else if(a === 'heroinfo') heroInfo();
+  else if(a === 'cdo'){ const k = b.dataset.k; if($('#cinfoHide')?.checked) ls.set('dz_cinfo', JSON.stringify([...new Set([...cinfoOff(), k])])); closeSheet(); doCombatChip(k); }
+  else if(a === 'cinforeset'){ ls.set('dz_cinfo', ''); settingsSheet(); }
+  else if(a === 'heropic') heroPicSheet();
+  else if(a === 'herodraw') drawHero();
   else if(a === 'model') chooseModel();
   else if(a === 'recap') recapOpen();
   else if(a === 'recapnew'){ if(S.recap) S.recap.err = null; makeRecap(); }
@@ -3524,6 +4490,28 @@ function journalAction(b){
   else if(a === 'shopbuy') shopBuy(int(b.dataset.k));
   else if(a === 'shopsell') shopSell(b.dataset.k);
   else if(a === 'haggle') haggle();
+  else if(a === 'mkey'){ const k = prompt('Mistral API klíč (prázdné = smazat):', cleanKey(ls.get('kroniky_key_mistral'))); if(k !== null){ ls.set('kroniky_key_mistral', cleanKey(k)); ls.set('dz_mistral_ok', ''); renderDrawer(); if(cleanKey(k)) testMistral(); } }
+  else if(a === 'mtest') testMistral();
+  else if(a === 'mmodel') pick('Model Mistral (v plánu Experiment jsou všechny zdarma)', MISTRAL_MODELS.map(([id,n,d]) => ({ label:(id === mistralModel() ? '✅ ' : '') + n + ' · ' + d, value:id }))).then(v => { if(v){ ls.set('dz_mistral_model', v); renderDrawer(); } });
+  else if(a === 'mbg'){ ls.set('dz_bg_mistral', ls.get('dz_bg_mistral') === 'off' ? '' : 'off'); renderDrawer(); }
+  else if(a === 'mproxy') proxySheet();
+  else if(a === 'mproxysave'){ const u = ($('#proxyUrl')?.value || '').trim(); ls.set('dz_mistral_proxy', /^https:\/\//.test(u) ? u : ''); ls.set('dz_mistral_ok', ''); closeSheet(); renderDrawer(); if(u) testMistral(); }
+  else if(a === 'srestsheet') shortRestSheet();
+  else if(a === 'srest') shortRest(b.dataset.k);
+  else if(a === 'povaha') povahaSheet();
+  else if(a === 'povsave') savePovaha();
+  else if(a === 'grollpov'){ const f = { ideal:rnd(IDEALY), pouto:rnd(POUTA), slabost:rnd(SLABOSTI) }; document.querySelectorAll('#povEdit [data-pov]').forEach(i => i.value = f[i.dataset.pov]); }
+  else if(a === 'featsheet') featSheet();
+  else if(a === 'learnsheet') spellLearnSheet();
+  else if(a === 'fixgo'){ const t = ($('#fixTxt')?.value || '').trim(); if(t) regenDM(t); }
+  else if(a === 'budget'){
+    const c = prompt('Rozpočet na Claude v dolarech:', budget('dz_budget_claude', 20)); if(c !== null && parseFloat(c.replace(',', '.')) > 0) ls.set('dz_budget_claude', c.replace(',', '.'));
+    const g = prompt('Rozpočet na Gemini v korunách:', budget('dz_budget_gem', 100)); if(g !== null && parseFloat(g.replace(',', '.')) > 0) ls.set('dz_budget_gem', g.replace(',', '.'));
+    renderDrawer();
+  }
+  else if(a === 'spendreset'){ if(confirm('Vynulovat počítadlo útraty? (Např. po dobití kreditu.)')){ setSpend({}); renderDrawer(); } }
+  else if(a === 'fallback'){ ls.set('dz_fallback', ls.get('dz_fallback') === 'off' ? '' : 'off'); renderDrawer(); }
+  else if(a === 'stream'){ ls.set('dz_stream', ls.get('dz_stream') === 'off' ? '' : 'off'); renderDrawer(); }
   else if(a === 'diff'){ S.diff = b.dataset.k; hist(`Hráč změnil obtížnost hry na: ${D().n}.`); save(); settingsSheet(); render(); }
   else if(a === 'pmode'){ ls.set('dz_portrait', b.dataset.k); settingsSheet(); }
   else if(a === 'imgmode'){ ls.set('dz_img', b.dataset.k === 'off' ? '' : b.dataset.k); settingsSheet(); render(); }
@@ -3561,6 +4549,7 @@ async function testKey(){
       const d = await r.json().catch(() => null);
       if(!r.ok) throw claudeErr(r, d);
     }
+    else if(getProvider() === 'mistral') return testMistral();
     else await geminiModels();
     alert('✅ Klíč funguje (' + keyHint(getKey()) + ').');
   }catch(e){ alert('❌ Klíč nefunguje: ' + e.message); }
@@ -3583,8 +4572,8 @@ $('#shade').onclick = closeDrawer;
 /* =========================================================
    ÚROVNĚ, ZKUŠENOSTI A SCHOPNOSTI
    ========================================================= */
-const XP_LEVELS = [0, 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000];   /* index = úroveň */
-const MAX_LEVEL = 10;
+const XP_LEVELS = [0, 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];   /* index = úroveň */
+const MAX_LEVEL = 20;
 /* Ve kterých vlastnostech je postava zběhlá: vlastnosti zázemí + dvě hlavní vlastnosti povolání. */
 const profStats = () => [...new Set([...(ZAZEMI[S.char.zazemi]?.stats || []), ...(CLASSES[S.char.cls]?.prio || []).slice(0, 2)])];
 const profBonus = () => Math.floor(((S.char.level || 1) - 1) / 4) + 2;   /* zdatnost podle D&D 2024: +2 (1.–4. úr.), +3 (5.–8.), +4 (9.–10.) */
@@ -3603,12 +4592,19 @@ function grantXP(amount, why){
     const gain = Math.max(1, Math.floor(hitDie() / 2) + 1 + mod(c.stats.odolnost) + hpPerLevelBonus());
     c.maxHp += gain; c.hp = Math.min(c.maxHp, c.hp + gain);
     S.statPicks = (S.statPicks || 0) + 1;
+    c.hdLeft = hdLeft() + 1;
+    if(featLevels(c.cls).includes(c.level)) S.featPicks = (S.featPicks || 0) + 1;
+    S.spellPicks = (S.spellPicks || 0) + spellsPerLevel(c.cls);
     S.slots = Math.min(slotMax(), (S.slots || 0) + 1);
     const nove = classAbilities().filter(a => a.lvl === c.level);
     for(const a of nove) if(!a.slot) S.res[a.id] = abilityMax(a);
     const extra = [];
     if(c.level === 5 && CLASSES[c.cls].martial) extra.push('⚔️ Útok navíc');
     if(c.level === 3 && !c.obor) extra.push('🎓 volba specializace');
+    if(featLevels(c.cls).includes(c.level)) extra.push('🏅 odbornost nebo +2 k vlastnostem');
+    if(spellsPerLevel(c.cls)) extra.push('📖 nové kouzlo');
+    if(c.cls === 'valecnik' && (c.level === 11 || c.level === 20)) extra.push('⚔️ další útok navíc');
+    if([5, 9, 13, 17].includes(c.level)) extra.push('🎯 zdatnost +' + profBonus());
     addLog({ t:'lvl', level:c.level, gain, nove:nove.map(a => a.i + ' ' + a.nazev).concat(extra) });
     hist(`HRÁČ POSTOUPIL NA ${c.level}. ÚROVEŇ: +${gain} max. HP${nove.length ? ', nové schopnosti: ' + nove.map(a => a.nazev).join(', ') : ''}${extra.length ? ', ' + extra.join(', ') : ''}. Vyprávěj to stručně jako okamžik, kdy hrdina cítí, že zesílil.`);
     book('sys', `⭐ ${c.name} dosáhl ${c.level}. úrovně.`);
@@ -3665,12 +4661,14 @@ async function levelUpPick(){
   hist(`Hráč si zvýšil vlastnost ${statName(k)} na ${c.stats[k]}.`);
   render(); save();
   if(S.statPicks) setTimeout(levelUpPick, 300);
+  else if(S.featPicks) setTimeout(featSheet, 400);
   else if(c.level >= 3 && !c.obor) setTimeout(subclassPick, 400);
 }
 
 /* Hodnota schopnosti: kostka může záviset na úrovni. */
 const aDice = a => typeof a.diceV === 'function' ? a.diceV() : a.dice;
-const castMod = a => a.spellStat && perk('spellDmg') && S.char.level >= 3 ? Math.max(0, mod(S.char.stats[a.spellStat])) : 0;
+const stK = k => k === '@' ? castStat() : k;
+const castMod = a => a.spellStat && (a.learned || perk('spellDmg') && S.char.level >= 3) ? Math.max(0, mod(S.char.stats[stK(a.spellStat)])) : 0;
 function addTemp(n, why){
   const c = S.char;
   n = Math.max(0, Math.round(n));
@@ -3684,13 +4682,13 @@ function wildSurgeCheck(a){
 async function useAbility(id){
   const a = classAbilities().find(x => x.id === id);
   if(!a || !canAct() || a.lvl > S.char.level) return;
-  if(abilityLeft(a) <= 0){ alert('Tuhle schopnost už jsi vyčerpal. Obnoví ji spánek (aspoň 6 h).'); return; }
+  if(abilityLeft(a) < (a.slot ? a.cost || 1 : 1)){ alert(a.slot ? 'Nemáš dost slotů kouzel. Obnoví je spánek (aspoň 6 h).' : 'Tuhle schopnost už jsi vyčerpal. Obnoví ji spánek' + (SHORT_REST[a.id] ? ' nebo krátký odpočinek.' : ' (aspoň 6 h).')); return; }
   if(a.reaction){ alert('Tohle je reakce – hra ji v boji použije sama, když tě zasáhne útok (1× za kolo).'); return; }
   if(inCombat()){
     if(a.bonus && S.tah?.bonus){ alert('Bonusovou akci už jsi v tomto tahu použil.'); return; }
     if(a.slot && S.tah?.slot){ alert('Za jeden tah můžeš seslat jen jedno kouzlo se slotem.'); return; }
   }
-  const c = S.char, spend = () => { if(a.slot) S.slots--; else S.res[a.id] = abilityLeft(a) - 1; if(inCombat()){ S.tah ||= {}; if(a.bonus) S.tah.bonus = true; if(a.slot) S.tah.slot = true; } };
+  const c = S.char, spend = () => { if(a.slot) S.slots -= (a.cost || 1); else S.res[a.id] = abilityLeft(a) - 1; if(inCombat()){ S.tah ||= {}; if(a.bonus) S.tah.bonus = true; if(a.slot) S.tah.slot = true; } };
   /* bonusová akce nespotřebuje tah – nepřátelé nejednají, AI se dozví v příštím tahu */
   const finish = (t, shown) => {
     if(!a.bonus) return act(t, shown);
@@ -3702,7 +4700,7 @@ async function useAbility(id){
 
   if(a.kind === 'heal'){
     let r = typeof a.flat === 'function' ? a.flat() : rollDice(aDice(a)).total;
-    r += (a.addStat ? Math.max(0, mod(c.stats[a.addStat])) : 0) + (a.addLevel ? c.level : 0) + (perk('healBonus') && c.level >= 3 ? 2 + c.level : 0);
+    r += (a.addStat ? Math.max(0, mod(c.stats[stK(a.addStat)])) : 0) + (a.addLevel ? c.level : 0) + (perk('healBonus') && c.level >= 3 ? 2 + c.level : 0);
     const b = c.hp; c.hp = Math.min(c.maxHp, c.hp + r); spend();
     let cured = '';
     if(a.cureToo){ const e = S.effects.find(x => ['jed','nemoc'].includes(x.typ)); if(e){ S.effects = S.effects.filter(x => x !== e); cured = ` a zbavil se stavu ${e.nazev}`; addLog({ t:'fx', notes:[{ c:'good', t:`✔️ Vyléčeno: ${e.nazev}` }] }); } }
@@ -3711,7 +4709,7 @@ async function useAbility(id){
     return finish(`Použiju schopnost ${a.nazev}. [HRA: vyléčeno ${c.hp - b} HP${cured}, hráč má ${c.hp}/${c.maxHp}.${wildSurgeCheck(a)}]`, `${a.i} ${a.nazev}`);
   }
   if(a.kind === 'temp'){
-    const r = (typeof a.flat === 'function' ? a.flat() : rollDice(aDice(a)).total) + (a.addStat ? Math.max(0, mod(c.stats[a.addStat])) : 0);
+    const r = (typeof a.flat === 'function' ? a.flat() : rollDice(aDice(a)).total) + (a.addStat ? Math.max(0, mod(c.stats[stK(a.addStat)])) : 0);
     spend(); addTemp(r, a.nazev); sfx('heal'); closeDrawer();
     return finish(`Použiju ${a.nazev}. [HRA: hráč získal ${r} dočasných životů – pohltí příští zranění.]`, `${a.i} ${a.nazev}`);
   }
@@ -3728,6 +4726,7 @@ async function useAbility(id){
   if(a.kind === 'buff'){
     spend();
     const ef = a.eff();
+    if(a.conc){ if(concEffect()) endConcentration('nové kouzlo'); ef.conc = true; }
     if(a.rage){
       if(perk('rageExtra')) ef.extraDmg = perk('rageExtra');
       if(perk('rageObrana')) ef.obrana = (ef.obrana || 0) + perk('rageObrana');
@@ -3749,6 +4748,12 @@ async function useAbility(id){
     addLog({ t:'fx', notes:[{ c:'good', t:`✔️ Vyléčeno: ${e.nazev}` }] }); sfx('heal');
     closeDrawer();
     return act(`Použiju ${a.nazev} na ${e.nazev}. [HRA: stav ${e.nazev} byl odstraněn.]`, `${a.i} ${a.nazev}`);
+  }
+  if(a.kind === 'story'){
+    spend();
+    if(a.conc){ if(concEffect()) endConcentration('nové kouzlo'); S.effects.push({ id:newId('e'), typ:'pozehnani', nazev:a.nazev, popis:a.popis, postih:{}, hp:0, lecba:'', blokuje:false, trvani:1, conc:true }); }
+    addLog({ t:'fx', notes:[{ c:'good', t:`${a.i} ${a.nazev}` }] }); sfx('page'); closeDrawer();
+    return act(`Sešlu kouzlo ${a.nazev}. [HRA: kouzlo ${a.kruh ? a.kruh + '. kruhu ' : ''}bylo sesláno, slot je zaplacený: ${a.popis}${a.conc ? ' Trvá, dokud hráč udrží soustředění (nejvýš hodinu).' : ''} Vyprávěj jeho účinek podle situace.]`, `${a.i} ${a.nazev}`);
   }
   /* útočné schopnosti */
   if(!S.foes.length){ alert('Tahle schopnost potřebuje nepřítele.'); return; }
@@ -3790,12 +4795,14 @@ function abilitiesSheet(){
   openSheet(`<h3>✨ Schopnosti – ${esc(CLASSES[c.cls].nazev)} ${c.level}. úrovně</h3>
     ${sm ? `<div class="dnote" style="margin:-4px 0 10px">Sloty kouzel: <b>${'◆'.repeat(Math.max(0, S.slots))}${'◇'.repeat(Math.max(0, sm - S.slots))}</b> ${S.slots}/${sm} · obnoví je spánek${CLASSES[c.cls].caster === 'pact' ? ' (pakt: stačí 1 h)' : ''}</div>` : ''}
     ${sp ? `<div class="abil r0"><span class="ico">✨</span><span class="mid"><b>${esc(sp.nazev)}</b><small>Kdykoli: útok kouzlem ${esc(sp.zraneni)} (${esc(statName(sp.vlastnost))}). Napiš např. „sešlu ${esc(sp.nazev.toLowerCase())} na…“</small></span><span class="val">∞</span></div>` : ''}
+    ${S.spellPicks && learnableSpells().length ? `<button class="abil" data-act="learnsheet"><span class="ico">📖</span><span class="mid"><b>Naučit se kouzlo (${S.spellPicks}×)</b><small>Vyber si nová kouzla ze seznamu svého povolání.</small></span></button>` : ''}
+    ${concEffect() ? `<div class="dnote" style="margin:-4px 0 8px">🌀 Soustředíš se na: <b>${esc(concEffect().nazev)}</b> – nové kouzlo se soustředěním ho ukončí.</div>` : ''}
     ${!c.obor && c.level >= 3 && OBORY[c.cls] ? `<button class="abil" data-act="subclass"><span class="ico">🎓</span><span class="mid"><b>Zvolit specializaci</b><small>Na 3. úrovni si vybíráš podtřídu.</small></span></button>` : ''}
     ${list.map(a => {
       const locked = a.lvl > c.level, left = abilityLeft(a);
-      return `<button class="abil ${locked ? 'locked' : ''} ${a.reaction ? 'react' : ''}" data-abil="${a.id}" ${locked || !usable || left <= 0 || a.reaction || (inCombat() && ((a.bonus && S.tah?.bonus) || (a.slot && S.tah?.slot))) ? 'disabled' : ''}>
-        <span class="ico">${a.i}</span><span class="mid"><b>${esc(a.nazev)}</b><small>${esc(a.popis)}</small></span>
-        <span class="val">${locked ? '🔒 ' + a.lvl + '. úr.' : a.slot ? '1 slot' : left + '/' + abilityMax(a)}${!locked && a.reaction ? '<br><small>↺ reakce</small>' : !locked && a.bonus ? '<br><small>⚡ bonus</small>' : ''}</span></button>`; }).join('')}
+      return `<button class="abil ${locked ? 'locked' : ''} ${a.reaction ? 'react' : ''}" data-abil="${a.id}" ${locked || !usable || left < (a.slot ? a.cost || 1 : 1) || a.reaction || (inCombat() && ((a.bonus && S.tah?.bonus) || (a.slot && S.tah?.slot))) ? 'disabled' : ''}>
+        <span class="ico">${a.i}</span><span class="mid"><b>${esc(a.nazev)}${a.conc ? ' 🌀' : ''}</b><small>${esc(a.popis)}</small></span>
+        <span class="val">${locked ? '🔒 ' + a.lvl + '. úr.' : a.slot ? ((a.cost || 1) > 1 ? a.cost + ' sloty' : '1 slot') : left + '/' + abilityMax(a)}${!locked && a.reaction ? '<br><small>↺ reakce</small>' : !locked && a.bonus ? '<br><small>⚡ bonus</small>' : ''}</span></button>`; }).join('')}
     ${!usable ? `<div class="dnote">${busy ? 'Pán jeskyně právě píše…' : S.pending ? 'Nejdřív hoď kostkou.' : S.loot ? 'Nejdřív vyřeš nález.' : ''}</div>` : ''}
     <button class="cancel" data-act="closesheet">Zavřít</button>`);
 }
@@ -3807,7 +4814,7 @@ const PLACE_ICONS = [
   [/hrad|pevnost|tvrz|citadel/,'🏰'], [/hostin|krčm|hospod|taverna/,'🍺'], [/chrám|kostel|klášter|svatyn|kaple|oltář/,'⛪'],
   [/jeskyn|důl|doly|sluj|podzem/,'🕳️'], [/ruin|zřícenin|hrob|krypt|hřbitov|mohyl/,'🏚️'], [/bažin|močál|slatin|blat/,'🐸'],
   [/přístav|pobřeží|moře|ostrov|zátok|maják/,'⚓'], [/hor|skal|průsmyk|vrch|štít/,'⛰️'], [/les|hvozd|háj|bor/,'🌲'],
-  [/řek|brod|most|jezer|rybník/,'🌊'], [/měst/,'🏙️'], [/ves|vesnic|osad|dvůr|statek|mlýn|chalup/,'🏡']
+  [/^(?!.*brod).*(řek|most|jezer|rybník)/,'🌊'], [/měst|brod/,'🏘️'], [/ves|vesnic|osad|dvůr|statek|mlýn|chalup/,'🏡']
 ];
 const placeBase = n => String(n || '').split(/\s+[–—-]\s+|,\s*|\s*\(/)[0].trim().slice(0,60);
 const placeKey = n => low(placeBase(n));
@@ -3845,9 +4852,11 @@ function tabMap(){
   const P = S.places || {}, keys = Object.keys(P);
   if(!keys.length) return '<div class="empty">Mapa je zatím prázdná. Místa se na ni zapisují, jak je navštěvuješ.</div>';
   const half = k => Math.max(20, P[k].nazev.length * 3.4 + 6);   /* polovina šířky popisku */
-  const minX = Math.min(...keys.map(k => P[k].x - half(k))) - 10, maxX = Math.max(...keys.map(k => P[k].x + half(k))) + 10;
-  const minY = Math.min(...keys.map(k => P[k].y)) - 40, maxY = Math.max(...keys.map(k => P[k].y)) + 44;
-  const w = Math.max(300, maxX - minX), h = Math.max(260, maxY - minY);
+  let minX = Math.min(...keys.map(k => P[k].x - half(k))) - 10; const maxX = Math.max(...keys.map(k => P[k].x + half(k))) + 10;
+  let minY = Math.min(...keys.map(k => P[k].y)) - 40; const maxY = Math.max(...keys.map(k => P[k].y)) + 44;
+  let w = maxX - minX, h = maxY - minY;
+  if(w < 300){ minX -= (300 - w) / 2; w = 300; }          /* málo míst → doprostřed */
+  if(h < 260){ minY -= (260 - h) / 2; h = 260; }
   const dcol = { nizke:'#3d6a26', stredni:'#9a6a12', vysoke:'#8c2216' };
   const roads = (S.roads || []).filter(r => P[r.a] && P[r.b]).map(r => {
     const a = P[r.a], b = P[r.b], mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
@@ -3857,7 +4866,7 @@ function tabMap(){
     return `<g class="mplace" data-place="${esc(k)}">
       ${here ? `<circle cx="${p.x}" cy="${p.y}" r="17" fill="none" stroke="#8c2216" stroke-width="2.5"><animate attributeName="r" values="15;19;15" dur="2s" repeatCount="indefinite"/></circle>` : ''}
       <circle cx="${p.x}" cy="${p.y}" r="13" fill="#f6ecd2" stroke="#6d573a" stroke-width="1.2"/>
-      <text x="${p.x}" y="${p.y + 5}" text-anchor="middle" font-size="15">${p.ikona}</text>
+      <text x="${p.x}" y="${p.y + 5}" text-anchor="middle" font-size="15">${placeIcon(p.nazev) === '📍' ? p.ikona : placeIcon(p.nazev)}</text>
       <text x="${p.x}" y="${p.y + 28}" class="mname ${here ? 'here' : ''}">${esc(p.nazev)}</text></g>`; }).join('');
   return `<div class="sec"><span>Mapa kraje</span><span>${keys.length} míst</span></div>
     <div class="mapwrap"><svg class="mapsvg" viewBox="${minX} ${minY} ${w} ${h}" style="width:${Math.max(100, w / 3.4)}%;min-width:100%">
@@ -4398,6 +5407,13 @@ function load(id){
 /* Doplnění, které potřebuje funkce hry (volá se po načtení i po založení postavy). */
 function initState(){
   if(!S) return;
+  const c = S.char;
+  S._sumBusy = false; delete c.imgBusy;
+  if(c.hdLeft === undefined) c.hdLeft = c.level;
+  if(!c.feats) c.feats = [];
+  if(S.featPicks === undefined) S.featPicks = featLevels(c.cls).filter(l => l <= c.level).length;
+  if(!c.kouzla){ c.kouzla = []; S.spellPicks = (S.spellPicks || 0) + spellsPerLevel(c.cls) * c.level; }
+  if(c.insp === undefined) c.insp = c.druh === 'clovek';
   if(S.slots === undefined) rechargeAbilities();
   if(!S.weather) rollWeather(true);
   if(S.location && !S.here){
@@ -4481,6 +5497,7 @@ async function geminiImage(prompt){
   const part = (d?.candidates?.[0]?.content?.parts || []).find(p => p.inlineData || p.inline_data);
   const inl = part && (part.inlineData || part.inline_data);
   if(!inl) throw new Error('model nevrátil obrázek');
+  trackGemini(null, true);
   const id = 'img' + Date.now() + Math.floor(Math.random() * 1000);
   const url = `data:${inl.mimeType || inl.mime_type || 'image/png'};base64,${inl.data}`;
   await idbPut(id, url); IMGCACHE[id] = url;
@@ -4537,11 +5554,41 @@ function npcByName(nm){
   const k = Object.keys(S.npcs).find(k => low(k) === t) || Object.keys(S.npcs).find(k => low(k).split(/[\s,(]+/)[0] === t.split(/[\s,(]+/)[0] && t.length > 2);
   return k ? { ...S.npcs[k], key:k } : null;
 }
+/* ---------- Portrét hrdiny (Gemini, kreslí se jen na požádání nebo jednou na začátku) ---------- */
+function heroPicSheet(){
+  const c = S.char, hasKey = !!cleanKey(ls.get('kroniky_key_gemini'));
+  openSheet(`<div class="npcbig">${c.img ? `<img class="heroimg" data-src="${esc(c.img)}" alt="">` : `<div class="heroph">${c.imgBusy ? '🖌️<small>Kreslím…</small>' : species().i + CLASSES[c.cls].ikona}</div>`}</div>
+    <h3 style="text-align:center">${esc(c.name)}</h3>
+    <p class="ddesc" style="text-align:center">${esc(species().nazev)} ${esc(CLASSES[c.cls].nazev.toLowerCase())} ${c.level}. úrovně</p>
+    <div class="flbl">Jak vypadáš</div>
+    <input id="heroVzhled" class="field" maxlength="140" placeholder="např. žena, rudé copy, jizva přes tvář, černý plášť" value="${esc(c.vzhled || '')}">
+    <div class="dnote" style="text-align:left">Podle vzhledu tě popisuje i Pán jeskyně. Na portrétu bude i tvoje zbraň a zbroj.</div>
+    ${hasKey ? `<button class="btn" data-act="herodraw" ${c.imgBusy ? 'disabled' : ''}>${c.img ? '🔄 Nakreslit znovu' : '🎨 Nakreslit portrét'} <small style="opacity:.7">(~0,80 Kč z Gemini)</small></button>`
+      : '<div class="dnote">Na kreslení potřebuješ Gemini klíč (Kronika → AI → Gemini → 🔑). Vzhled se ale uloží i bez něj.</div><button class="btn" data-act="herodraw">💾 Uložit vzhled</button>'}
+    <button class="cancel" data-act="closesheet">Zavřít</button>`);
+  hydrateImages();
+}
+async function drawHero(){
+  const c = S.char, inp = $('#heroVzhled');
+  if(inp){ const v = inp.value.trim().slice(0,140); if(v !== (c.vzhled || '')){ c.vzhled = v; if(v) hist(`Hráčova postava vypadá takto: ${v}.`); } }
+  if(!cleanKey(ls.get('kroniky_key_gemini')) || isDemoNoKey()){ closeSheet(); save(); renderDrawer(); return; }
+  if(c.imgBusy) return;
+  const slot = S.slot, w = equipped('zbran'), z = equipped('zbroj'), st = equipped('stit');
+  c.imgBusy = true; closeSheet(); render(); renderDrawer();
+  try{
+    const img = await geminiImage(`Portrét hlavního hrdiny fantasy hry ve stylu středověkého dřevorytu a iluminovaného rukopisu: sépiový inkoust na zestárlém pergamenu, jemné šrafování, hrdinný postoj, pohled zepředu, hlava a ramena, čtvercový formát, bez jakéhokoli textu, písmen či rámečku. Svět: ${SETTINGS[S.setting].nazev}. Hrdina: ${c.name} – ${species().nazev}${c.linie && species().volba ? ' (' + species().volba.moznosti[c.linie] + ')' : ''}, ${CLASSES[c.cls].nazev}${obor() ? ' – ' + obor().nazev : ''}. ${c.vzhled ? 'Vzhled: ' + c.vzhled + '.' : ''} Výbava: ${[w?.nazev, z?.nazev, st?.nazev].filter(Boolean).join(', ') || 'prosté cestovní oblečení'}.`);
+    if(S && S.slot === slot){ S.char.img = img; addLog({ t:'fx', notes:[{ c:'good', t:'🎨 Portrét hrdiny je hotový' }] }); }
+  }catch(e){ if(S && S.slot === slot) alert('Portrét se nepovedl: ' + e.message); }
+  if(S && S.slot === slot){ delete S.char.imgBusy; save(); render(); if($('#drawer').classList.contains('on')) renderDrawer(); }
+}
 const portraitImg = (n, cls) => n?.img ? `<img class="${cls}" data-src="${esc(n.img)}" alt=""${n.key ? ` data-npcpic="${esc(n.key)}"` : ''}>` : '';
 function npcSheet(k){
   const n = S.npcs[k]; if(!n) return;
   openSheet(`<div class="npcbig">${portraitImg(n, 'npcpic')}</div><h3 style="text-align:center">${esc(k)}</h3><p class="ddesc" style="text-align:center">${esc(n.popis)}</p>
-    <p style="text-align:center;margin-bottom:8px"><span class="tag npc" style="color:${relColor(n.skore ?? 0)}">${esc(relLabel(n.skore ?? 0))}</span></p>
+    <p style="text-align:center;margin-bottom:8px"><span class="tag npc" style="color:${relColor(n.skore ?? 0)}">${esc(relLabel(n.skore ?? 0))}</span>${n.mrtvy ? ' <span class="tag">✝ mrtvý</span>' : ''}</p>
+    ${n.karta?.hlas ? `<p class="ddesc" style="text-align:center">🗣️ <i>${esc(n.karta.hlas)}</i></p>` : ''}
+    ${n.karta && (n.skore ?? 0) >= 40 && (n.karta.chce || n.karta.boji_se) ? `<div class="sec"><span>💬 Svěřil(a) se ti</span></div><div class="imps clues">${n.karta.chce ? `<div>🎯 Chce: ${esc(n.karta.chce)}</div>` : ''}${n.karta.boji_se ? `<div>😨 Bojí se: ${esc(n.karta.boji_se)}</div>` : ''}</div>` : ''}
+    ${n.pamet?.length ? `<div class="sec"><span>🧠 Co spolu máte za sebou</span></div><div class="imps clues">${n.pamet.map(x => `<div>• ${esc(x)}</div>`).join('')}</div>` : ''}
     ${n.img || portraitMode() !== 'off' ? `<button class="btn ghost" data-act="redraw" data-k="${esc(k)}">${n.img ? '🔄 Nakreslit znovu' : '🎨 Nakreslit portrét'}</button>` : ''}<button class="cancel" data-act="closesheet">Zavřít</button>`);
   hydrateImages();
 }
@@ -4561,7 +5608,7 @@ async function illustrate(idx){
 }
 /* Načte obrázky uložené v IndexedDB do vykreslených <img>. */
 function hydrateImages(){
-  document.querySelectorAll('img.illu[data-src], img.npcpic[data-src], img.saypic[data-src]').forEach(async im => {
+  document.querySelectorAll('img.illu[data-src], img.npcpic[data-src], img.saypic[data-src], img.heroimg[data-src]').forEach(async im => {
     if(im.dataset.done) return; im.dataset.done = 1;
     const src = im.dataset.src;
     if(!src.startsWith('idb:')){ if(im.src !== src) im.src = src; return; }
@@ -4690,6 +5737,7 @@ function settingsSheet(){
     ${TOGGLES.map(([k, n, d, def]) => `<button class="tog ${togOn(k, def) ? 'on' : ''}" data-act="toggle" data-k="${k}" data-def="${def ? 1 : 0}"><span class="mid"><b>${n}</b><small>${d}</small></span><span class="sw"></span></button>`).join('')}
     ${S ? `<div class="flbl">⚔️ Obtížnost této hry</div>
     <div class="seg">${Object.entries(DIFFS).map(([k,x]) => `<button class="${diff() === k ? 'on' : ''}" data-act="diff" data-k="${k}">${x.i} ${x.n}</button>`).join('')}</div>
+    ${cinfoOff().length ? `<button class="btn ghost" data-act="cinforeset">💡 Znovu ukazovat vysvětlení bojových akcí (${cinfoOff().length} skryto)</button>` : ''}
     <div class="dnote" style="text-align:left">${esc(D().d)}</div>` : ''}
     <div class="flbl">👤 Portréty postav (Gemini)</div>
     <div class="seg">${[['auto','Automaticky'],['tap','Po klepnutí'],['off','Vypnuto']].map(([k,n]) => `<button class="${portraitMode() === k ? 'on' : ''}" data-act="pmode" data-k="${k}">${n}</button>`).join('')}</div>
@@ -4761,9 +5809,11 @@ function sanitizeFoe(raw, fresh){
 /* Začátek boje: iniciativa d20 + obratnost, překvapení = nevýhoda. */
 function startCombat(prekvapeni){
   const roll2 = dis => dis ? Math.min(d20(), d20()) : d20();
-  const pd = roll2(prekvapeni === 'hrac'), pIni = pd + mod(S.char.stats.obratnost);
+  if(prekvapeni === 'hrac' && featHas('ostrazity')) prekvapeni = null;   /* Ostražitého nikdo nepřekvapí */
+  const pd = roll2(prekvapeni === 'hrac'), pIni = pd + mod(S.char.stats.obratnost) + (featHas('ostrazity') ? profBonus() : 0);
   for(const f of S.foes) if(f.ini === undefined) f.ini = roll2(prekvapeni === 'nepratele') + f.iniB;
   S.cb = { round:1, pIni, first:true, prekvapeni:prekvapeni || null };
+  S.pace ||= {}; S.pace.boje = [...(S.pace.boje || []), S.turn].slice(-10); markEvent();
   S.tah = { bonus:false, slot:false, reakce:false, cleave:false };
   const order = [{ n:'Ty', v:pIni }].concat(S.foes.map(f => ({ n:f.jmeno, v:f.ini }))).sort((a,b) => b.v - a.v);
   addLog({ t:'ini', order, prekvapeni:prekvapeni || null });
@@ -4880,6 +5930,7 @@ function foeAttacks(names){
       dmg = reactReduce(dmg);
       absorbed = Math.min(S.char.temp || 0, dmg); S.char.temp = (S.char.temp || 0) - absorbed;
       S.char.hp = Math.max(0, S.char.hp - (dmg - absorbed));
+      concCheck(dmg);
       wear(equipped('zbroj'), 2); wear(equipped('stit'), 1);
       if(pc().skryty) delete pc().skryty;
     }
@@ -4926,6 +5977,7 @@ function applyMastery(m, hit, foe, dmgDice, sm, d){
   return txt;
 }
 /* Útok navíc (5. úroveň) – druhý plnohodnotný hod. */
+const heavyW = w => !!w && /^(1d1[02]|2d6|2d8)/.test(String(w.zraneni || ''));
 function extraAttack(firstTarget){
   const w = usableWeapon(), a = attackInfo({ utok:'zbran' });
   const foe = S.foes.includes(firstTarget) ? firstTarget : S.foes[0];
@@ -4944,6 +5996,7 @@ function extraAttack(firstTarget){
     dmg = Math.max(1, rollDiceMult(a.dice, crit ? 2 : 1) + sm + a.bonus);
     for(const e of S.effects){ if(e.extraDmg) dmg += rollDice(e.extraDmg, crit).total; if(e.dmgBonus) dmg += e.dmgBonus; }
     if(S.char.level >= 3 && perk('extraHit')) dmg += rollDice(perk('extraHit'), crit).total;
+    if(featHas('mistr_zbrani') && heavyW(w)) dmg += profBonus();
   }
   addLog({ t:'roll', title:`Útok navíc – ${a.nazev} na ${foe.jmeno}${adv ? (adv > 0 ? ' · výhoda' : ' · nevýhoda') : ''}`, d, d2:adv ? (d === d1 ? d2 : d1) : null, parts, total, dc:foe.obrana, dcl:'obrana', ok:hit, res:hit ? `Zásah! · zranění ${dmg}` : 'Minul' });
   sfx(hit ? 'clash' : 'miss');
@@ -4990,7 +6043,28 @@ function escapeAction(){
   if(S.pending) S.pending.escape = true;
   render(); save();
 }
+/* Vysvětlení bojových akcí – ukáže se před provedením, dokud ho hráč u dané akce nevypne. */
+const CINFO = {
+  atk:['⚔️','Útok zbraní','Hodíš d20 + vlastnost zbraně + zdatnost proti obraně nepřítele. Když zasáhneš, hodíš zranění. Padne-li 20, je to kritický zásah – dvojnásobné kostky zranění. Bojová povolání mají od 5. úrovně útok navíc.'],
+  cast:['✨','Útočné kouzlo (trik)','Kouzlo bez slotu – můžeš ho sesílat pořád dokola. Hodíš d20 + kouzelná vlastnost + zdatnost proti obraně nepřítele. Na 5., 11. a 17. úrovni zesílí.'],
+  hide:['🫥','Schovat se','Zkouška Nenápadnosti. Když se povede, jsi skrytý: tvůj příští útok má výhodu a útoky na tebe nevýhodu – dokud nezaútočíš nebo tě nenajdou. Potřebuješ se mít kam schovat.'],
+  stand:['🧍','Vstát','Zvedneš se ze země. Dokud ležíš, útoky zblízka proti tobě mají výhodu a tvoje útoky nevýhodu.'],
+  escape:['🔓','Vyprostit se','Zkouška síly nebo obratnosti proti tomu, kdo tě drží. Když uspěješ, jsi volný a můžeš se zase pohybovat.'],
+  dodge:['🛡️','Úhyb','Celý tah se jen kryješ a uhýbáš. Do tvého dalšího tahu mají všechny útoky proti tobě nevýhodu (nepřítel hází dvakrát a platí horší hod). Tento tah neútočíš.'],
+  dis:['↩️','Odpoutání','Opatrně ustoupíš z boje zblízka. Tento tah tvůj pohyb nevyvolá příležitostné útoky – můžeš od nepřítele odejít, aniž by tě sekl do zad. Tento tah neútočíš. Hodí se k útěku nebo přesunu.'],
+  dash:['🏃','Sprint','Zdvojnásobíš pohyb – doběhneš daleko, utečeš nebo dostihneš prchajícího. Dopíšeš, kam běžíš. Pozor: když utíkáš od nepřítele zblízka bez Odpoutání, může tě seknout (příležitostný útok).'],
+  help:['🤝','Pomoc','Pomůžeš spojenci (třeba družiníkovi) – jeho příští hod má výhodu. Dopíšeš, komu a s čím pomáháš.'],
+  ready:['⏳','Příprava','Připravíš si akci na spouštěč, např. „až vyleze ze dveří, seknu ho“. Když spouštěč nastane, provedeš ji jako reakci. Dopíšeš spouštěč a co uděláš.']
+};
+const cinfoOff = () => { try{ return JSON.parse(ls.get('dz_cinfo') || '[]'); }catch(e){ return []; } };
 function combatChip(k){
+  if(!CINFO[k] || cinfoOff().includes(k)) return doCombatChip(k);
+  const [ic, n, d] = CINFO[k];
+  openSheet(`<h3>${ic} ${esc(n)}</h3><p class="ddesc">${esc(d)}</p>
+    <label class="cinfochk"><input type="checkbox" id="cinfoHide"> Příště už tohle vysvětlení nezobrazovat</label>
+    <button class="btn" data-act="cdo" data-k="${k}">${ic} ${esc(n)} – provést</button><button class="cancel" data-act="closesheet">Zpět</button>`);
+}
+function doCombatChip(k){
   if(k === 'atk') return attackAction('zbran');
   if(k === 'cast') return attackAction('kouzlo');
   if(k === 'hide') return hideAction();
@@ -5024,9 +6098,15 @@ function iniBar(){
    DEMO PÁN JESKYNĚ (bez AI – na test mechaniky)
    ========================================================= */
 async function mockDM(req){
+  const r = await mockDM0(req);
+  if(req.vstup?.vynutit && r) r.zkouska = { vlastnost:req.vstup.vynutit, obtiznost:12, duvod:'Riskantní pokus (demo)' };
+  if(req.vstup?.svet && r && r.efekty) r.efekty.zpravy_ze_sveta = 'Na obzoru stoupá kouř – prý hoří mlýn u brodu. (demo)';
+  return r;
+}
+async function mockDM0(req){
   await new Promise(r => setTimeout(r, 500));
   const v = req.vstup, t = low(v.text), foes = S.foes, alive = foes.map(f => f.jmeno);
-  const base = { zkouska:null, shrnuti:req.potrebaShrnuti ? 'Demo shrnutí příběhu.' : null };
+  const base = { zkouska:null, shrnuti:req.potrebaShrnuti ? 'Demo shrnutí příběhu.' : null, kapitola:req.potrebaShrnuti ? 'Demo kapitola.' : null };
   if(v.typ === 'start' && story()){ const P = story(); return { ...base,
     vypraveni:`${P.uvod}\n\n${P.hacek.replace(/\s*\(.*\)$/, '')} *(demo)*`,
     efekty:{ lokace:P.mista[0][0], novy_ukol:{ nazev:P.nazev, popis:P.kratce }, npc:[{ jmeno:P.npc[0][0], popis:P.npc[0][1], vztah:'neutrální' }] },
@@ -5034,7 +6114,7 @@ async function mockDM(req){
   if(v.typ === 'start') return { ...base,
     vypraveni:`Déšť bubnuje do okenic hostince **U Zlomeného kola**. U krbu sedí jen pár unavených pocestných.\n\nHostinský se k tobě nakloní přes pult: „Hledáš práci, cizinče? Ve sklepě se po nocích něco ozývá. Dám ti deset zlaťáků, když zjistíš co.“`,
     efekty:{ lokace:'Hostinec U Zlomeného kola', novy_ukol:{ nazev:'Tajemství sklepa', popis:'Hostinský Bořek slíbil 10 zlatých, když zjistíš, co se po nocích ozývá ve sklepě.' },
-      npc:[{ jmeno:'Bořek', popis:'Zavalitý hostinský s jizvou přes nos', vztah:'přátelský' }] },
+      npc:[{ jmeno:'Bořek', popis:'Zavalitý hostinský s jizvou přes nos', vztah:'přátelský', karta:{ hlas:'Bručí, každému říká „holenku“', chce:'Klid v hostinci a zaplacené dluhy', boji_se:'Výběrčích daní', tajemstvi:'Ve sklepě schovává pašované víno' } }] },
     navrhy:['Sejdu do sklepa','Koupím si zbroj','Objednám si pivo'] };
   if(v.typ === 'prichod') return { ...base, vypraveni:`Po ${v.hodiny} h cesty dorazíš do **${v.cil}**. *(demo)*`, efekty:{ lokace:v.cil }, navrhy:['Rozhlédnu se'] };
   if(v.typ === 'udalost') return { ...base, vypraveni:`Na cestě do ${v.cil} se něco stane: ${v.popis.slice(0,60)}… *(demo)*`, efekty:{}, navrhy:['Pokračuji do ' + v.cil] };
