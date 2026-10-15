@@ -140,7 +140,7 @@ input,textarea{font:inherit;color:inherit}
 .fxr .ft i{display:block;font-style:normal;font-family:var(--fc);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.2}
 .fxr .fa{color:var(--line2);font-size:20px;flex:none}
 button.fxr:active{background:rgba(201,154,58,.18)}
-.fxr.good{color:var(--green)}.fxr.bad{color:var(--blood)}.fxr.gold{color:var(--gold)}.fxr.quest{color:var(--gold)}.fxr.loc{color:var(--blue)}.fxr.wx{color:var(--blue)}.fxr.npc{color:var(--purple)}.fxr.foe{color:var(--blood)}
+.fxr.good{color:var(--green)}.fxr.bad{color:var(--blood)}.fxr.gold{color:var(--gold)}.fxr.quest{color:var(--gold)}.fxr.loc{color:var(--blue)}.fxr.wx{color:var(--blue)}.fxr.npc{color:var(--purple)}.fxr.fxfoe{color:var(--blood)}
 .tag{font-size:15px;padding:1px 10px;border-radius:3px;border:1px solid var(--line)}
 .tag.good{color:var(--green);border-color:#8fae72}.tag.bad{color:var(--blood);border-color:#c48a77}.tag.gold{color:var(--gold);border-color:#c8a35a}
 .tag.quest{color:var(--gold);border-style:dashed}.tag.loc{color:var(--blue)}.tag.npc{color:var(--purple)}.tag.foe{color:var(--blood)}
@@ -355,8 +355,17 @@ body.w-bourka #atmo::before{background-image:url("data:image/svg+xml,%3Csvg xmln
 body.w-dest:not(.night) #atmo,body.w-bourka:not(.night) #atmo{background:linear-gradient(rgba(40,50,70,.10),rgba(40,50,70,.16))}
 @keyframes rain{to{background-position:-43px 240px,-31px 170px}}
 @keyframes storm{to{background-position:-36px 200px,-43px 240px,-31px 170px}}
-body.w-snih #atmo::before{opacity:1;background-image:radial-gradient(circle,rgba(255,255,255,.95) 0 1.6px,transparent 2.2px),radial-gradient(circle,rgba(255,255,255,.8) 0 1.1px,transparent 1.6px);background-size:70px 70px,43px 43px;animation:snow 9s linear infinite}
-@keyframes snow{to{background-position:30px 700px,-20px 430px}}
+
+/* ======== OHOŘELÝ PERGAMEN – nepravidelné spálené okraje ======== */
+.e.fx,.e.choices,.e.roll,.loot,.e.lvl,.e.ini,.qrow,.imps,.preview,.chron,.povbox,.skills{-webkit-mask-box-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M0.0,2.6 L3.0,2.5 L6.0,2.8 L9.0,2.8 L12.0,3.8 L15.0,3.2 L18.0,4.1 L21.0,2.7 L24.0,4.2 L27.0,4.5 L30.0,3.0 L33.0,1.6 L36.0,3.2 L39.0,3.0 L42.0,3.0 L45.0,3.0 L48.0,2.9 L51.0,4.5 L54.0,5.6 L57.0,5.0 L60.0,7.0 L63.0,6.7 L66.0,6.3 L69.0,7.0 L72.0,7.0 L75.0,7.0 L78.0,5.6 L81.0,6.5 L84.0,5.2 L87.0,6.7 L90.0,5.5 L93.0,7.0 L94.2,0.0 L95.2,3.0 L95.6,6.0 L95.6,9.0 L95.6,12.0 L94.1,15.0 L94.7,18.0 L95.6,21.0 L94.5,24.0 L95.6,27.0 L95.6,30.0 L94.7,33.0 L93.7,36.0 L93.4,39.0 L93.1,42.0 L93.3,45.0 L93.3,48.0 L92.1,51.0 L93.2,54.0 L92.2,57.0 L93.2,60.0 L91.8,63.0 L90.4,66.0 L90.0,69.0 L89.0,72.0 L89.8,75.0 L90.6,78.0 L90.3,81.0 L91.3,84.0 L92.7,87.0 L92.5,90.0 L92.2,93.0 L96.0,91.0 L93.0,89.3 L90.0,89.7 L87.0,90.9 L84.0,89.6 L81.0,89.1 L78.0,89.0 L75.0,89.0 L72.0,89.0 L69.0,90.5 L66.0,90.6 L63.0,91.2 L60.0,92.5 L57.0,91.8 L54.0,91.0 L51.0,90.1 L48.0,90.5 L45.0,89.3 L42.0,89.5 L39.0,89.0 L36.0,89.0 L33.0,89.0 L30.0,90.3 L27.0,89.0 L24.0,89.0 L21.0,89.0 L18.0,89.2 L15.0,90.5 L12.0,92.0 L9.0,92.1 L6.0,91.5 L3.0,91.1 L0.4,96.0 L1.0,93.0 L0.4,90.0 L0.9,87.0 L2.2,84.0 L2.7,81.0 L2.5,78.0 L3.8,75.0 L3.4,72.0 L2.8,69.0 L2.8,66.0 L3.9,63.0 L5.4,60.0 L4.3,57.0 L3.6,54.0 L3.3,51.0 L3.3,48.0 L4.4,45.0 L5.8,42.0 L7.0,39.0 L7.0,36.0 L7.0,33.0 L7.0,30.0 L6.2,27.0 L4.7,24.0 L4.5,21.0 L5.0,18.0 L6.5,15.0 L5.5,12.0 L7.0,9.0 L7.0,6.0 L6.3,3.0Z' fill='white'/%3E%3C/svg%3E") 16 / 16px round;border-color:transparent!important;border-radius:0!important;
+  box-shadow:inset 0 0 0 1px rgba(20,8,2,.55),inset 0 0 10px 3px rgba(18,7,2,.9),inset 0 0 26px 4px rgba(110,45,10,.28)!important}
+.e.roll:nth-child(2n),.qrow:nth-child(2n),.e.fx:nth-child(2n){-webkit-mask-box-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M0.0,2.3 L3.0,1.6 L6.0,1.1 L9.0,2.6 L12.0,2.4 L15.0,1.9 L18.0,1.4 L21.0,1.1 L24.0,1.0 L27.0,0.8 L30.0,1.7 L33.0,0.7 L36.0,0.4 L39.0,0.4 L42.0,1.3 L45.0,2.1 L48.0,2.4 L51.0,2.1 L54.0,3.0 L57.0,4.4 L60.0,3.2 L63.0,5.0 L66.0,4.7 L69.0,4.6 L72.0,5.1 L75.0,6.3 L78.0,7.0 L81.0,7.0 L84.0,6.3 L87.0,4.8 L90.0,6.1 L93.0,5.0 L90.7,0.0 L89.9,3.0 L91.5,6.0 L90.3,9.0 L89.0,12.0 L89.2,15.0 L90.7,18.0 L90.7,21.0 L91.9,24.0 L93.4,27.0 L92.2,30.0 L91.8,33.0 L92.6,36.0 L91.4,39.0 L91.0,42.0 L90.8,45.0 L90.2,48.0 L91.6,51.0 L92.3,54.0 L93.0,57.0 L93.2,60.0 L93.2,63.0 L92.7,66.0 L93.8,69.0 L93.9,72.0 L92.3,75.0 L90.9,78.0 L91.0,81.0 L91.9,84.0 L92.9,87.0 L92.5,90.0 L94.0,93.0 L96.0,94.7 L93.0,94.8 L90.0,95.6 L87.0,95.6 L84.0,95.0 L81.0,94.3 L78.0,95.1 L75.0,95.6 L72.0,94.6 L69.0,95.5 L66.0,95.6 L63.0,95.6 L60.0,95.1 L57.0,94.3 L54.0,95.6 L51.0,94.0 L48.0,93.2 L45.0,94.4 L42.0,93.1 L39.0,93.6 L36.0,92.8 L33.0,94.1 L30.0,93.4 L27.0,92.6 L24.0,92.1 L21.0,90.8 L18.0,90.2 L15.0,89.0 L12.0,89.0 L9.0,89.0 L6.0,89.0 L3.0,89.9 L6.3,96.0 L5.4,93.0 L4.9,90.0 L6.0,87.0 L6.1,84.0 L7.0,81.0 L6.2,78.0 L6.1,75.0 L7.0,72.0 L7.0,69.0 L5.9,66.0 L6.6,63.0 L7.0,60.0 L7.0,57.0 L7.0,54.0 L7.0,51.0 L5.9,48.0 L7.0,45.0 L5.9,42.0 L4.6,39.0 L3.1,36.0 L5.5,33.0 L6.1,30.0 L7.0,27.0 L7.0,24.0 L6.4,21.0 L7.0,18.0 L7.0,15.0 L5.7,12.0 L4.3,9.0 L2.8,6.0 L2.9,3.0Z' fill='white'/%3E%3C/svg%3E") 16 / 16px round}
+.e.choices,.loot,.e.roll:nth-child(3n),.qrow:nth-child(3n){-webkit-mask-box-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M0.0,4.2 L3.0,4.9 L6.0,5.0 L9.0,5.7 L12.0,4.2 L15.0,5.8 L18.0,5.0 L21.0,4.0 L24.0,3.8 L27.0,2.6 L30.0,3.1 L33.0,3.6 L36.0,2.2 L39.0,0.9 L42.0,0.6 L45.0,0.4 L48.0,1.2 L51.0,2.3 L54.0,1.8 L57.0,0.9 L60.0,0.4 L63.0,3.9 L66.0,3.6 L69.0,2.7 L72.0,1.6 L75.0,0.6 L78.0,1.0 L81.0,1.0 L84.0,2.4 L87.0,1.4 L90.0,2.2 L93.0,3.6 L93.8,0.0 L94.6,3.0 L95.6,6.0 L95.2,9.0 L95.6,12.0 L95.4,15.0 L95.6,18.0 L95.6,21.0 L95.6,24.0 L95.6,27.0 L94.9,30.0 L95.3,33.0 L94.7,36.0 L94.3,39.0 L92.9,42.0 L92.6,45.0 L91.6,48.0 L89.6,51.0 L89.8,54.0 L89.0,57.0 L89.0,60.0 L89.0,63.0 L89.0,66.0 L89.0,69.0 L89.0,72.0 L89.6,75.0 L90.9,78.0 L89.0,81.0 L89.0,84.0 L89.0,87.0 L89.0,90.0 L89.1,93.0 L96.0,95.1 L93.0,91.5 L90.0,90.0 L87.0,89.0 L84.0,89.0 L81.0,89.3 L78.0,90.5 L75.0,91.1 L72.0,90.7 L69.0,89.0 L66.0,89.0 L63.0,89.9 L60.0,90.1 L57.0,89.3 L54.0,89.5 L51.0,89.2 L48.0,89.1 L45.0,89.0 L42.0,90.2 L39.0,90.7 L36.0,90.5 L33.0,90.8 L30.0,90.3 L27.0,89.4 L24.0,90.8 L21.0,91.2 L18.0,91.8 L15.0,91.0 L12.0,92.4 L9.0,91.3 L6.0,92.0 L3.0,91.7 L0.4,96.0 L3.1,93.0 L2.4,90.0 L5.2,87.0 L4.5,84.0 L4.4,81.0 L4.1,78.0 L4.1,75.0 L3.8,72.0 L2.5,69.0 L1.1,66.0 L1.5,63.0 L1.4,60.0 L0.9,57.0 L0.4,54.0 L1.9,51.0 L1.9,48.0 L1.4,45.0 L0.9,42.0 L0.5,39.0 L0.4,36.0 L0.4,33.0 L1.7,30.0 L1.8,27.0 L0.6,24.0 L2.8,21.0 L2.4,18.0 L3.6,15.0 L4.0,12.0 L2.7,9.0 L3.1,6.0 L3.6,3.0Z' fill='white'/%3E%3C/svg%3E") 16 / 16px round}
+.e.fx,.e.choices,.e.roll,.loot,.e.lvl,.e.ini{padding-left:14px!important;padding-right:14px!important}
+.e.fx{padding-top:4px;padding-bottom:4px}
+body:not(.dark) .e.fx, body:not(.dark) .e.choices, body:not(.dark) .e.roll, body:not(.dark) .loot, body:not(.dark) .e.lvl, body:not(.dark) .e.ini, body:not(.dark) .qrow, body:not(.dark) .imps, body:not(.dark) .preview, body:not(.dark) .chron, body:not(.dark) .povbox, body:not(.dark) .skills{box-shadow:inset 0 0 0 1px rgba(60,30,10,.35),inset 0 0 9px 2px rgba(70,35,10,.55),inset 0 0 24px 4px rgba(140,80,20,.22)!important}
+#snowc{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 2s}
+body.w-snih #snowc{opacity:1}
 body.w-mlha #atmo::after{opacity:1;background:linear-gradient(90deg,transparent,rgba(235,230,220,.45),transparent 70%),linear-gradient(transparent 30%,rgba(230,225,215,.35));background-size:200% 100%,100% 100%;animation:fog 24s linear infinite}
 @keyframes fog{to{background-position:-200% 0,0 0}}
 #atmo.flash{background:rgba(255,255,240,.55)!important;animation:none!important}
@@ -484,6 +493,7 @@ img.hav{width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align
 .povbox small{display:block;margin-top:5px;color:var(--muted);font-style:italic}
 .aligns{margin-bottom:6px}.aligns button{flex:1 1 30%;font-size:12px;padding:6px 2px}
 .field.pov{margin-top:6px}
+.sstar{margin-right:auto;font-size:13px;opacity:.6;align-self:center}
 .cinfochk{display:flex;align-items:center;gap:10px;margin:12px 2px 4px;font-size:15px;color:var(--muted);cursor:pointer}
 .cinfochk input{width:24px;height:24px;flex:none;appearance:none;-webkit-appearance:none;margin:0;border:2px solid var(--line2);border-radius:4px;background:rgba(0,0,0,.3);display:grid;place-items:center;cursor:pointer}
 .cinfochk input:checked{background:var(--blood);border-color:#5a1209}.cinfochk input:checked::after{content:'✓';color:#fff3dd;font-size:16px;font-weight:700;line-height:1}
@@ -704,7 +714,7 @@ body.dark:not(.night):not(.battle):not(.dying):not(.w-dest):not(.w-bourka) #atmo
 <div class="shade" id="shade"></div>
 <aside class="drawer" id="drawer"></aside>
 <div class="shade" id="sheetShade"></div>
-<div id="atmo"></div>
+<div id="atmo"><canvas id="snowc"></canvas></div>
 <div class="diceov" id="diceOv"><canvas></canvas><div class="dres"></div></div>
 <div id="print"></div>
 <div class="sheet" id="sheet"></div>
@@ -1123,66 +1133,74 @@ const SETTINGS = {
 const STORIES = {
   prisaha:{ svet:'fantasy', ikona:'⚔️', nazev:'Poslední přísaha Ztraceného řádu',
     kratce:'Umírající rytíř ti vtiskne krvavý svitek. Bílý rytíř nesmí procitnout.',
-    uvod:'Hráč se probouzí v polorozpadlé kapli v městečku Kamenný Brod. Umírající rytíř mu vráží krvavý svitek: „Nedovol, aby se pečeť otevřela… Bílý rytíř nesmí procitnout.“',
-    hacek:'Kapli obklíčí Černá stráž a požaduje svitek. Svitek obsahuje mapu k tajnému archivu starého řádu.',
-    zaporak:'Lord Alistair Vale (bývalý paladin). Chce osvobodit 300 let uvězněného archanděla z čistého světla, který hodlá očistit svět spálením všeho živého.',
+    cil:'Zabránit Lordu Valeovi v prolomení Prastaré pečeti a probuzení padlého serafína Zaphiela – nebo najít způsob, jak Zaphiela po probuzení definitivně zničit či znovu uvěznit.',
+    uvod:'Hráč se probouzí v polorozpadlé kapli v Kamenném Brodu. Umírající rytíř Sir Ronald mu vráží krvavý svitek: „Nedovol, aby se pečeť otevřela… Bílý rytíř nesmí procitnout.“',
+    hacek:'Kapli obklíčí oddíl Černé stráže a požaduje svitek. Hráč může bojovat, utéct kryptou nebo stráže přelstít. Svitek obsahuje šifrovanou mapu k tajnému archivu řádu.',
+    zaporak:'Lord Alistair Vale, bývalý paladin. Po ztrátě rodiny zanevřel na svět a chce osvobodit Zaphiela (to je „Bílý rytíř“) – bytost z čistého magického žáru, která spálí zkažený svět do základů.',
     ton:'Heroická dobrodružná fantasy s prvkem záhady a rytířské cti.',
-    npc:[['Bratr Ignác','Starý knihovník a bylinkář. Zná šifru svitku, ale má strach z Černé stráže.'],
-      ['Lady Vane','Šéfka podsvětí. Hráčem manipuluje, ale prodá cenné informace o Valeových plánech.'],
-      ['Roderick Kazi-meč','Žoldnéř pracující pro Valea. Má pochybnosti a lze ho přetáhnout na stranu hráče.']],
-    mista:[['Kamenný Brod','Pohraniční městečko plné napětí mezi strážemi a obyvateli.'],
-      ['Šeptající hvozd','Hustý les se zříceninou vyhořelého opatství.'],
+    npc:[['Sir Ronald','Umírající rytíř Ztraceného řádu z úvodní scény. Stihne říct jen pár slov – jeho pečetní prsten otevírá dveře u věrných řádu.'],
+      ['Bratr Ignác','Starý knihovník a bylinkář. Zná šifru svitku, ale má strach z Černé stráže.'],
+      ['Lady Vane (Lucia)','Šéfka podsvětí z krčmy U Zlomeného meče. Prodá informace či výstroj výměnou za protislužby.'],
+      ['Roderick Kazi-meč','Cynický žoldnéřský kapitán ve službách Valea. Děsí ho Valeovo šílenství – lze ho přetáhnout na stranu hráče.']],
+    mista:[['Kamenný Brod','Pohraniční městečko plné napětí mezi Černou stráží a obyvateli.'],
+      ['Šeptající hvozd','Hustý les se zříceninou vyhořelého opatství sv. Eliáše.'],
       ['Pevnost Kladivo','Bývalé sídlo řádu, dnes obsazené Valeovými žoldnéři.'],
-      ['Zneuctěný oltář','Podzemní svatyně v Hoře přísah, kde leží uvězněná stvůra.']],
-    body:[['Útěk a pátrání','Útěk z kaple a hledání někoho v městečku, kdo přečte svitek.'],
-      ['Cesta přes hvozd','Získání druhého klíče k pečeti z vyhořelého opatství.'],
-      ['Infiltrace pevnosti','Získání podrobností o rituálu a o čase prolomení pečeti.'],
-      ['Finální konfrontace','Souboj s Valeem v okamžiku spuštění rituálu v podzemí.']],
-    konce:[['Vítězství','Vale je poražen, pečeť obnovena a hráč se stává novým strážcem řádu.'],
-      ['Tragické vítězství','Zničení pečeti i tvora vyvolá výbuch – svět je zachráněn, ale městečko zanikne.'],
-      ['Temná volba','Hráč podlehne vidině moci a stane se Valeovým vojevůdcem.']] },
+      ['Zneuctěný oltář','Podzemní svatyně v Hoře přísah, kde je pod pečetí uvězněný Zaphiel.']],
+    body:[['Přežití a šifra','Útěk z kaple a nalezení Ignáce nebo Lady Vane, kteří pomohou rozluštit svitek – ten odhalí dvojici Slunečních klíčů k pečeti.'],
+      ['Šeptající hvozd','Získání Prvního Slunečního klíče z krypty vyhořelého opatství.'],
+      ['Infiltrace pevnosti','Druhý klíč drží sám Vale v Pevnosti Kladivo – plížení, diplomacie s Roderickem nebo útok.'],
+      ['Hora přísah','Souboj s Valeem u Zneuctěného oltáře, když už rituál začal.']],
+    konce:[['Vítězství','Vale je poražen, oba Sluneční klíče obnoví pečeť. Hráč se stává velmistrem nového řádu.'],
+      ['Hořké vítězství','Zničení pečeti i Zaphiela vyvolá magický výbuch – Hora přísah se zhroutí a kraj zůstane navždy poznamenán.'],
+      ['Temná volba','Hráč podlehne Zaphielovu pokušení, zabije Valea a sám se stane náměstkem spáleného světa.']],
+    mechanika:'Sleduj časový tlak rituálu: čím déle hráč otálí, tím blíž je Vale k otevření pečeti (zvěsti, zemětřesení, zářící obloha nad Horou přísah). Reaguj na to, jestli hráč postupuje silou, špionáží nebo diplomacií – každá cesta má jiné spojence i nepřátele.' },
 
   mocal:{ svet:'temna', ikona:'🌿', nazev:'Šepot Černého močálu',
     kratce:'Probouzíš se přivázaný ke kůlu jako oběť pro Matku močálů.',
-    uvod:'Hráč se probouzí připoutaný ke kůlu ve vesnici Sychrav. Vesničané v maskách ho chystají jako oběť pro „Matku močálů“, aby zastavili mor.',
-    hacek:'Vesnici napadnou zdivočelí nakažení. V chaosu se hráč osvobodí. Rychtář mu nabídne dohodu: zastav nákazu a dostaneš protijed na jed, který jsme ti dali do jídla. (Na začátku zapiš hráči stav typu "jed" – pomalý jed rychtáře, trvá do vyléčení, léčba: rychtářův protijed.)',
-    zaporak:'Matka močálů (Morana). Bytost napůl čarodějnice a napůl hnilobný strom. Nákazu šíří jako pomstu za vykácení posvátného háje. Chce kraj proměnit v močál.',
+    cil:'Najít lék na zhoubnou černokrevnou nákazu, odhalit pravdu o původu kletby v močálu a zastavit Matku močálů – nebo s ní uzavřít temný pakt na úkor lidí.',
+    uvod:'Hráč se probouzí připoutaný ke kůlu ve vesnici Sychrav. Vesničané v maskách z ptačích lebek ho chystají jako oběť pro „Matku močálů“, aby zastavili mor.',
+    hacek:'Vesnici napadnou zdivočelí nakažení. V chaosu se hráč osvobodí. Rychtář mu nabídne dohodu: dal mu do jídla pomalý jed a protijed vydá jen za zničení zdroje nákazy. (Na začátku zapiš hráči stav typu "jed" – pomalý jed rychtáře, trvá do vyléčení, léčba: rychtářův protijed.)',
+    zaporak:'Matka močálů (Morana) – prastará čarodějnice a stromová bytost. Nákazu spustila jako pomstu za vykácení posvátného háje a otrávení pramenů olovem a krví. Chce kraj proměnit v močál.',
     ton:'Špinavý horor, nekompromisní boj o přežití a morální dilemata.',
-    npc:[['Rychtář Tobiáš','Chladný vůdce Sychravu. Otrávil hráče, aby si pojistil jeho poslušnost.'],
+    npc:[['Rychtář Tobiáš','Chladný vládce Sychravu. Otrávil hráče, aby si pojistil jeho poslušnost, a tají vlastní vinu na vykácení háje.'],
       ['Malá Ema','Holčička imunní vůči nákaze, která tvrdí, že si s Matkou močálů povídá ve snech.'],
-      ['Vrána (Bezprstý Hans)','Vyvrhel žijící hluboko v močálu. Zná cestu přes tekuté písky.']],
+      ['Vrána (Bezprstý Hans)','Vyvrhel žijící v ruinách kaple uprostřed močálu. Zná cesty přes tekuté písky.']],
     mista:[['Vesnice Sychrav','Pochmurná osada obehnaná kůly, kde vládne strach a paranoia.'],
-      ['Hřbitov utopených','Zrádný močál plný potopených vozů, bludiček a nemrtvých.'],
-      ['Vyhořelý posvátný háj','Místo dávného zločinu, kde nákaza praská přímo ze země.'],
-      ['Srdce hniloby','Spletitá jeskyně pod kořeny nejstaršího dubu, sídlo Morany.']],
-    body:[['Útěk a otrava','Hráč získá svobodu, ale zjistí, že mu zbývá jen pár dní života.'],
-      ['Cesta do močálu','Pátrání po Hansovi a získání pomůcek pro vstup do zamořené zóny.'],
-      ['Odhalení pravdy','V háji hráč zjistí, že nákazu ze chamtivosti spustil sám rychtář.'],
-      ['Rozhodnutí v Srdci hniloby','Finální konfrontace a volba osudu celého kraje.']],
-    konce:[['Krvavé spáleniště','Matka močálů padne, ale močál pohltí Sychrav. Hráč vezme jediný protijed.'],
-      ['Očista a smíření','Obnovení háje a potrestání rychtáře. Matka nákazu stáhne a hráče vyléčí.'],
-      ['Zkáza Sychravu','Hráč se spojí s Matkou močálů a pomůže jí vyhladit vesnici jako pomstu.']] },
+      ['Hřbitov utopených','Zrádný močál plný potopených vozů, bludiček a nemrtvých; v jeho středu Hansova kaple.'],
+      ['Vyhořelý posvátný háj','Místo dávného zločinu, kde nákaza praská přímo ze země a prameny jsou otrávené.'],
+      ['Srdce hniloby','Spletité kořenové jeskyně pod nejstarším dubem, sídlo Morany.']],
+    body:[['Osvobození a otrava','Útěk od kůlu a získání zásoby zpomalujícího lektvaru od rychtáře – jed ale dál působí.'],
+      ['Hřbitov utopených','Nalezení Hansovy kaple a získání ochranných přísad proti jedovatým plynům močálu.'],
+      ['Posvátný háj','Odhalení důkazů o Tobiášově chamtivosti: vykácel háj a otrávil prameny kvůli zisku.'],
+      ['Srdce hniloby','Cesta podzemními kořenovými jeskyněmi k finálnímu rozhodnutí před Moranou.']],
+    konce:[['Krvavé spáleniště','Matka močálů padne a Srdce hniloby shoří. Močál vyschne, ale země zůstane neúrodná a rychtář si udrží moc.'],
+      ['Očista a smíření','Odhalení rychtářova zločinu a očista pramenů. Matka nákazu stáhne a vyléčí hráče i vesnici.'],
+      ['Zkáza Sychravu','Pakt s Matkou močálů – bažina pohltí Sychrav a hráč se stane prvním strážcem močálu.']],
+    mechanika:'Sleduj postup jedu a nákazy v těle hráče: každých pár dní bez protijedu jed zesílí – uprav stav přes "stavy" (stejný název, horší postih, např. {"vse": -1} → {"vse": -2}). Zpomalující lektvar postup oddálí. To vytváří stálý časový tlak – připomínej ho (třes rukou, černé žilky na kůži, kašel s krví).' },
 
   vrakoviste:{ svet:'piratska', ikona:'🧜', nazev:'Kletba Zpívajícího vrakoviště',
     kratce:'Moře tě vyvrhne na Ostrov kostí s runovým medailonem v dlani.',
+    cil:'Získat artefakt Srdce moře z vraku Zlaté karavely, zastavit kletbu kapitána Garry a získat vlastní loď, posádku a pověst největšího kapitána Ostrovů.',
     uvod:'Hráč, vyvržený mořem a promočený na kost, procitá na pláži Ostrova kostí s dřevěným medailonem s runovým rytím v dlani.',
-    hacek:'Umírající kapitán prozradí, že medailon je klíč ke Zlaté karavele – lodi plné pokladů. Druhou polovinu klíče však drží obávaný pirát.',
-    zaporak:'Kapitán Garra („Železný pařát“). Bukanýr, který obětoval posádku Krakenovi pro nesmrtelnost. Chce artefakt Srdce moře k ovládnutí oceánů.',
+    hacek:'Umírající navigátor prozradí, že medailon je polovinou klíče ke Zlaté karavele – lodi plné pokladů. Druhou polovinu má obávaný kapitán Garra.',
+    zaporak:'Kapitán Garra („Železný pařát“) – pirátský lord s paží z živého černého kovu. Obětoval posádku mořskému démonovi pro nesmrtelnost a chce Srdce moře k ovládnutí oceánů.',
     ton:'Dravé, dobrodružné, plné mořské soli, rumu a šermířských soubojů.',
-    npc:[['Krvavá Mary','Majitelka pajzlu na Černém bradle. Ví o mořích všechno, ale zadarmo nepomůže.'],
-      ['Kormidelník Diego','Zkušený kartograf, který dokáže provést loď i nejhorším útesem.'],
-      ['Siréna','Mořská panna v kleci na Garrově lodi. Za svobodu nabízí ochranu před mořskými stvůrami.']],
-    mista:[['Pajzl U Tří kormidel (Černé bradlo)','Divoký přístav plný rvaček, rumu a špehů.'],
+    npc:[['Krvavá Mary','Majitelka pajzlu U Tří kormidel na Černém bradle. Obchoduje s informacemi – zadarmo nic.'],
+      ['Kormidelník Diego','Nevrlý kartograf s mapou útesů v hlavě. Pluje jen s poctivou posádkou.'],
+      ['Siréna','Mořská panna v kleci na Garrově lodi. Za svobodu nabízí ochranu před mořskými stvůrami.'],
+      ['Důstojník Briggs','Garrova brutální pravá ruka. Drží druhou polovinu medailonu.']],
+    mista:[['Pajzl U Tří kormidel (Černé bradlo)','Divoký přístav plný rvaček, rumu, hazardu a špehů.'],
+      ['Smaragdová jeskyně','Úkryt Garrovy prokleté posádky a Briggse.'],
       ['Sargasové pohřebiště','Labyrint uvízlých vraků, chobotnic a mořských zombií.'],
-      ['Smaragdová jeskyně','Úkryt kapitána Garry a jeho prokleté posádky.'],
-      ['Zpívající vrakoviště','Útes se zaklíněnou Zlatou karavelou, kde vítr vytváří děsivou hudbu.']],
-    body:[['Sestavení posádky','Získání lodi v přístavu a najmutí kormidelníka Diega.'],
-      ['Přepad hlídky','Získání druhé části medailonu z rukou Garrova prvního důstojníka.'],
-      ['Plavba pohřebištěm','Souboj s mořskou stvůrou a překonání zrádných proudů.'],
-      ['Finální duel','Námořní souboj u vrakoviště a střetnutí na potápějící se palubě.']],
-    konce:[['Pirátský král','Porážka Garry, získání Srdce moře a vláda nad Ostrovy.'],
-      ['Potopený poklad','Poklad skončí na dně, ale svět je zachráněn před věčnou bouří.'],
-      ['Zrada a útěk','Hráč ukradne část pokladu, zradí posádku a zmizí dřív, než se loď potopí.']] }
+      ['Zpívající vrakoviště','Útes se zaklíněnou Zlatou karavelou, kde vítr hraje děsivou hudbu.']],
+    body:[['Posádka a loď','Získání lodi v hazardu či boji na Černém bradle a najmutí kormidelníka Diega.'],
+      ['Přepad hlídky','Infiltrace Smaragdové jeskyně, porážka Briggse a zisk druhé poloviny medailonu.'],
+      ['Sargasové pohřebiště','Překonání mořských zombií a stvůr v labyrintu uvízlých vraků.'],
+      ['Bitva u vrakoviště','Námořní střetnutí a finální duel s Garrou na potápějící se palubě Zlaté karavely.']],
+    konce:[['Pirátský král','Garra poražen, Srdce moře i poklad získány – hráč vládne Ostrovům.'],
+      ['Svobodné moře','Srdce moře i kletba zničeny. Poklad se potopí, ale moře zůstane svobodné a bezpečné.'],
+      ['Zrada a útěk','Hráč zradí vlastní posádku, unese malou šalupu s truhlou drahokamů a zmizí do neznáma.']],
+    mechanika:'Jakmile má hráč loď, sleduj stav lodi a morálku posádky: poškození v bitvách, nedostatek rumu a jídla, nespravedlivé dělení kořisti nebo zbytečné ztráty snižují morálku (reptání, dezerce, hrozba vzpoury); vítězství, poctivé dělení a odvaha ji zvedají. Zapisuj to jako fakta ("fakt") a nech posádku mluvit.' }
 };
 const story = () => S && S.story ? STORIES[S.story] : null;
 /* Tajný plán pro AI – posílá se s každým tahem, hráč ho nevidí. */
@@ -1193,7 +1211,7 @@ function storyStatic(){
   return `HLAVNÍ PŘÍBĚH – TAJNÝ PLÁN PÁNA JESKYNĚ („${P.nazev}“). Hráči ho NIKDY neprozrazuj ani necituj, odhaluj ho postupně skrze situace, stopy a rozhovory.
 Úvod: ${P.uvod}
 Háček: ${P.hacek}
-Hlavní hrozba: ${P.zaporak}
+${P.cil ? 'Hlavní cíl hráče: ' + P.cil + '\n' : ''}Hlavní hrozba: ${P.zaporak}
 Tón a nálada: ${P.ton}
 Důležité postavy:
 ${L(P.npc)}
@@ -1203,7 +1221,7 @@ Hlavní dějové body:
 ${P.body.map(([n,t],i) => `${i + 1}. ${n}: ${t}`).join('\n')}
 Možné konce:
 ${L(P.konce)}
-Pravidla příběhu: Drž se osnovy, ale nech hráči svobodu volby – konec určují jeho činy. Když hráč odbočí, přizpůsob události tak, aby se hlavní hrozba připomněla sama (útok posluhovačů, zvěsti, zprávy z okolí). Postavy a místa zapisuj přes "npc" a "lokace" až ve chvíli, kdy je hráč opravdu potká. Když hráč dokončí dějový bod, nastav "pribeh_krok" na jeho číslo. Když příběh skončí (jedním z konců nebo jinak podle hráčových činů), nastav "konec_pribehu" na krátký popis konce. Kde v příběhu hráč právě je, najdeš v zadání tahu.`;
+${P.mechanika ? 'Mechanika příběhu: ' + P.mechanika + '\n' : ''}Pravidla příběhu: Informace odhaluj výhradně skrze prostředí, dialogy a následky voleb. Drž se osnovy, ale nech hráči svobodu volby – konec určují jeho činy. Když hráč odbočí, přizpůsob události tak, aby se hlavní hrozba připomněla sama (útok posluhovačů, zvěsti, zprávy z okolí). Postavy a místa zapisuj přes "npc" a "lokace" až ve chvíli, kdy je hráč opravdu potká. Když hráč dokončí dějový bod, nastav "pribeh_krok" na jeho číslo. Když příběh skončí (jedním z konců nebo jinak podle hráčových činů), nastav "konec_pribehu" na krátký popis konce. Kde v příběhu hráč právě je, najdeš v zadání tahu.`;
 }
 /* Proměnná část – posílá se s každým tahem (krátká). */
 function storyDynamic(){
@@ -1258,7 +1276,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '15. 10. 2026 · v33';
+const APP_VERSION = '15. 10. 2026 · v36';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1777,7 +1795,10 @@ const SYSTEM = `Jsi zkušený Pán jeskyně (Dungeon Master) textové hry ve sty
 
 STYL VYPRÁVĚNÍ
 - Vyprávěj ve 2. osobě („vstoupíš“, „vidíš“), živě, s atmosférou zvoleného světa.
-- Délka: 1–3 krátké odstavce, STRIKTNĚ maximálně 110 slov. Hraje se na mobilu, dlouhý text nikdo nečte. Raději méně a živě.
+- Délka: řiď se pokynem DÉLKA v zadání tahu (boj krátce a úderně, nové místo delší a atmosférické). Hraje se na mobilu – raději méně a živě.
+- SMYSLY: v každém popisu zapoj aspoň dva smysly kromě zraku (zvuk, vůně a pach, chlad a teplo, dotek, chuť). Konkrétní detaily místo obecných slov: ne „je tu strašidelně“, ale „ze stropu kape rezavá voda a někde ve tmě cosi škrábe o kámen“.
+- NEOPAKUJ SE: každý tah začni jinak, nepoužívej stále stejné obraty. Fráze, které jsi poslední dobou nadužíval, ti hra pošle v zadání – ty v tomto tahu nepoužij vůbec.
+- „ANO, A…“: když hráč přidá kreativní detail (hodí nepříteli popel do očí, použije lustr, vymyslí lest), ber ho vážně, rozviň ho ve vyprávění a odměň ho – u zkoušky dej "vyhoda": true, nebo ho nech uspět bez hodu, když je nápad opravdu chytrý. Nikdy ho neodbývej obecnou odpovědí.
 - NPC mluví přímou řečí v českých uvozovkách „…“, každé má vlastní hlas, povahu a motivace a pamatuje si, jak se k němu hráč choval.
 - Nikdy nerozhoduj za hráče, co udělá, řekne nebo cítí. Skonči v momentě, kdy je na tahu hráč.
 - Zápletku posouvej dál, přidávej háčky, tajemství a zvraty.
@@ -1899,7 +1920,7 @@ VÝSTUP – vrať POUZE platný JSON:
     "nalezeno": null nebo {"predmety": [PŘEDMĚT], "zlato": 0},
     "nepratele": [{"jmeno": "...", "hp": 8, "obrana": 12, "utok": 3, "zraneni": "1d6", "iniciativa": 1, "zachrana": 1, "dalka": false}],
     "utoci": ["jméno nepřítele"], "konec_boje": false, "prekvapeni": null, "stav_boje": null,
-    "novy_ukol": null nebo {"nazev": "krátký název úkolu", "popis": "co, pro koho a proč"}, "splneny_ukol": null nebo "název úkolu", "lokace": null, "pribeh_krok": null, "konec_pribehu": null, "stopa": null, "fakt": null, "zpravy_ze_sveta": null, "obchod": null, "druzinik": null, "druzinik_odchazi": null,
+    "novy_ukol": null nebo {"nazev": "krátký název úkolu", "popis": "co, pro koho a proč"}, "splneny_ukol": null nebo "název úkolu", "lokace": null, "pribeh_krok": null, "konec_pribehu": null, "stopa": null, "fakt": null, "tajne": null, "tajne_smazat": null, "zpravy_ze_sveta": null, "obchod": null, "druzinik": null, "druzinik_odchazi": null,
     "cas_hodiny": 0.2, "spanek": null, "jidlo": false, "cesta": null,
     "stavy": [{"nazev": "Bahenní horečka", "typ": "nemoc|jed|prokleti|zraneni|pozehnani|jine", "popis": "krátce, jak se projevuje", "postih": {"odolnost": -2} nebo {"vse": -1}, "hp_za_den": -3, "trvani_hodin": 72 nebo null, "lecba": "jak se léčí", "blokuje_leceni": false}],
     "odebrat_stavy": ["přesný název stavu"],
@@ -1913,7 +1934,24 @@ VÝSTUP – vrať POUZE platný JSON:
 - Zkoušku vyžaduj JEN tehdy, když neúspěch má zajímavé následky. Běžné věci (prohlédnout místnost, vylézt na plot, zeptat se ochotného NPC) hráč prostě udělá bez hodu.
 - OBTÍŽNOST zkoušky (D&D 2024): 5 velmi snadná (přelézt zídku), 8 snadná, 10 BĚŽNÁ – nejčastější volba (vypáčit jednoduchý zámek, uklidnit koně, všimnout si stop), 12–13 trochu náročná (přesvědčit podezíravého strážného), 15 TĚŽKÁ – opravdová výzva (přeskočit 3m propast, oklamat zkušeného úředníka), 20 velmi těžká – vzácně, 25+ jen hrdinské kousky. Na nízkých úrovních dávej většinou 8–13; 15 jen výjimečně. Okolnosti obtížnost mění (tma, spěch, odpor NPC zvyšují; příprava, nástroje a pomoc snižují) – ale nedávej pořád stejné číslo. Obtížnost hry (Příběh/Nemilosrdná) do čísla NEZAPOČÍTÁVEJ, to upraví hra sama.
 - Když vyplňuješ "zkouska", nedávej do efektů výsledek té zkoušky. Vyprávění pak skonči POPISEM POKUSU (hráč se natahuje, zkoumá, přesvědčuje…), NIKDY otázkou „co uděláš?“ – teď hráč hází. Na další krok se ptej až po výsledku.
-- "navrhy": vždy 3–4 opravdu odlišné možnosti, které v situaci dávají smysl – např. opatrná, odvážná, mluvení s někým, chytrý nápad nebo využití věci z inventáře. Hráč si vybere jednu, nebo napíše vlastní.`;
+- "navrhy": vždy 3–4 opravdu odlišné možnosti, které v situaci dávají smysl – např. opatrná, odvážná, mluvení s někým, chytrý nápad nebo využití věci z inventáře. Aspoň JEDNA musí stavět na tom, čím je hráčova postava výjimečná: její povolání, dovednost se zdatností, schopnost, kouzlo nebo konkrétní věc z inventáře (zloděj „Prohlédnu zámek paklíči“, klerik „Pomodlím se nad mrtvým“, bard „Zahraju strážím do noty“). Hráč si vybere jednu, nebo napíše vlastní.
+
+FILMOVÝ BOJ
+- Výsledky hodů ti pošle hra. Popisuj je konkrétně a obrazně podle zbraně a nepřítele: kam rána dopadla, jak nepřítel zareagoval, co se rozbilo. Minutí není „minul jsi“ – nepřítel uhnul, čepel sklouzla po štítu, šíp se zabodl do trámu. Kritický zásah je okamžik, na který se vzpomíná.
+- Nepřátelé jednají: řvou, ustupují, volají posily, prosí o milost, když prohrávají.
+- „JAK TO CHCEŠ DOKONČIT?“: když hra v zadání napíše DOKONČENÍ, nepopisuj smrtící ránu sama – vyprávěj jen okamžik, kdy nepřítel vrávorá a je hráči vydán na milost, a zeptej se „Jak to chceš dokončit?“. Do "navrhy" dej 3 různé styly zakončení (krutý, elegantní, milosrdný – např. ušetřit ho a vyslechnout). Hráčův popis pak v dalším tahu vyprávěj přesně a epicky.
+
+TAJNÉ POZNÁMKY PÁNA JESKYNĚ
+- Ve stavu → "tajne_poznamky_PJ" máš svoje soukromé poznámky. Hráč je NEVIDÍ a nikdy mu je přímo neprozrazuj.
+- Zapisuj si do "tajne" (jedna krátká věta) plány a tajemství, která chceš později využít: kdo lže a proč, co se chystá za scénou, skrytá past, kde je ukrytý předmět, kdo hráče sleduje. Pak je postupně NAZNAČUJ (drobné stopy, nervózní NPC, zvěsti) – ať příběh drží pohromadě a zvraty dávají smysl.
+- Když se tajemství odhalí nebo plán proběhne, smaž ho přes "tajne_smazat": ["přesný text poznámky"].
+
+UKÁZKA DOBRÉHO A ŠPATNÉHO TAHU
+Hráč: „Vejdu do krčmy a rozhlédnu se.“
+ŠPATNĚ (obecné, bez smyslů, nic se neděje, rozhoduje za hráče): „Vejdeš do krčmy. Je tu hodně lidí a atmosféra je napjatá. Rozhodneš se jít k barovému pultu.“
+DOBŘE: „Dveře **U Utopence** za tebou zaskřípou a do tváře tě udeří teplo, kouř z jalovcového dřeva a kyselý pach rozlitého piva. Hovor u nejbližšího stolu utichne – tři drvoši si tě měří od hlavy k patě a jeden pomalu zakryje dlaní svůj měšec. U krbu sedí shrbená stařena a plete. Mezi vlnou má zapletené pírko černé vrány – stejné, jaké jsi ráno našel na mrtvém poslovi.
+**Hostinský:** „Pokoje nemám. Jestli chceš pít, plať předem.““
+(konkrétní místo a lidé, tři smysly, háček navázaný na příběh, NPC s vlastním hlasem, skončí v momentě, kdy je na tahu hráč)`;
 
 function publicState(){
   npcCtx = null;
@@ -1962,6 +2000,7 @@ function publicState(){
     stopy:(S.clues || []).slice(-20).map(c => c.t),
     kronika_faktu:(S.fakta || []).map(f => `[den ${f.d}] ${f.t}`),
     kapitoly:(S.kapitoly || []).map((k,i) => `${i + 1}. ${k.t}`),
+    tajne_poznamky_PJ:(S.pjNotes || []).map(n => n.t),
     co_se_deje_ve_svete:(S.world?.news || []).slice(-8).map(x => `[den ${x.d}] ${x.t}`),
     obchod:shopHere() ? `hráč má otevřený obchod u ${S.shop.obchodnik} (${S.shop.zbozi.length} věcí)` : null,
     hlavni_pribeh:story() ? `${story().nazev} – hotovo ${S.storyStep || 0} z ${story().body.length} dějových bodů${S.storyEnd ? ', příběh skončil: ' + S.storyEnd : ''}` : 'volné dobrodružství'
@@ -1983,6 +2022,10 @@ function buildPrompt(b){
   if(v.svet) task += `\nSVĚT SE HÝBE (mimo scénu): Zatímco hráč jednal, hlavní hrozba – nebo nepřátelé a nevyřešené problémy z úkolů, stop a kroniky faktů – udělala další krok (už ${v.svet}. od začátku hry). Rozhodni co: útok posluhovačů, vypálená ves, únos, nová dohoda padoucha, zvěsti, pomsta někoho, koho hráč naštval… Ať to navazuje na to, co už se stalo. Hráč se o tom dozví PŘIROZENĚ ve scéně (zvěst, posel, kouř na obzoru, uprchlíci, vývěska, přímo to uvidí) – nebo jen náznakem, když se to teď nehodí. Zapiš to do "zpravy_ze_sveta" jednou větou.`;
   if(v.vynutit) task += `\nFÉROVOST – POVINNÝ HOD: Tuhle akci NESMÍŠ vyhodnotit bez hodu. Vyplň "zkouska" (nejspíš vlastnost ${statName(v.vynutit)}, nebo vhodnější podle situace) s obtížností podle situace a vyprávění skonči popisem pokusu. Výsledek nepopisuj.`;
   else if(v.riziko) task += `\nFÉROVOST: Hra vyhodnotila tuto akci jako RISKANTNÍ (nejspíš zkouška: ${statName(v.riziko)}). Když může selhat a selhání by mělo následky, vyžádej "zkouska" a výsledek nepopisuj. Bez hodu jen když je to teď opravdu triviální nebo nemožné – pak vyplň "bez_hodu".`;
+  if(v.dokonceni) task += `\nDOKONČENÍ: Hráč zasadil smrtelnou ránu nepříteli „${v.dokonceni}“. Nepopisuj jeho smrt – vyprávěj jen, jak vrávorá, padá na kolena a je hráči vydán na milost, a zeptej se „Jak to chceš dokončit?“. Do "navrhy" dej 3 různé styly zakončení.`;
+  if(v.typ === 'akce' && S.finisher) task += `\nHráč popisuje, jak DOKONČIL nepřítele „${S.finisher}“. Vyprávěj to přesně podle něj – epicky a filmově. (Když se rozhodl nepřítele ušetřit, nepřítel přežije zajatý nebo prosí o milost – můžeš ho vrátit přes "npc".)`;
+  task += '\n' + lengthHint(v);
+  { const rh = repetitionHint(); if(rh) task += '\nSTYL: ' + rh; }
   if(v.rezie) task += `\nREŽIE TEMPA (jen pro tebe, hráči to neříkej): ${v.rezie}`;
   if(v.oprava) task += `\nOPRAVA OD HRÁČE (mimo příběh): Tvoje předchozí verze odpovědi na tuto situaci byla podle hráče špatně: „${String(v.oprava).slice(0,400)}“. Napiš odpověď znovu a oprav to. Pokud jde o trvalou věc o světě, zapiš ji i do "fakt".`;
   const who = k => k === 'hrac' ? 'HRÁČ' : k === 'pj' ? 'PÁN JESKYNĚ' : 'HRA';
@@ -2133,12 +2176,24 @@ async function readClaudeStream(r, usage){
 /* Claude (Anthropic) – volání přímo z prohlížeče. Dlouhé pokyny Pána jeskyně se ukládají do mezipaměti
    (prompt caching), takže se při dalších tazích platí jen zlomek ceny. */
 const CLAUDE_MODELS = [['claude-haiku-5-5', 'Haiku 5.5', 'nejlevnější a nejrychlejší']];
-const claudeModel = () => CLAUDE_MODELS[0][0];   /* jen Haiku – levné a rychlé */
+const claudeModel = () => CLAUDE_MODELS[0][0];   /* běžné tahy: Haiku – levné a rychlé */
+const SONNET = 'claude-sonnet-5-5';
+const sonnetOn = () => ls.get('dz_sonnet') !== 'off' && ls.get('dz_sonnet_bad') !== '1';
+/* Důležité chvíle: začátek příběhu, souboj se silným nepřítelem, dokončení nepřítele, poslední dějový bod, konec příběhu */
+function importantMoment(req){
+  const v = req.vstup || {};
+  if(req.prompt || !S) return false;
+  if(v.typ === 'start' || v.dokonceni || v.finisherFor) return true;
+  if(S.foes.some(isBossFoe) && (v.typ === 'hod' || v.typ === 'akce')) return true;
+  if(story() && !S.storyEnd && (S.storyStep || 0) >= story().body.length - 1) return true;
+  return false;
+}
 const claudeName = id => (CLAUDE_MODELS.find(m => m[0] === id) || [id, id])[1];
 const claudeKey = () => cleanKey(ls.get('kroniky_key_claude'));
 async function fetchClaude(req){
   const stream = !req.prompt && !req.noStream && ls.get('dz_stream') !== 'off' && typeof TextDecoder !== 'undefined';
-  const body = { model:claudeModel(), max_tokens:4000, temperature:0.9, ...(stream ? { stream:true } : {}),
+  const big = sonnetOn() && importantMoment(req);
+  const body = { model:big ? SONNET : claudeModel(), max_tokens:4000, temperature:0.9, ...(stream ? { stream:true } : {}),
     system:req.sys ? [{ type:'text', text:req.sys, cache_control:{ type:'ephemeral' } }]
       : [{ type:'text', text:SYSTEM }, ...(storyStatic() ? [{ type:'text', text:storyStatic() }] : [])].map((b, i, a) => i === a.length - 1 ? { ...b, cache_control:{ type:'ephemeral' } } : b),
     messages:[{ role:'user', content:req.prompt || buildPrompt(req) }] };
@@ -2151,12 +2206,18 @@ async function fetchClaude(req){
     if(/temperature/i.test(d0?.error?.message || '')){ delete body.temperature; r = await send(body); }
     else if(!r.clone) throw claudeErr(r, d0);
   }
-  if(!r.ok){ const d = await r.json().catch(() => null); throw claudeErr(r, d); }
+  if(!r.ok){
+    const d = await r.json().catch(() => null);
+    /* Sonnet na účtu není → příště jen Haiku, teď to zkusit znovu */
+    if(big && (r.status === 404 || r.status === 400 && /model/i.test(d?.error?.message || ''))){ ls.set('dz_sonnet_bad', '1'); return fetchClaude(req); }
+    throw claudeErr(r, d);
+  }
   const usage = {};
   let text;
   if(stream && r.body && r.body.getReader) text = await readClaudeStream(r, usage);
   else { const d = await r.json().catch(() => null); Object.assign(usage, d?.usage || {}); text = (d?.content || []).filter(c => c.type === 'text').map(c => c.text).join(''); }
-  trackClaude(usage);
+  trackClaude(usage, big);
+  if(big && S) S.lastSonnet = S.turn + 1;
   let out = parseJSON(text);
   if(!req.prompt && !out?.vypraveni) out = salvageDM(text);       /* Claudovo vyprávění nezahazovat kvůli chybě ve formátu */
   return req.prompt ? checkRaw(out) : checkOut(out);
@@ -2550,15 +2611,15 @@ function fixSheet(){
 /* =========================================================
    ÚTRATA (odhad) – ceny za milion tokenů v USD; přepočet na Kč přibližný
    ========================================================= */
-const PRICE = { claude:{ in:1, out:5, cw:1.25, cr:0.1 }, gemini:{ in:0.10, out:0.40 }, img:0.039 };
+const PRICE = { claude:{ in:1, out:5, cw:1.25, cr:0.1 }, sonnet:{ in:3, out:15, cw:3.75, cr:0.3 }, gemini:{ in:0.10, out:0.40 }, img:0.039 };
 const USD_CZK = 23;
 const spend = () => { try{ return JSON.parse(ls.get('dz_spend')) || {}; }catch(e){ return {}; } };
 const setSpend = o => ls.set('dz_spend', JSON.stringify(o));
 const budget = (k, def) => { const v = parseFloat(String(ls.get(k)).replace(',', '.')); return v > 0 ? v : def; };
-function trackClaude(u){
+function trackClaude(u, big){
   if(!u) return;
-  const P = PRICE.claude, usd = ((u.input_tokens || 0) * P.in + (u.output_tokens || 0) * P.out + (u.cache_creation_input_tokens || 0) * P.cw + (u.cache_read_input_tokens || 0) * P.cr) / 1e6;
-  const o = spend(); o.claude = (o.claude || 0) + usd; o.cCalls = (o.cCalls || 0) + 1; o.since ||= new Date().toISOString().slice(0,10);
+  const P = big ? PRICE.sonnet : PRICE.claude, usd = ((u.input_tokens || 0) * P.in + (u.output_tokens || 0) * P.out + (u.cache_creation_input_tokens || 0) * P.cw + (u.cache_read_input_tokens || 0) * P.cr) / 1e6;
+  const o = spend(); o.claude = (o.claude || 0) + usd; o.cCalls = (o.cCalls || 0) + 1; if(big) o.sCalls = (o.sCalls || 0) + 1; o.since ||= new Date().toISOString().slice(0,10);
   const B = budget('dz_budget_claude', 20);
   if(!o.warned && o.claude >= B * 0.8 && S){ o.warned = 1; addLog({ t:'sys', text:`💸 Na Claudovi už jsi utratil asi ${o.claude.toFixed(2)} $ z ${B} $ (odhad). Zbývá zhruba ${Math.max(0, B - o.claude).toFixed(2)} $.` }); }
   setSpend(o);
@@ -2601,7 +2662,7 @@ function spendHTML(){
   const c = o.claude || 0, gk = (o.gemini || 0) * USD_CZK;
   const bar = (v, max) => `<div class="bar"><div style="width:${Math.min(100, 100 * v / max)}%;background:${v / max >= 0.8 ? 'var(--blood)' : 'var(--gold)'}"></div></div>`;
   return `<div class="sec"><span>💸 Útrata za AI (odhad)</span><span>${o.since ? 'od ' + o.since.split('-').reverse().join('. ') : ''}</span></div>
-    <div class="qrow"><b>🧠 Claude: ${c.toFixed(2)} $ z ${Bc} $</b><small>${o.cCalls || 0} odpovědí · ≈ ${(c * USD_CZK).toFixed(0)} Kč · zbývá asi ${Math.max(0, Bc - c).toFixed(2)} $</small>${bar(c, Bc)}</div>
+    <div class="qrow"><b>🧠 Claude: ${c.toFixed(2)} $ z ${Bc} $</b><small>${o.cCalls || 0} odpovědí${o.sCalls ? ` (${o.sCalls}× Sonnet)` : ''} · ≈ ${(c * USD_CZK).toFixed(0)} Kč · zbývá asi ${Math.max(0, Bc - c).toFixed(2)} $</small>${bar(c, Bc)}</div>
     ${o.mCalls ? `<div class="qrow"><b>🌬️ Mistral: zdarma</b><small>${o.mCalls} odpovědí · ${Math.round((o.mTok || 0) / 1000)} tis. tokenů z měsíční miliardy</small></div>` : ''}
     <div class="qrow"><b>✨ Gemini: ${gk.toFixed(1)} Kč z ${Bg} Kč</b><small>${o.imgs || 0} obrázků · ${o.gCalls || 0} textových odpovědí</small>${bar(gk, Bg)}</div>
     <div class="dnote" style="text-align:left">Počítá se z tokenů, které hlásí AI – skutečnou útratu uvidíš na platform.claude.com a v Google AI Studiu. Počítá jen toto zařízení.</div>
@@ -3072,6 +3133,47 @@ function npcContext(){
 }
 const npcRelevant = k => (npcCtx || (npcCtx = npcContext())).has(k);
 
+/* =========================================================
+   VYPRAVĚČ: tajné poznámky PJ, hlídání opakování, délka podle situace, dokončení nepřítele
+   ========================================================= */
+function pjNotesApply(add, del){
+  S.pjNotes ||= [];
+  for(const d of arr(del)){ const t = low(String(d || '')).trim(); if(t) S.pjNotes = S.pjNotes.filter(n => low(n.t) !== t && !low(n.t).startsWith(t.slice(0, 40))); }
+  for(const a of arr(add).slice(0, 2)){
+    const t = String(typeof a === 'object' && a ? (a.text || '') : a || '').trim().slice(0, 200);
+    if(t && t !== '[object Object]' && !S.pjNotes.some(n => low(n.t) === low(t))) S.pjNotes.push({ t, d:S.time.day });
+  }
+  if(S.pjNotes.length > 25) S.pjNotes = S.pjNotes.slice(-25);
+}
+/* Fráze, které se v posledních vyprávěních opakují (3 slova a víc ve 3+ odpovědích) + začátky odpovědí. */
+const CLICHES = ['vzduch je těžký','srdce ti buší','ticho prořízne','mráz ti přeběhne po zádech','nikdo si tě nevšímá','napětí by se dalo krájet','zdá se, že','jako by','v dálce se ozve','tvé smysly'];
+function repetitionHint(){
+  const dms = (S.log || []).filter(e => e.t === 'dm').slice(-8).map(e => low(String(e.text).replace(/\*\*/g, '')));
+  if(dms.length < 3) return '';
+  const cnt = {};
+  for(const t of dms){
+    const w = t.replace(/[„“"()…:;!?.,–-]/g, ' ').split(/\s+/).filter(Boolean), seen = new Set();
+    for(let i = 0; i + 3 <= w.length; i++){
+      const g = w.slice(i, i + 3).join(' ');
+      if(g.length < 12 || seen.has(g)) continue; seen.add(g); cnt[g] = (cnt[g] || 0) + 1;
+    }
+  }
+  const rep = Object.entries(cnt).filter(([, n]) => n >= 3).sort((a,b) => b[1] - a[1]).map(([g]) => g).slice(0, 8);
+  const cl = CLICHES.filter(c => dms.some(t => t.includes(c)));
+  const starts = [...new Set(dms.slice(-4).map(t => t.split(/\s+/).slice(0, 2).join(' ')))];
+  const out = [...new Set([...rep, ...cl])];
+  return (out.length ? `NEPOUŽÍVEJ tyto opakované fráze: ${out.map(x => '„' + x + '“').join(', ')}. ` : '') + `Nezačínej slovy: ${starts.map(x => '„' + x + '…“').join(', ')}.`;
+}
+function lengthHint(v){
+  if(S.finisher && v.typ === 'akce') return 'DÉLKA: 70–120 slov – epické zakončení boje podle hráčova popisu.';
+  if(S.foes.length || v.typ === 'hod' && S.cb) return 'DÉLKA: boj – 1–3 krátké úderné věty, nejvýš 55 slov.';
+  if(v.typ === 'start' || v.typ === 'prichod') return 'DÉLKA: nové místo – 90–140 slov, atmosféra, smysly a háček.';
+  if(v.typ === 'udalost' || v.typ === 'noc' || v.typ === 'bezvedomi') return 'DÉLKA: 60–110 slov.';
+  return 'DÉLKA: 40–90 slov (rozhovor a běžná akce).';
+}
+/* Smrtelná rána silnému nepříteli → hráč sám popíše, jak to dokončí. */
+const isBossFoe = f => !!f && (f.boss || f.maxHp >= Math.max(18, 5 * S.char.level));
+
 /* KRONIKA FAKTŮ – trvalá paměť příběhu, nikdy se nemaže */
 function addFacts(raw){
   const list = arr(raw).map(x => String(typeof x === 'object' && x ? (x.text || x.fakt || '') : x).trim().slice(0, 200)).filter(x => x && x !== '[object Object]');
@@ -3268,6 +3370,8 @@ async function callDM(input){
   busy = true; S.lastFailed = null; render();
   takeSnap(input);
   lastStreamed = false; liveText = '';
+  if(input && input.typ === 'hod' && S.finisherNext){ input = { ...input, dokonceni:S.finisherNext }; S.finisher = S.finisherNext; S.finisherNext = null; }
+  else if(input && input.typ === 'akce' && S.finisher) input = { ...input, finisherFor:S.finisher };
   if(input && input.typ === 'akce' && !input.vyrus && !input.oprava){ const v = rollIntruder(); if(v) input = { ...input, vyrus:v }; }
   if(input && ['akce','prichod'].includes(input.typ) && !input.oprava){
     const w = worldTick(); if(w) input = { ...input, svet:w };
@@ -3289,6 +3393,7 @@ async function callDM(input){
       if(res2 && res2.vypraveni) res = res2;
     }
     applyResponse(res, needSummary, input);
+    if(input && input.finisherFor) S.finisher = null;
     if(bgSum && !S._sumBusy) bgSummary();
   }catch(e){
     S.lastFailed = input;
@@ -3316,7 +3421,7 @@ function applyResponse(res, needSummary, input = {}){
   const text = String(res.vypraveni || '').trim() || '…';
   S.turn++;
   S.history.push({ kdo:'pj', text });
-  addLog({ t:'dm', text, anim:twOn() && !lastStreamed || undefined, turn:S.turn });
+  addLog({ t:'dm', text, anim:twOn() && !lastStreamed || undefined, turn:S.turn, ...(S.lastSonnet === S.turn ? { star:1 } : {}) });
   book('pj', text);
   if(ttsOn()) speak(text);
   scrollNew = true;
@@ -3562,6 +3667,7 @@ function applyEffects(ef){
   notes.push(...addClues(ef.stopa || ef.stopy));
   notes.push(...addFacts(ef.fakt || ef.fakta));
   notes.push(...addWorldNews(ef.zpravy_ze_sveta));
+  pjNotesApply(ef.tajne, ef.tajne_smazat);
   if(ef.inspirace){ const n = grantInspiration(typeof ef.inspirace === 'string' ? ef.inspirace : ''); if(n){ notes.push(n); hist('Hráč získal hrdinskou inspiraci.'); } }
   if(notes.some(n => ['clue','fact','quest','world','loc'].includes(n.c) || n.c === 'npc' && /^👤 /.test(n.t) && !/[💚💔]/.test(n.t))) markEvent();
   if(ef.obchod){ const n = openShopFrom(ef.obchod); if(n) notes.push(n); }
@@ -3740,6 +3846,7 @@ async function roll(){
     popis += ` Zranění ${dmg} (${a.dice}${mult > 1 ? ' ×' + mult + ' kostky' : ''} ${fmtMod(sm)}${a.bonus ? ' ' + fmtMod(a.bonus) : ''}${extra ? ' +' + extra + ' ' + na.nazev : ''}${fxn.length ? ' ' + fxn.join(' ') : ''}).`;
     sfx('clash');
     popis += foe ? ' ' + hurtFoe(foe, dmg) : ' (cíl není ve hře sledovaný – vyprávěj účinek přiměřeně.)';
+    if(foe && foe.hp === 0 && isBossFoe(foe) && ls.get('dz_finisher') !== 'off'){ S.finisherNext = foe.jmeno; }
   }else if(p.utok) sfx('miss');
   if(p.utok){ delete pc().skryty; if(foe) delete foe.vex; }
   if(p.utok === 'zbran'){
@@ -4047,7 +4154,7 @@ function fxHTML(notes){
     else if(n.c === 'shop') lbl = 'Obchod – klepni a nakupuj';
     else if(n.c === 'npc' && ic === '🤝') lbl = 'Družiník';
     const go = k && lbl && k[1] ? k[1] : '';
-    return `<${go ? `button data-goto="${go}"` : 'div'} class="fxr ${n.c}"><span class="fi">${esc(ic)}</span><span class="ft">${lbl ? `<i>${lbl}</i>` : ''}${esc(txt)}</span>${go ? '<span class="fa">›</span>' : ''}</${go ? 'button' : 'div'}>`;
+    return `<${go ? `button data-goto="${go}"` : 'div'} class="fxr ${n.c === 'foe' ? 'fxfoe' : n.c}"><span class="fi">${esc(ic)}</span><span class="ft">${lbl ? `<i>${lbl}</i>` : ''}${esc(txt)}</span>${go ? '<span class="fa">›</span>' : ''}</${go ? 'button' : 'div'}>`;
   };
   return `<div class="e fx">${list.map(row).join('')}</div>`;
 }
@@ -4056,7 +4163,7 @@ function logHTML(e, i){
   switch(e.t){
     case 'dm': return `<div class="e dm${e.anim ? ' tw' : ''}" data-li="${i}">${dmRich(e.text)}
       ${e.img ? `<img class="illu" data-src="${esc(e.img)}" alt="Ilustrace scény">` : ''}
-      <div class="dmtools">${e.imgBusy ? '<span class="busyimg">🖌️ Kreslím ilustraci…</span>' : imgMode() !== 'off' && !e.img ? `<button data-illu="${i}">🖼️ Ilustrace</button>` : ''}${window.speechSynthesis ? `<button data-say="${i}">🔊 Přečíst</button>` : ''}${canRegen(e) ? `<button data-regen="1" title="Napsat odpověď znovu">🔄 Jinak</button><button data-fix="1" title="Opravit Pána jeskyně">✋ Nesedí</button>` : ''}</div></div>`;
+      <div class="dmtools">${e.star ? '<span class="sstar" title="Tuto chvíli vyprávěl Claude Sonnet">⭐</span>' : ''}${e.imgBusy ? '<span class="busyimg">🖌️ Kreslím ilustraci…</span>' : imgMode() !== 'off' && !e.img ? `<button data-illu="${i}">🖼️ Ilustrace</button>` : ''}${window.speechSynthesis ? `<button data-say="${i}">🔊 Přečíst</button>` : ''}${canRegen(e) ? `<button data-regen="1" title="Napsat odpověď znovu">🔄 Jinak</button><button data-fix="1" title="Opravit Pána jeskyně">✋ Nesedí</button>` : ''}</div></div>`;
     case 'lvl': return `<div class="e lvl"><b>${esc(e.title || '⭐ ' + e.level + '. úroveň!')}</b><small>${e.gain ? '+' + e.gain + ' max. HP' : ''}${e.nove.length ? (e.gain ? ' · nové: ' : '') + esc(e.nove.join(', ')) : ''}${e.title ? '' : ' · zvyš si vlastnost'}</small></div>`;
     case 'player': return `<div class="e player"><span>${esc(e.text)}</span></div>`;
     case 'fx': return fxHTML(e.notes);
@@ -4397,7 +4504,9 @@ function tabChron(){
     <button class="btn ghost" data-act="settings">⚙️ Zvuky, efekty a ilustrace</button>
     <button class="btn ghost" data-act="cloud">☁️ Cloud (více zařízení)${cloudCfg()?.on ? ' – zapnuto' : ''}</button>
     <button class="btn ghost" data-act="switchAI">🔄 AI: ${PROVIDERS[getProvider()].nazev}${isDemo() ? ' (demo)' : ''} – přepnout</button>
-    ${getProvider() === 'gemini' ? `<button class="btn ghost" data-act="model">🤖 Model: ${esc(ls.get('kroniky_gemini_model') || 'vybere se automaticky')}</button>` : getProvider() === 'claude' ? `<div class="dnote">🤖 Model: Claude ${esc(claudeName(claudeModel()))} (nejlevnější)</div>` : ''}
+    ${getProvider() === 'gemini' ? `<button class="btn ghost" data-act="model">🤖 Model: ${esc(ls.get('kroniky_gemini_model') || 'vybere se automaticky')}</button>` : getProvider() === 'claude' ? `<div class="dnote">🤖 Model: Claude ${esc(claudeName(claudeModel()))} (nejlevnější)</div>
+      <button class="tog ${sonnetOn() ? 'on' : ''}" data-act="sonnet"><span class="mid"><b>⭐ Důležité chvíle píše Sonnet</b><small>${ls.get('dz_sonnet_bad') === '1' ? 'Sonnet není na tvém účtu dostupný – běží jen Haiku.' : 'Začátek příběhu, souboj s bossem, dokončení nepřítele a finále napíše chytřejší (asi 3× dražší) Claude Sonnet. Ostatní tahy dál levný Haiku.'}</small></span><span class="sw"></span></button>
+      <button class="tog ${ls.get('dz_finisher') !== 'off' ? 'on' : ''}" data-act="finisher"><span class="mid"><b>⚔️ „Jak to chceš dokončit?“</b><small>Po smrtelné ráně silnému nepříteli si závěrečný úder popíšeš sám.</small></span><span class="sw"></span></button>` : ''}
     <button class="btn ghost" data-act="key">🔑 Změnit API klíč</button>
     ${mistralHTML()}
     ${spendHTML()}
@@ -4541,6 +4650,8 @@ function journalAction(b){
   else if(a === 'mbg'){ ls.set('dz_bg_mistral', ls.get('dz_bg_mistral') === 'off' ? '' : 'off'); renderDrawer(); }
   else if(a === 'mproxy') proxySheet();
   else if(a === 'mproxysave'){ const u = ($('#proxyUrl')?.value || '').trim(); ls.set('dz_mistral_proxy', /^https:\/\//.test(u) ? u : ''); ls.set('dz_mistral_ok', ''); closeSheet(); renderDrawer(); if(u) testMistral(); }
+  else if(a === 'sonnet'){ if(ls.get('dz_sonnet_bad') === '1'){ ls.set('dz_sonnet_bad', ''); ls.set('dz_sonnet', ''); } else ls.set('dz_sonnet', sonnetOn() ? 'off' : ''); renderDrawer(); }
+  else if(a === 'finisher'){ ls.set('dz_finisher', ls.get('dz_finisher') === 'off' ? '' : 'off'); renderDrawer(); }
   else if(a === 'srestsheet') shortRestSheet();
   else if(a === 'srest') shortRest(b.dataset.k);
   else if(a === 'povaha') povahaSheet();
@@ -5360,6 +5471,48 @@ function updateAtmo(){
   b.classList.toggle('battle', !!(game && S.foes.length));
   b.classList.toggle('dying', !!(game && S.dying));
   for(const k of ['dest','bourka','snih','mlha']) b.classList.toggle('w-' + k, !!(out && w === k));
+  snowFx(b.classList.contains('w-snih'));
+}
+/* Sníh: skutečné vločky – různě velké, rozmazané, padají různou rychlostí a poletují ve větru. */
+let snowOn = false, snowRaf = 0, flakes = [], flakeImg = null;
+function snowFx(on){
+  if(on === snowOn) return;
+  snowOn = on;
+  if(!on){ cancelAnimationFrame(snowRaf); setTimeout(() => { if(!snowOn){ const c = $('#snowc'); c?.getContext?.('2d')?.clearRect(0, 0, c.width, c.height); } }, 2100); return; }
+  const c = $('#snowc'); if(!c || !c.getContext) return;
+  const ctx = c.getContext('2d'); if(!ctx) return;
+  if(!flakeImg){
+    flakeImg = document.createElement('canvas'); flakeImg.width = flakeImg.height = 32;
+    const g = flakeImg.getContext('2d'), gr = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+    gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.35, 'rgba(250,252,255,.85)'); gr.addColorStop(.7, 'rgba(210,222,240,.25)'); gr.addColorStop(1, 'rgba(200,215,235,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, 32, 32);
+  }
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const size = () => { c.width = innerWidth * dpr; c.height = innerHeight * dpr; };
+  size(); addEventListener('resize', size);
+  const count = Math.min(140, Math.round(innerWidth * innerHeight / 7000));
+  const mk = top => { const z = Math.random(); return { x:Math.random() * innerWidth, y:top ? -10 - Math.random() * 40 : Math.random() * innerHeight,
+    r:1 + z * z * 3.4, vy:.35 + z * 1.15, ph:Math.random() * 6.28, sw:.4 + Math.random() * 1.2, sp:.008 + Math.random() * .02, a:.35 + z * .6 }; };
+  flakes = Array.from({ length:count }, () => mk(false));
+  let wind = 0, last = performance.now();
+  const step = now => {
+    if(!snowOn) return;
+    snowRaf = requestAnimationFrame(step);
+    if(document.hidden) return;
+    const dt = Math.min(3, (now - last) / 16.7); last = now;
+    wind += (Math.sin(now / 4000) * .5 - wind) * .01;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for(const f of flakes){
+      f.ph += f.sp * dt;
+      f.y += f.vy * dt; f.x += (Math.sin(f.ph) * f.sw * .5 + wind) * dt;
+      if(f.y > innerHeight + 10 || f.x < -20 || f.x > innerWidth + 20) Object.assign(f, mk(true));
+      ctx.globalAlpha = f.a;
+      const d = f.r * 4.2; ctx.drawImage(flakeImg, f.x - d / 2, f.y - d / 2, d, d);
+    }
+    ctx.globalAlpha = 1;
+  };
+  snowRaf = requestAnimationFrame(step);
 }
 
 /* =========================================================
