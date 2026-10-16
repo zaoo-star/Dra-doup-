@@ -494,6 +494,33 @@ img.hav{width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align
 .aligns{margin-bottom:6px}.aligns button{flex:1 1 30%;font-size:12px;padding:6px 2px}
 .field.pov{margin-top:6px}
 .sstar{margin-right:auto;font-size:13px;opacity:.6;align-self:center}
+.rw1{font-size:16px}.rwd{font-size:14px;color:var(--muted);font-style:italic;margin-top:1px}
+.pts{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:6px 0 4px}
+.pts.sm{justify-content:flex-start;gap:3px;margin:3px 0 1px}
+.pt{display:inline-flex;flex-direction:column;align-items:center;line-height:1.1;padding:3px 8px;border-radius:7px;font-size:14px;border:1px solid var(--line2);background:rgba(0,0,0,.18);color:var(--ink,var(--text))}
+.pt b{font-size:15px}.pt i{font-style:normal;font-size:10.5px;color:var(--muted);margin-top:1px}
+.pts.sm .pt{flex-direction:row;gap:3px;padding:1px 6px;font-size:12px;border-radius:10px}.pts.sm .pt b{font-size:12px}
+.pt.pl{border-color:rgba(110,170,80,.55);background:rgba(90,150,60,.12)}.pt.pl b{color:#8fc46e}
+.pt.mi{border-color:rgba(200,70,50,.6);background:rgba(170,40,25,.14)}.pt.mi b{color:#e0563f}
+.pt.d20{justify-content:center;font-weight:600}
+.rwsum{font-size:14px;margin-top:2px}.rwsum .cg{color:#8fc46e}.rwsum .cm{color:var(--gold)}.rwsum .cb{color:#e0563f}
+.advr{margin:6px auto 0;max-width:460px;padding:5px 10px;border-radius:7px;font-size:13.5px;line-height:1.35;text-align:left}
+.advr.up{background:rgba(90,150,60,.14);border:1px solid rgba(110,170,80,.5)}.advr.dn{background:rgba(170,40,25,.16);border:1px solid rgba(200,70,50,.55)}
+.advr.nul{background:rgba(200,160,60,.1);border:1px solid rgba(200,160,60,.45)}.advr span{font-size:12.5px;color:var(--muted)}
+.advr.sm{margin:4px 0 0;padding:2px 7px;font-size:12px}
+.e.roll .advr b,.e.roll .pt b{font-family:inherit;font-size:inherit;text-transform:none;letter-spacing:0;display:inline;margin:0;line-height:inherit}
+.e.roll .pt b{font-weight:700}
+body:not(.dark) .pt.pl b,body:not(.dark) .rwsum .cg{color:#3d6a26}
+.rib.fold{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.rib .chev{margin-left:8px;font-size:13px;opacity:.8;transition:transform .2s;transform:rotate(-90deg);flex:none}
+.rib.open .chev{transform:none}
+.rib.fold small{margin-left:auto}.rib.fold:not(:has(small)) .chev{margin-left:auto}
+.rib.fold + .ribbody{display:none}.rib.fold.open + .ribbody{display:block}
+.rib.fold:not(.open){margin-bottom:4px;opacity:.92}
+.foldbar{display:flex;justify-content:flex-end;gap:6px;margin:-4px 0 4px}
+.foldbar button{font-size:12px;color:var(--muted);border:1px dotted var(--line2);border-radius:4px;padding:2px 8px}
+.cond.diffc{color:var(--gold);border-color:rgba(200,160,60,.5)}
+.diffbadge{display:inline-block;margin-top:4px!important;font-size:14px;font-family:var(--fb);font-style:normal;color:var(--gold);border:1px solid rgba(200,160,60,.45);border-radius:10px;padding:0 7px;margin-left:2px;line-height:1.4}
 .cinfochk{display:flex;align-items:center;gap:10px;margin:12px 2px 4px;font-size:15px;color:var(--muted);cursor:pointer}
 .cinfochk input{width:24px;height:24px;flex:none;appearance:none;-webkit-appearance:none;margin:0;border:2px solid var(--line2);border-radius:4px;background:rgba(0,0,0,.3);display:grid;place-items:center;cursor:pointer}
 .cinfochk input:checked{background:var(--blood);border-color:#5a1209}.cinfochk input:checked::after{content:'✓';color:#fff3dd;font-size:16px;font-weight:700;line-height:1}
@@ -1276,7 +1303,7 @@ const getProvider = () => PROVIDERS[ls.get('kroniky_provider')] ? ls.get('kronik
 const setProvider = p => ls.set('kroniky_provider', p);
 /* Klíč očistíme od neviditelných znaků, mezer, uvozovek a zalomení, které se lepí při kopírování na mobilu. */
 const cleanKey = k => String(k || '').replace(/[\s\u00a0\u200b-\u200f\u2028\u2029\ufeff"'`„“”‚‘’]/g, '').replace(/^(key=|x-goog-api-key:|Bearer)/i, '');
-const APP_VERSION = '15. 10. 2026 · v36';
+const APP_VERSION = '16. 10. 2026 · v38';
 const getKey = () => cleanKey(ls.get('kroniky_key_' + getProvider()));
 const setKey = k => ls.set('kroniky_key_' + getProvider(), cleanKey(k));
 const keyHint = k => k ? `${k.slice(0, 4)}…${k.slice(-3)}, ${k.length} znaků` : 'žádný';
@@ -1913,7 +1940,7 @@ Typické zbraně: dýka 1d4, krátký meč 1d6, sekera/meč 1d8, obouruční 1d1
 VÝSTUP – vrať POUZE platný JSON:
 {
   "vypraveni": "text pro hráče, **tučně** důležité názvy",
-  "zkouska": null nebo {"vlastnost": "obratnost", "dovednost": "nenapadnost", "zachrana": false, "nastroj": null, "obtiznost": 5–30 podle tabulky OBTÍŽNOST, "duvod": "krátce", "utok": null, "cil": null, "proti": null, "vyhoda": false, "nevyhoda": false},
+  "zkouska": null nebo {"vlastnost": "obratnost", "dovednost": "nenapadnost", "zachrana": false, "nastroj": null, "obtiznost": 5–30 podle tabulky OBTÍŽNOST, "duvod": "krátce", "utok": null, "cil": null, "proti": null, "vyhoda": false, "nevyhoda": false, "proc": "u výhody/nevýhody krátce proč (např. „stráž je opilá“)"},
   "efekty": {
     "hp": 0, "zlato": 0,
     "pridat": [PŘEDMĚT], "odebrat": ["přesný název z inventáře"],
@@ -2841,7 +2868,7 @@ function grantInspiration(why){
 function useInspiration(){
   const c = S.char, p = S.pending;
   if(!c.insp || !p || rolling || busy) return;
-  p.adv = Math.min(1, (p.adv || 0) + 1); p.insp = true; c.insp = false;
+  p.advUp = [...(p.advUp || []), '🌟 hrdinská inspirace']; p.adv = (p.advDown || []).length ? 0 : 1; p.insp = true; c.insp = false;
   addLog({ t:'fx', notes:[{ c:'gold', t:'🌟 Inspirace použita – hod s výhodou' }] });
   render(); save();
 }
@@ -3173,6 +3200,96 @@ function lengthHint(v){
 }
 /* Smrtelná rána silnému nepříteli → hráč sám popíše, jak to dokončí. */
 const isBossFoe = f => !!f && (f.boss || f.maxHp >= Math.max(18, 5 * S.char.level));
+
+/* =========================================================
+   PŘEHLED HODU – bonusy a postihy jako štítky, šance na úspěch, důvody výhody a nevýhody
+   ========================================================= */
+const PROTI_N = { jed:'jedu', strach:'strachu', kouzlo:'kouzlům', spanek:'uspání', nemoc:'nemoci', kletba:'kletbám' };
+const WX_WHY = { 'mlha':'mlha – na cíl skoro nevidíš', 'bouře':'bouře – vítr a liják ruší střelbu i oheň', 'déšť':'déšť – ohnivé kouzlo syčí a hasne' };
+function advExtra(p){
+  const x = [];
+  if(S.nextRoll?.adv && (S.nextRoll.stat === '*' || S.nextRoll.stat === p.vlastnost)) x.push(S.nextRoll.nazev);
+  if(p.utok && S.nextAttack?.adv && (p.utok === 'zbran' || S.nextAttack.spell)) x.push(S.nextAttack.nazev);
+  return x;
+}
+function partInfo(x, i){
+  const n = x.n;
+  if(i === 0 && STAT_KEYS.some(k => statName(k) === n)) return [n, 'vlastnost'];
+  let m;
+  if((m = n.match(/^Zdatnost · (.+)$/))) return ['zdatnost', 'umíš ' + m[1]];
+  if((m = n.match(/^Odbornost · (.+)$/))) return ['odbornost', 'mistr v ' + m[1] + ' – dvojitá zdatnost'];
+  if(n === 'Zdatnost (záchrana)') return ['zdatnost', 'záchranný hod tvého povolání'];
+  if(n === 'Zdatnost') return ['zdatnost', 'výcvik se zbraní'];
+  if(n === 'Všeuměl') return ['všeuměl', 'bard – polovina zdatnosti'];
+  if(/^Zdatnost · /.test(n)) return ['zdatnost', n.slice(11)];
+  if(n === 'opotřebení') return ['opotřebení', 'poškozená zbraň'];
+  if(n === 'Aura ochrany') return [n, 'paladin'];
+  const c = allConds().find(z => z.nazev === n);
+  if(c) return [n, c.typ === 'pozehnani' ? 'požehnání' : c.derived ? 'únava / hlad' : c.combat ? 'stav v boji' : 'stav – ' + (EFF_TYPES[c.typ]?.n || '').toLowerCase()];
+  if(S.inv?.some(it => it.nazev === n)) return [n, 'výbava'];
+  if(obor() && n === obor().nazev) return [n, 'specializace'];
+  return [n, 'schopnost'];
+}
+function partsHTML(parts, small){
+  return `<div class="pts${small ? ' sm' : ''}">${parts.map((x, i) => { const [n, sub] = partInfo(x, i);
+    return `<span class="pt ${x.v > 0 ? 'pl' : x.v < 0 ? 'mi' : 'nu'}"><b>${fmtMod(x.v)}</b> ${esc(n)}${small ? '' : `<i>${esc(sub)}</i>`}</span>`; }).join('')}</div>`;
+}
+function advLine(up, down, small){
+  up = up || []; down = down || [];
+  if(!up.length && !down.length) return '';
+  const L = a => a.map(esc).join(' · ');
+  if(up.length && down.length) return `<div class="advr nul${small ? ' sm' : ''}">⚖️ <b>Výhoda i nevýhoda se ruší</b> – házíš jednou.<br><span>⬆️ ${L(up)}</span><br><span>⬇️ ${L(down)}</span></div>`;
+  if(up.length) return `<div class="advr up${small ? ' sm' : ''}">⬆️ <b>Výhoda</b>${small ? '' : ' – házíš dvěma kostkami, platí ta lepší'}: ${L(up)}</div>`;
+  return `<div class="advr dn${small ? ' sm' : ''}">⬇️ <b>Nevýhoda</b>${small ? '' : ' – házíš dvěma kostkami, platí ta horší'}: ${L(down)}</div>`;
+}
+function rollChance(bonus, dc, adv){
+  const need = Math.min(20, Math.max(2, dc - bonus));
+  const pr = Math.min(.95, Math.max(.05, (21 - need) / 20));
+  const q = adv > 0 ? 1 - (1 - pr) ** 2 : adv < 0 ? pr * pr : pr;
+  return { need, pct:Math.round(q * 100) };
+}
+function rollWhyHTML(p, parts, foe){
+  const c = S.char, bonus = parts.reduce((a, x) => a + x.v, 0);
+  const up = [...(p.advUp || []), ...advExtra(p)], down = p.advDown || [];
+  const adv = up.length && down.length ? 0 : up.length ? 1 : down.length ? -1 : 0;
+  const ch = rollChance(bonus, p.obtiznost, adv);
+  const head = p.utok
+    ? `⚔️ <b>${esc(attackInfo(p).nazev)}</b>${foe ? ' → <b>' + esc(foe.jmeno) + '</b>' : ''}`
+    : `${p.zachrana ? '🛡️ Záchranný hod' : '🎯 Zkouška'}: <b>${esc(p.dovednost ? skillName(p.dovednost) : statName(p.vlastnost))}</b>${p.dovednost ? ' <i>(' + esc(statName(p.vlastnost)) + ')</i>' : ''}`;
+  const target = p.utok ? `obrana <b>${p.obtiznost}</b>` : `obtížnost <b>${p.obtiznost}</b> <i class="dcl">${dcLabel(p.obtiznost)}</i>`;
+  return `<div class="rw1">${head}</div>${p.duvod ? `<div class="rwd">${esc(p.duvod)}</div>` : ''}
+    <div class="pts"><span class="pt d20">🎲 d20</span>${partsHTML(parts).slice(17, -6)}</div>
+    <div class="rwsum">celkem <b>${fmtMod(bonus)}</b> · ${target} → potřebuješ hodit <b>${ch.need}+</b> · šance <b class="${ch.pct >= 60 ? 'cg' : ch.pct >= 35 ? 'cm' : 'cb'}">${ch.pct} %</b></div>
+    ${advLine(up, down)}
+    ${p.utok ? `<div class="rwd">💥 zranění ${esc(attackInfo(p).dice)} ${fmtMod(mod(c.stats[p.vlastnost]) + attackInfo(p).bonus)}</div>` : ''}`;
+}
+
+/* =========================================================
+   DENÍK: sbalitelné sekce (klepnutím na nadpis), stav se pamatuje
+   ========================================================= */
+const FOLD_OPEN = ['Atributy','Životy','Obrana'];          /* co je otevřené napoprvé */
+const foldState = () => { try{ return JSON.parse(ls.get('dz_fold') || '{}'); }catch(e){ return {}; } };
+function foldSheet(root){
+  if(!root) return;
+  const st = foldState();
+  for(const rib of [...root.querySelectorAll('.rib')]){
+    if(rib.classList.contains('fold')) continue;
+    const k = rib.querySelector('b')?.textContent.trim() || '';
+    const body = document.createElement('div'); body.className = 'ribbody';
+    let n = rib.nextElementSibling;
+    while(n && !n.classList.contains('rib')){ const nx = n.nextElementSibling; body.appendChild(n); n = nx; }
+    rib.after(body);
+    rib.classList.add('fold'); rib.dataset.act = 'fold'; rib.dataset.k = k;
+    const open = st[k] ?? FOLD_OPEN.includes(k);
+    rib.classList.toggle('open', !!open);
+    if(!rib.querySelector('.chev')) rib.insertAdjacentHTML('beforeend', '<span class="chev">▾</span>');
+  }
+  if(!root.querySelector('.foldbar')) root.insertAdjacentHTML('afterbegin', `<div class="foldbar"><button data-act="foldall" data-k="open">▾ Rozbalit vše</button><button data-act="foldall" data-k="close">▸ Sbalit vše</button></div>`);
+}
+function toggleFold(rib){
+  const st = foldState(), k = rib.dataset.k, open = !rib.classList.contains('open');
+  rib.classList.toggle('open', open); st[k] = open; ls.set('dz_fold', JSON.stringify(st));
+}
 
 /* KRONIKA FAKTŮ – trvalá paměť příběhu, nikdy se nemaže */
 function addFacts(raw){
@@ -3737,19 +3854,25 @@ function setPending(z){
   if(!STAT_KEYS.includes(vl)) return;
   /* výhoda / nevýhoda: od AI, podle druhu, připravené schopnosti */
   const proti = ['jed','strach','kouzlo','spanek','nemoc','kletba'].includes(z.proti) ? z.proti : null;
-  let adv = (z.vyhoda ? 1 : 0) - (z.nevyhoda ? 1 : 0);
-  if(hasAdvAgainst(proti, vl)) adv++;
-  if(pc().vystrasen) adv--;
+  /* výhoda a nevýhoda s důvody (D&D: jakákoli výhoda + jakákoli nevýhoda se ruší) */
+  const up = [], down = [], why = String(z.proc || z.duvod_vyhody || '').trim().slice(0, 70);
+  if(z.vyhoda) up.push(why || 'situace ti nahrává');
+  if(z.nevyhoda) down.push(why || 'situace je proti tobě');
+  if(hasAdvAgainst(proti, vl)) up.push(`${(species().adv || []).includes(proti) ? species().nazev : obor()?.nazev || 'tvůj původ'} – odolnost proti ${PROTI_N[proti] || proti}`);
+  if(pc().vystrasen) down.push('jsi vystrašený');
   if(utok){
-    if(pc().srazen) adv--;
-    if(pc().skryty) adv++;
-    if(foe){ const rg = utok === 'kouzlo' || isRanged(usableWeapon()); if(foe.st?.srazen) adv += rg ? -1 : 1; if(foe.vex) adv++; }
+    if(pc().srazen) down.push('ležíš na zemi');
+    if(pc().skryty) up.push('jsi skrytý – nepřítel tě nevidí');
+    if(foe){ const rg = utok === 'kouzlo' || isRanged(usableWeapon());
+      if(foe.st?.srazen) (rg ? down : up).push(rg ? `${foe.jmeno} leží – na dálku se trefuješ hůř` : `${foe.jmeno} leží na zemi`);
+      if(foe.vex) up.push(`${foe.jmeno} je rozhozený tvým předchozím útokem`); }
   }
   let [wa, ww] = weatherAdv(vl, utok, utok === 'zbran' && isRanged(usableWeapon()));
   if(wa < 0 && utok === 'zbran' && isRanged(usableWeapon()) && featHas('ostrostrelec')) wa = 0;
-  adv += wa;
-  if(nas && dov && profSkills().has(dov)) adv++;          /* zdatnost v dovednosti i nástroji = výhoda */
-  S.pending = { vlastnost:vl, obtiznost:dc, duvod:String(z.duvod || '').slice(0,100), utok, cilId:foe ? foe.id : null, proti, adv:clamp(adv, -1, 1), wxWhy:wa ? ww : '', dovednost:dov, zachrana:zach, nastroj:nas };
+  if(wa > 0) up.push(WX_WHY[ww] || ww); if(wa < 0) down.push(WX_WHY[ww] || ww);
+  if(nas && dov && profSkills().has(dov)) up.push(`umíš dovednost i nástroj (${nas})`);
+  let adv = up.length && down.length ? 0 : up.length ? 1 : down.length ? -1 : 0;
+  S.pending = { vlastnost:vl, obtiznost:dc, duvod:String(z.duvod || '').slice(0,100), utok, cilId:foe ? foe.id : null, proti, adv, advUp:up, advDown:down, wxWhy:wa ? ww : '', dovednost:dov, zachrana:zach, nastroj:nas };
 }
 
 function rollParts(p){
@@ -3766,9 +3889,9 @@ function rollParts(p){
     const pb = profBonus();
     if(p.zachrana){ if(saveProf(p.vlastnost)) parts.push({ n:'Zdatnost (záchrana)', v:pb }); }
     else if(p.dovednost){
-      if(expertSkills().has(p.dovednost)) parts.push({ n:'Odbornost · ' + skillName(p.dovednost), v:2 * pb });
-      else if(profSkills().has(p.dovednost)) parts.push({ n:'Zdatnost · ' + skillName(p.dovednost), v:pb });
-      else if(jackOfAll()) parts.push({ n:'Všeuměl', v:Math.floor(pb / 2) });
+      if(expertSkills().has(p.dovednost)) parts.push({ n:'Odbornost · ' + skillName(p.dovednost), v:2 * pb, k:'prof' });
+      else if(profSkills().has(p.dovednost)) parts.push({ n:'Zdatnost · ' + skillName(p.dovednost), v:pb, k:'prof' });
+      else if(jackOfAll()) parts.push({ n:'Všeuměl', v:Math.floor(pb / 2), k:'prof' });
     }
     if(p.nastroj && !(p.dovednost && profSkills().has(p.dovednost))) parts.push({ n:'Zdatnost · ' + p.nastroj, v:pb });
     const sb = S.char.level >= 3 ? perk('statBonus') : null;
@@ -3803,8 +3926,8 @@ async function roll(){
   btn.disabled = true;
   /* výhoda = dvě d20, platí lepší; nevýhoda = horší */
   let adv = p.adv || 0;
-  if(S.nextRoll?.adv && (S.nextRoll.stat === '*' || S.nextRoll.stat === p.vlastnost)) adv = Math.min(1, adv + 1);
-  if(p.utok && S.nextAttack?.adv && (p.utok === 'zbran' || S.nextAttack.spell)) adv = Math.min(1, adv + 1);
+  const advX = advExtra(p), upAll = [...(p.advUp || []), ...advX], downAll = p.advDown || [];
+  adv = upAll.length && downAll.length ? 0 : upAll.length ? 1 : downAll.length ? -1 : 0;
   const d1 = d20(), d2 = adv ? d20() : null;
   let d = adv > 0 ? Math.max(d1, d2) : adv < 0 ? Math.min(d1, d2) : d1, luck = '';
   if(d === 1 && species().lucky){ d = d20(); luck = ' (štěstí půlčíka: jednička přehozena)'; }
@@ -3826,7 +3949,7 @@ async function roll(){
   let popis = `${title}: d20=${d}${advTxt}${luck} ${partsText(parts)} = ${total} proti ${p.utok && foe ? 'obraně ' + foe.jmeno : 'obtížnosti'} ${p.obtiznost} → ${ok ? (p.utok ? 'ZÁSAH' : 'ÚSPĚCH') : (p.utok ? 'MINUL' : 'NEÚSPĚCH')}${krit ? ' (' + krit + ')' : ''}.`;
   let res = ok ? (p.utok ? 'Zásah!' : 'Úspěch') : (p.utok ? 'Minul' : 'Neúspěch');
   if(krit) res += ' – ' + krit;
-  const rollEntry = { t:'roll', title:title + (adv ? (adv > 0 ? ' · výhoda' : ' · nevýhoda') + (adv < 0 && p.wxWhy ? ' (' + p.wxWhy + ')' : '') : '') + (luck ? ' · štěstí' : ''), d, d2:adv ? (d === d1 ? d2 : d1) : null, parts, total, dc:p.obtiznost, dcl:p.utok && foe ? 'obrana' : 'obtížnost', ok, res };
+  const rollEntry = { t:'roll', advUp:upAll, advDown:downAll, title:title + (adv ? (adv > 0 ? ' · výhoda' : ' · nevýhoda') + (adv < 0 && p.wxWhy ? ' (' + p.wxWhy + ')' : '') : '') + (luck ? ' · štěstí' : ''), d, d2:adv ? (d === d1 ? d2 : d1) : null, parts, total, dc:p.obtiznost, dcl:p.utok && foe ? 'obrana' : 'obtížnost', ok, res };
   addLog(rollEntry);
   if(ok && p.utok){
     const crit = d >= critMin;
@@ -4167,7 +4290,7 @@ function logHTML(e, i){
     case 'lvl': return `<div class="e lvl"><b>${esc(e.title || '⭐ ' + e.level + '. úroveň!')}</b><small>${e.gain ? '+' + e.gain + ' max. HP' : ''}${e.nove.length ? (e.gain ? ' · nové: ' : '') + esc(e.nove.join(', ')) : ''}${e.title ? '' : ' · zvyš si vlastnost'}</small></div>`;
     case 'player': return `<div class="e player"><span>${esc(e.text)}</span></div>`;
     case 'fx': return fxHTML(e.notes);
-    case 'roll': return `<div class="e roll ${e.ok ? 'good' : 'bad'} ${e.enemy ? 'enemy' : ''}"><div class="die">${e.d}</div><div><b>${esc(e.res)}</b><small>${esc(e.title)}</small><small>d20 ${e.d}${e.d2 ? ` <s>${e.d2}</s>` : ''} ${esc(partsText(e.parts))} = <b>${e.total}</b> vs. ${esc(e.dcl)} ${e.dc}</small></div></div>`;
+    case 'roll': return `<div class="e roll ${e.ok ? 'good' : 'bad'} ${e.enemy ? 'enemy' : ''}"><div class="die">${e.d}</div><div><b>${esc(e.res)}</b><small>${esc(e.title)}</small>${e.parts?.length ? partsHTML(e.parts, true) : ''}<small>🎲 ${e.d}${e.d2 ? ` <s>${e.d2}</s>` : ''}${e.parts?.length ? ` ${fmtMod(e.parts.reduce((a,x) => a + x.v, 0))}` : ''} = <b>${e.total}</b> vs. ${esc(e.dcl)} ${e.dc}</small>${advLine(e.advUp, e.advDown, true)}</div></div>`;
     case 'loot': return lootHTML(e);
     case 'sys': return `<div class="e sys">${esc(e.text)}</div>`;
     case 'ini': return `<div class="e ini"><b>⚔️ Boj! Iniciativa${e.prekvapeni === 'hrac' ? ' (byl jsi zaskočen)' : e.prekvapeni === 'nepratele' ? ' (zaskočil jsi je)' : ''}</b><span>${e.order.map((o,i) => `${i + 1}. ${esc(o.n)} <i>${o.v}</i>`).join(' · ')}</span></div>`;
@@ -4192,7 +4315,7 @@ function render(){
   $('#hMeta').textContent = `${dp[1]} Den ${S.time.day} · ${clockStr()} · ${season()[2]} ${wxIcon()} ${wx().n}${S.char.cls === 'druid' && S.wxNext && S.wxNext !== S.weather?.typ ? ' → ' + WEATHER[S.wxNext].i : ''}` + (S.travel ? ` · 🧭 na cestě do ${S.travel.cil}` : S.location ? ` · 📍 ${S.location}` : '');
   $('#sndBtn').textContent = sfxOn() || ambOn() ? '🔊' : '🔇';
   $('#mic').hidden = !SR;
-  $('#conds').innerHTML = (S.comp ? `<button class="cond comp${S.comp.down ? ' down' : ''}" data-npcpic="${esc(S.comp.jmeno)}">🤝 ${esc(S.comp.jmeno)} ${S.comp.down ? '🩸' : '❤️ ' + S.comp.hp + '/' + S.comp.maxHp}</button>` : '') + allConds().map((x,i) =>
+  $('#conds').innerHTML = `<button class="cond diffc" data-diffc="1" title="Obtížnost hry">${D().i} ${D().n}</button>` + (S.comp ? `<button class="cond comp${S.comp.down ? ' down' : ''}" data-npcpic="${esc(S.comp.jmeno)}">🤝 ${esc(S.comp.jmeno)} ${S.comp.down ? '🩸' : '❤️ ' + S.comp.hp + '/' + S.comp.maxHp}</button>` : '') + allConds().map((x,i) =>
     `<button class="cond ${x.derived ? 'need' : x.typ === 'pozehnani' ? 'good' : ''}" data-cond="${i}">${x.i} ${esc(x.nazev)}</button>`).join('');
 
   $('#foes').classList.toggle('on', S.foes.length > 0);
@@ -4219,11 +4342,11 @@ function render(){
   $('#actPanel').style.display = mode === 'act' ? 'block' : 'none';
   $('#rollBtn').textContent = S.dying ? '🎲 Hoď o život' : '🎲 Hoď d20';
   $('#rollAlt').style.display = mode === 'roll' && S.pending && !S.dying && !S.pending.proti && !S.pending.zachrana ? 'block' : 'none';
-  $('#inspBtn').style.display = mode === 'roll' && S.pending && !S.dying && S.char.insp && (S.pending.adv || 0) < 1 ? 'block' : 'none';
+  $('#inspBtn').style.display = mode === 'roll' && S.pending && !S.dying && S.char.insp && !S.pending.insp ? 'block' : 'none';
   if(S.dying) $('#rollWhy').innerHTML = `💀 <b>Na pokraji smrti</b> · 10+ = úspěch · 3 úspěchy = přežiješ, 3 selhání = smrt<br><b style="color:var(--green)">${'✔ '.repeat(S.dying.ok) || '–'}</b> &nbsp; <b style="color:var(--blood)">${'✘ '.repeat(Math.min(3, S.dying.ko)) || '–'}</b>`;
   else if(S.pending){
     const p = S.pending, parts = rollParts(p), foe = p.cilId ? S.foes.find(f => f.id === p.cilId) : null;
-    $('#rollWhy').innerHTML = p.utok
+    $('#rollWhy').innerHTML = rollWhyHTML(p, parts, foe); if(false) $('#rollWhy').innerHTML = p.utok
       ? `⚔️ <b>${esc(attackInfo(p).nazev)}</b>${foe ? ' → <b>' + esc(foe.jmeno) + '</b>' : ''} · d20 ${esc(partsText(parts))} · obrana <b>${p.obtiznost}</b><br>zranění ${esc(attackInfo(p).dice)} ${fmtMod(mod(c.stats[p.vlastnost]) + attackInfo(p).bonus)}`
       : `${p.zachrana ? 'Záchranný hod' : 'Zkouška'}: <b>${esc(p.dovednost ? skillName(p.dovednost) : statName(p.vlastnost))}</b>${p.dovednost ? ' <i>(' + esc(statName(p.vlastnost)) + ')</i>' : ''}${p.adv > 0 ? ' · výhoda' : p.adv < 0 ? ' · nevýhoda' : ''} (d20 ${esc(partsText(parts))}) · obtížnost <b>${p.obtiznost}</b> <i class="dcl">${dcLabel(p.obtiznost)}</i>${p.duvod ? '<br>' + esc(p.duvod) : ''}`;
   }
@@ -4501,6 +4624,7 @@ function tabChron(){
     <button class="btn ghost" data-act="book">📜 Kronika jako kniha (tisk / PDF)</button>
     <button class="btn ghost" data-act="new">💾 Uložené hry a nová postava</button>
     <div class="sec">Nastavení</div>
+    <button class="btn ghost" data-act="diffpick">${D().i} Obtížnost hry: ${D().n} – změnit</button>
     <button class="btn ghost" data-act="settings">⚙️ Zvuky, efekty a ilustrace</button>
     <button class="btn ghost" data-act="cloud">☁️ Cloud (více zařízení)${cloudCfg()?.on ? ' – zapnuto' : ''}</button>
     <button class="btn ghost" data-act="switchAI">🔄 AI: ${PROVIDERS[getProvider()].nazev}${isDemo() ? ' (demo)' : ''} – přepnout</button>
@@ -4522,9 +4646,10 @@ function renderDrawer(){
   const body = ({ hero:tabSheet, bag:tabSheet, map:tabMap, quests:tabQuests, npcs:tabNpcs, chron:tabChron }[jTab] || tabHero)();
   const sc = $('#drawer .jbody')?.scrollTop || 0;
   $('#drawer').innerHTML = `
-    <div class="jhead"><h2>${esc(c.name)}<small>${CLASSES[c.cls].ikona} ${CLASSES[c.cls].nazev} ${c.level}. úrovně · ${SETTINGS[S.setting].nazev}</small></h2><button class="xbtn" data-act="close" aria-label="Zavřít">✕</button></div>
+    <div class="jhead"><h2>${esc(c.name)}<small>${CLASSES[c.cls].ikona} ${CLASSES[c.cls].nazev} ${c.level}. úrovně · ${SETTINGS[S.setting].nazev}</small><button class="diffbadge" data-act="diffpick">${D().i} Obtížnost: ${D().n} ▾</button></h2><button class="xbtn" data-act="close" aria-label="Zavřít">✕</button></div>
     <div class="tabs">${tabs.map(([k,n]) => `<button class="tab ${jTab===k?'on':''}" data-tab="${k}">${n}</button>`).join('')}</div>
     <div class="jbody">${body}</div>`;
+  if(jTab === 'hero' || jTab === 'bag') foldSheet($('#drawer .dsheet'));
   $('#drawer .jbody').scrollTop = sc;
   hydrateImages();
   if(detailId && $('#sheet').classList.contains('on')){
@@ -4564,7 +4689,8 @@ $('#chips').onclick = e => {
   if(q === 'sleep') return act(S.location && /hostin|krčm|hospod|pokoj|dům|chalup|domov/i.test(S.location) ? 'Pronajmu si pokoj / uložím se a vyspím se do rána.' : 'Rozdělám oheň, utábořím se a vyspím se.', '🏕️ Vyspat se');
   act(b.textContent);
 };
-$('#conds').onclick = e => { const cp = e.target.closest('[data-npcpic]'); if(cp) return npcSheet(cp.dataset.npcpic); const b = e.target.closest('[data-cond]'); if(!b) return; const x = allConds()[int(b.dataset.cond)]; if(x) openSheet(condDetail(x), x.derived || x.typ === 'pozehnani' ? 'r0' : ''); };
+$('#conds').onclick = e => { if(e.target.closest('[data-diffc]')) return journalAction({ dataset:{ act:'diffpick' } });
+  const cp = e.target.closest('[data-npcpic]'); if(cp) return npcSheet(cp.dataset.npcpic); const b = e.target.closest('[data-cond]'); if(!b) return; const x = allConds()[int(b.dataset.cond)]; if(x) openSheet(condDetail(x), x.derived || x.typ === 'pozehnani' ? 'r0' : ''); };
 $('#hName').onclick = () => { if(S && !S.dead) heroPicSheet(); };
 $('#rollBtn').onclick = roll;
 $('#inspBtn').onclick = useInspiration;
@@ -4652,6 +4778,9 @@ function journalAction(b){
   else if(a === 'mproxysave'){ const u = ($('#proxyUrl')?.value || '').trim(); ls.set('dz_mistral_proxy', /^https:\/\//.test(u) ? u : ''); ls.set('dz_mistral_ok', ''); closeSheet(); renderDrawer(); if(u) testMistral(); }
   else if(a === 'sonnet'){ if(ls.get('dz_sonnet_bad') === '1'){ ls.set('dz_sonnet_bad', ''); ls.set('dz_sonnet', ''); } else ls.set('dz_sonnet', sonnetOn() ? 'off' : ''); renderDrawer(); }
   else if(a === 'finisher'){ ls.set('dz_finisher', ls.get('dz_finisher') === 'off' ? '' : 'off'); renderDrawer(); }
+  else if(a === 'fold') toggleFold(b);
+  else if(a === 'foldall'){ const all = b.dataset.k === 'open'; const st = foldState(); document.querySelectorAll('#drawer .rib.fold').forEach(r => { st[r.dataset.k] = all; r.classList.toggle('open', all); }); ls.set('dz_fold', JSON.stringify(st)); }
+  else if(a === 'diffpick') pick('⚔️ Obtížnost této hry', Object.entries(DIFFS).map(([k,x]) => ({ label:`${diff() === k ? '✅ ' : ''}${x.i} ${x.n} – ${x.d}`, value:k }))).then(v => { if(v && v !== diff()){ S.diff = v; hist(`Hráč změnil obtížnost hry na: ${D().n}.`); addLog({ t:'sys', text:`${D().i} Obtížnost hry: ${D().n}` }); save(); render(); } if($('#drawer').classList.contains('on')) renderDrawer(); });
   else if(a === 'srestsheet') shortRestSheet();
   else if(a === 'srest') shortRest(b.dataset.k);
   else if(a === 'povaha') povahaSheet();
